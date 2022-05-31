@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="GoilGen_Logo_simple.svg">
-  <metadata
-     id="metadata21">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="GoilGen_Logo_simple.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
   <style
      id="style28705">
 .measure-arrow
@@ -48,17 +35,16 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.408984"
-     inkscape:cx="500.65768"
+     inkscape:zoom="1.204492"
+     inkscape:cx="388.13043"
      inkscape:cy="131.59075"
-     inkscape:window-width="3840"
-     inkscape:window-height="2066"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
-     inkscape:snap-nodes="false"
-     inkscape:document-rotation="0" />
+     inkscape:snap-nodes="false" />
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -87,67 +73,6 @@
          class="powerclip"
          d="m 86.630778,129.6799 h 52.272182 v 50.92102 H 86.630778 Z m 34.468832,-3.63302 c 0,8.05599 0,16.11197 0,24.16796 6.41276,0 12.82552,0 19.23828,0 0,-8.05599 0,-16.11197 0,-24.16796 -6.41276,0 -12.82552,0 -19.23828,0 z" />
     </clipPath>
-    <linearGradient
-       x1="26.648937"
-       y1="20.603781"
-       x2="135.66525"
-       y2="114.39767"
-       id="linearGradient1478"
-       xlink:href="#linearGradient4689"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.562541,0,0,0.567972,656.44113,61.942951)" />
-    <linearGradient
-       id="linearGradient4689">
-      <stop
-         style="stop-color:#5a9fd4;stop-opacity:1"
-         offset="0"
-         id="stop4691" />
-      <stop
-         style="stop-color:#306998;stop-opacity:1"
-         offset="1"
-         id="stop4693" />
-    </linearGradient>
-    <linearGradient
-       x1="150.96111"
-       y1="192.35176"
-       x2="112.03144"
-       y2="137.27299"
-       id="linearGradient1475"
-       xlink:href="#linearGradient4671"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.562541,0,0,0.567972,656.44113,61.942951)" />
-    <linearGradient
-       id="linearGradient4671">
-      <stop
-         style="stop-color:#ffd43b;stop-opacity:1"
-         offset="0"
-         id="stop4673" />
-      <stop
-         style="stop-color:#ffe873;stop-opacity:1"
-         offset="1"
-         id="stop4675" />
-    </linearGradient>
-    <radialGradient
-       cx="61.518883"
-       cy="132.28575"
-       r="29.036913"
-       fx="61.518883"
-       fy="132.28575"
-       id="radialGradient1480"
-       xlink:href="#linearGradient2795"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(2.382716e-8,-0.296405,1.43676,4.683673e-7,-128.544,150.5202)" />
-    <linearGradient
-       id="linearGradient2795">
-      <stop
-         style="stop-color:#b8b8b8;stop-opacity:0.49803922"
-         offset="0"
-         id="stop2797" />
-      <stop
-         style="stop-color:#7f7f7f;stop-opacity:0"
-         offset="1"
-         id="stop2799" />
-    </linearGradient>
   </defs>
   <g
      inkscape:label="Ebene 1"
@@ -155,7 +80,7 @@
      id="layer1">
     <g
        aria-label="CoilGen"
-       transform="matrix(0.61346152,0,0,0.61346152,-1.6475725,-48.972142)"
+       transform="matrix(0.61346152,0,0,0.61346152,-54.696389,-81.372558)"
        id="text717-7"
        style="font-size:40px;line-height:1.25;font-family:Magneto;-inkscape-font-specification:'Magneto, Normal';white-space:pre;shape-inside:url(#rect719);stroke:none;stroke-opacity:1"
        inkscape:export-filename="C:\Users\amrein\Documents\PhD_Work\CoilGen\Documentation\GoilGen_Logo.png"
@@ -202,27 +127,5 @@
        id="text717-3-6-6"
        style="font-size:40px;line-height:1.25;font-family:Magneto;-inkscape-font-specification:'Magneto, Normal';white-space:pre;shape-inside:url(#rect719)"
        inkscape:path-effect="#path-effect17268" />
-    <g
-       id="g2303"
-       transform="matrix(0.26458333,0,0,0.26458333,-9.7050788,12.428529)"
-       inkscape:export-xdpi="500"
-       inkscape:export-ydpi="500">
-      <path
-         id="path46"
-         style="fill:#646464;fill-opacity:1"
-         d="m 155.14043,129.17763 c 0,-14.56215 -4.15226,-22.03817 -12.45678,-22.44755 -3.30427,-0.15595 -6.53055,0.37039 -9.66912,1.58878 -2.505,0.89673 -4.19124,1.78372 -5.07823,2.68045 v 34.75812 c 5.31216,3.33351 10.02976,4.88329 14.14303,4.63962 8.70415,-0.57508 13.0611,-7.64172 13.0611,-21.21942 z m 10.24419,0.60432 c 0,7.39804 -1.73498,13.53871 -5.22444,18.422 -3.88909,5.5266 -9.27923,8.37275 -16.17042,8.52871 -5.1952,0.1657 -10.54635,-1.46207 -16.05346,-4.87355 v 31.59032 l -8.90884,-3.17755 v -70.12057 c 1.46206,-1.79346 3.34325,-3.3335 5.62407,-4.63961 5.30242,-3.08983 11.74524,-4.67861 19.32848,-4.75658 l 0.12671,0.12671 c 6.93018,-0.0877 12.27159,2.75843 16.02422,8.5287 3.4992,5.29267 5.25368,12.07665 5.25368,20.37142 z" />
-      <path
-         id="path48"
-         style="fill:#646464;fill-opacity:1"
-         d="m 219.83186,150.51401 c 0,9.92254 -0.9942,16.79424 -2.9826,20.6151 -1.99816,3.82086 -5.79952,6.8717 -11.41385,9.14277 -4.55189,1.79346 -9.47417,2.76817 -14.75709,2.93387 l -1.47181,-5.61432 c 5.37064,-0.73103 9.15252,-1.46207 11.34561,-2.1931 4.31796,-1.46206 7.28108,-3.70389 8.90884,-6.706 1.30611,-2.44652 1.94942,-7.11537 1.94942,-14.02606 v -2.3198 c -6.09193,2.76817 -12.47628,4.14251 -19.15303,4.14251 -4.38619,0 -8.25579,-1.37434 -11.58929,-4.14251 -3.74289,-3.01186 -5.61433,-6.83272 -5.61433,-11.46258 v -37.07793 l 8.90884,-3.05084 v 37.3216 c 0,3.98656 1.28662,7.0569 3.85985,9.21101 2.57323,2.1541 5.90674,3.18729 9.99077,3.10932 4.08403,-0.0877 8.46047,-1.66676 13.10983,-4.75658 v -43.54025 h 8.90884 z" />
-      <path
-         id="path1948"
-         style="fill:url(#linearGradient1478);fill-opacity:1"
-         d="m 726.35103,73.646241 c -4.58365,0.0213 -8.96094,0.412218 -12.8125,1.09375 -11.34621,2.004504 -13.40625,6.200102 -13.40625,13.9375 v 10.21875 h 26.8125 v 3.406249 h -26.8125 -10.0625 c -7.79246,0 -14.61576,4.68372 -16.75,13.59375 -2.46182,10.21297 -2.57101,16.58602 0,27.25 1.90593,7.93785 6.45755,13.59375 14.25,13.59375 h 9.21875 v -12.25 c 0,-8.8499 7.65715,-16.65625 16.75,-16.65625 h 26.78125 c 7.45495,0 13.40626,-6.13816 13.40625,-13.625 V 88.677491 c 0,-7.266339 -6.12998,-12.724777 -13.40625,-13.9375 -4.60598,-0.766725 -9.38509,-1.115048 -13.96875,-1.09375 z m -14.5,8.21875 c 2.76955,0 5.03125,2.298646 5.03125,5.125 0,2.816336 -2.2617,5.09375 -5.03125,5.09375 -2.77947,-10e-7 -5.03125,-2.277415 -5.03125,-5.09375 0,-2.826353 2.25178,-5.125 5.03125,-5.125 z" />
-      <path
-         id="path1950"
-         style="fill:url(#linearGradient1475);fill-opacity:1"
-         d="m 757.06978,102.30249 v 11.90625 c 0,9.23076 -7.82589,17 -16.75,17 h -26.78125 c -7.33583,0 -13.40625,6.27848 -13.40625,13.625 v 25.53125 c 0,7.26634 6.31859,11.54032 13.40625,13.625 8.48733,2.49561 16.62624,2.94663 26.78125,0 6.75016,-1.95439 13.40626,-5.88761 13.40625,-13.625 v -10.21875 h -26.78125 v -3.40625 h 26.78125 13.40626 c 7.79246,0 10.69625,-5.43541 13.40624,-13.59375 2.79933,-8.39888 2.68022,-16.47577 0,-27.25 -1.92578,-7.75744 -5.60387,-13.59375 -13.40624,-13.59375 z m -15.0625,64.65625 c 2.77948,0 5.03125,2.27742 5.03125,5.09375 0,2.82635 -2.25177,5.125 -5.03125,5.125 -2.76955,0 -5.03125,-2.29865 -5.03125,-5.125 10e-6,-2.81633 2.2617,-5.09375 5.03125,-5.09375 z" />
-    </g>
   </g>
 </svg>
