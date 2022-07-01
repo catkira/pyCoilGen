@@ -1,10 +1,19 @@
 ### Input
 
+### MESH
+# generate mesh: define Cylindric_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen)
 from python.subfunctions.read_mesh import Cylindric_mesh
 Mesh = Cylindric_mesh(5.0,3.0,100)
-# generate mesh: define coil_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen, Normalen(?))
-# steps I'm not sure why and if we need them: split_disconnected_mesh, refine_mesh
-#TODO: Ask Philipp if mesh meets requirements and try to find out if data have already the correct format
+
+# not relevant for a generated cylindric mesh: split_disconnected_mesh(Trennt Objekte falls mehrere unverbundene Netze im stl), refine_mesh(Macht aus einem Dreieck 3)
+
+
+### STREAM FUNCTION
+# parameterize the mesh: normalen, Planarization, offene Boundaries markieren (Liste welche vertices), auf 2D (evtl z-Axen ausrichtung dafür)
+
+# calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten 
+
+# basisfunktionen: Mikrospulen um jeden Knoten -> werden in sensitifity matrix mit dem Zielfeld in Verbindung gebracht
 
 ### Calculation
 
