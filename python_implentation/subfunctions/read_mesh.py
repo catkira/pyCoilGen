@@ -6,11 +6,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
 
-class Cylindric_mesh():
-    def __init__(self,coil_length,coil_radius,coil_n):
-        self.vertices, self.faces = meshzoo.tube(length=coil_length, radius=coil_radius, n=int(coil_n))#points, cells(index of the points that close the cell)
+class CylindricMesh():
+    def __init__(self,coilLength,coilRadius,n):
+        self.vertices, self.faces = meshzoo.tube(length=coilLength, radius=coilRadius, n=int(n))#points, cells(index of the points that close the cell)
         self.normals=self.getNormals
         self.openBoundaries=self.getOpenBoundaries()
+        self.u,self.v=self.get2Dcoordinates()
 
     def getNormals(self):
         normals=[]
@@ -37,8 +38,18 @@ class Cylindric_mesh():
             else: continue
         return [upperopen,loweropen]
 
+    #bei z +1 statt wie bei philipp -zmin
+    def get2Dcoordinates(self):
+        u=[]
+        v=[]
+        for i in range(len(self.vertices)):
+            r = np.sqrt(self.vertices[i][0]**2+self.vertices[i][1]**2)
+            u.append((r-self.vertices[i][2]+1)*np.sin(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
+            v.append((r-self.vertices[i][2]+1)*np.cos(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
+        return u,v
 
-mesh = Cylindric_mesh(2,1,10)
+
+mesh = CylindricMesh(2,1,10)
 
 #TODO test function for normals (nach außen und alle gleich!)
 
@@ -70,6 +81,9 @@ def calculateNormal(mesh,face):
 #testEqualDirectionsNormal(mesh)
 testIfLonelyVertice(mesh)
 print(mesh.openBoundaries)
+x,y = mesh.get2Dcoordinates()
+plt.plot(x,y,'.')
+plt.show()
 
 
 ### optische Mesh Kontrolle - nur zur Veranschaulichung
