@@ -2,8 +2,9 @@
 
 ### MESH
 # generate mesh: define Cylindric_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen)
-from python.subfunctions.read_mesh import Cylindric_mesh
-Mesh = Cylindric_mesh(5.0,3.0,100)
+from pythonImplentation.subfunctions.readMesh import CylindricMesh
+
+Mesh = CylindricMesh(5.0,3.0,100)
 
 # not relevant for a generated cylindric mesh: split_disconnected_mesh(Trennt Objekte falls mehrere unverbundene Netze im stl), refine_mesh(Macht aus einem Dreieck 3)
 
