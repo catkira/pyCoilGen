@@ -14,7 +14,7 @@ Mesh = CylindricMesh(5.0,3.0,100)
 
 # define target field
 
-# calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten 
+# calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten (in readMesh)
 
 # basisfunktionen: Mikrospulen um jeden Knoten -> werden in sensitifity matrix mit dem Zielfeld in Verbindung gebracht
 

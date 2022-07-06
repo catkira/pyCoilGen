@@ -12,6 +12,7 @@ class CylindricMesh():
         self.normals=self.getNormals
         self.openBoundaries=self.getOpenBoundaries()
         self.u,self.v=self.get2Dcoordinates()
+        self.neighbours=self.getNeighbourList()#nicht sortiert ...
 
     def getNormals(self):
         normals=[]
@@ -48,6 +49,28 @@ class CylindricMesh():
             v.append((r-self.vertices[i][2]+1)*np.cos(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
         return u,v
 
+    def getNeighbourList(self):
+        #faces abrastern und je die andern beiden Punkte in liste schreiben (mit index)
+        neighbours=[]
+        for i in range(len(self.vertices)):
+            neighboursThis=[]
+            for j in self.faces:
+                if i in j:
+                    for k in range(3):
+                        if i == j[k]:
+                            continue
+                        else: neighboursThis.append(j[k])
+            neighbours.append(correctList(neighboursThis))
+        return neighbours
+
+def correctList(old):
+    new=[]
+    for i in old:
+        if i in new:
+            continue
+        else:
+            new.append(i)
+    return new
 
 mesh = CylindricMesh(2,1,10)
 
