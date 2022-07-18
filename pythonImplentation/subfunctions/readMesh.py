@@ -5,6 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
+import scipy as sc
 
 class CylindricMesh():
     def __init__(self,coilLength,coilRadius,n):
@@ -13,14 +14,33 @@ class CylindricMesh():
         self.openBoundaries=self.getOpenBoundaries()
         self.u,self.v=self.get2Dcoordinates()
         self.neighbours=self.getNeighbourList()#nicht sortiert ...
+        self.areas = self.getAreas()
+        self.current = self.getCurrent()
+
+    def getCurrent(self):
+        '''returns the current for the triangles made with the points in faces
+        C = (c-b)/(2*Fläche)'''
+        current =[]
+        for i in range(len(self.areas)):
+            current.append((self.vertices[self.faces[i][2]]-self.vertices[self.faces[i][1]])/(2*self.areas[i]))
+        return current
+
+    def getAreas(self):
+        '''returns the areas of the triangles made with the points in faces'''
+        areas=[]
+        for i in self.faces:
+            areas.append(np.linalg.norm(np.cross((self.vertices[i[1]]-self.vertices[i[0]]),(self.vertices[i[2]]-self.vertices[i[0]]))))
+        return areas
 
     def getNormals(self):
+        '''returns the normals of the faces'''
         normals=[]
         for i in range(len(self.faces)):
             normals.append(calculateNormal(self, self.faces[i]))
         return normals
     
     def getOpenBoundaries(self):
+        '''returns indexes of the nodes at the edges of a cylinder extended in z-direction'''
         max = 0
         upperopen=[]
         min = 0
@@ -41,6 +61,7 @@ class CylindricMesh():
 
     #bei z +1 statt wie bei philipp -zmin
     def get2Dcoordinates(self):
+        '''returns the from 3D to 2D converted vertices'''
         u=[]
         v=[]
         for i in range(len(self.vertices)):
@@ -64,6 +85,7 @@ class CylindricMesh():
         return neighbours
 
 def correctList(old):
+    '''ensures that each element appears only once in the list'''
     new=[]
     for i in old:
         if i in new:
@@ -76,11 +98,11 @@ mesh = CylindricMesh(2,1,10)
 
 #TODO test function for normals (nach außen und alle gleich!)
 
-def testEqualDirectionsNormal(mesh): #WIP
+def test_EqualDirectionsNormal(mesh): #WIP
     for i in range(len(mesh.faces)):
         print("Normle Dreieck Nummer ",i, "ist" , calculateNormal(mesh,mesh.faces[i]))
 
-def testIfLonelyVertice(mesh):
+def test_IfLonelyVertice(mesh):
     for i in range(len(mesh.vertices)):
         if(any(i in sublist for sublist in mesh.faces)):
              continue
@@ -101,8 +123,8 @@ def calculateNormal(mesh,face):
         print("Mesh-Generation is going wrong. Faces do not have 3 components")
         return False
 
-#testEqualDirectionsNormal(mesh)
-testIfLonelyVertice(mesh)
+#test_EqualDirectionsNormal(mesh)
+test_IfLonelyVertice(mesh)
 print(mesh.openBoundaries)
 x,y = mesh.get2Dcoordinates()
 plt.plot(x,y,'.')

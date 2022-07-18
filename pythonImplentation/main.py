@@ -2,8 +2,7 @@
 
 ### MESH
 # generate mesh: define Cylindric_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen)
-from pythonImplentation.subfunctions.readMesh import CylindricMesh
-
+from subfunctions.readMesh import CylindricMesh
 Mesh = CylindricMesh(5.0,3.0,100)
 
 # not relevant for a generated cylindric mesh: split_disconnected_mesh(Trennt Objekte falls mehrere unverbundene Netze im stl), refine_mesh(Macht aus einem Dreieck 3)
@@ -13,10 +12,14 @@ Mesh = CylindricMesh(5.0,3.0,100)
 # parameterize the mesh: normalen, Planarization, offene Boundaries markieren (Liste welche vertices), auf 2D (evtl z-Axen ausrichtung dafür)
 
 # define target field
+from subfunctions.defineTargetField import TargetField
+TargetSphere = TargetField([0,0,0],2.0,1)
 
 # calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten (in readMesh)
 
-# basisfunktionen: Mikrospulen um jeden Knoten -> werden in sensitifity matrix mit dem Zielfeld in Verbindung gebracht
+#-------
+
+# basisfunktionen: Mikrospulen um jeden Knoten -> werden in sensitivity matrix mit dem Zielfeld in Verbindung gebracht
 
 ### Calculation
 
