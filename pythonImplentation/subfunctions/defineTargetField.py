@@ -43,10 +43,10 @@ def distanceBetweenPoints(point1,point2):
     return np.sqrt(result)
 
 
-sphere=TargetField([0,0,0],5,1)
-points = sphere.vertices
-fig = plt.figure()
-ax = fig.add_subplot(projection='3d')
+#sphere=TargetField([0,0,0],5,1)
+#points = sphere.vertices
+#fig = plt.figure()
+#ax = fig.add_subplot(projection='3d')
 
-ax.scatter3D(points[0],points[1],points[2])
-plt.show()
+#ax.scatter3D(points[0],points[1],points[2])
+#plt.show()

@@ -5,7 +5,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
-import scipy as sc
 
 class CylindricMesh():
     def __init__(self,coilLength,coilRadius,n):
@@ -13,9 +12,10 @@ class CylindricMesh():
         self.normals=self.getNormals
         self.openBoundaries=self.getOpenBoundaries()
         self.u,self.v=self.get2Dcoordinates()
-        self.neighbours=self.getNeighbourList()#nicht sortiert ...
+        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
         self.areas = self.getAreas()
         self.current = self.getCurrent()
+        self.test = self.getSuroundingTriangles()
 
     def getCurrent(self):
         '''returns the current for the triangles made with the points in faces
@@ -70,19 +70,44 @@ class CylindricMesh():
             v.append((r-self.vertices[i][2]+1)*np.cos(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
         return u,v
 
-    def getNeighbourList(self):
+    def getNeighbourTriangleIndices(self):
         #faces abrastern und je die andern beiden Punkte in liste schreiben (mit index)
-        neighbours=[]
+        #WIP dirty fix
+        neighbourtrianglesIndices=[]
+        for node in self.vertices:
+            k=[]
+            for i in range(len(self.faces)):
+                if node in self.faces[i]:
+                    k.append(i)
+            neighbourtrianglesIndices.append(k)
+        # neighbours=[]
+        # for i in range(len(self.vertices)):
+        #     neighboursThis=[]
+        #     for j in self.faces:
+        #         if i in j:
+        #             for k in range(3):
+        #                 if i == j[k]:
+        #                     continue
+        #                 else: neighboursThis.append(j[k])
+        #     neighbours.append(correctList(neighboursThis))
+        return neighbourtrianglesIndices
+    
+    def findStartTriangle(self,index):
+        '''returns the index of one triangle touching the node index'''
+        for i in range(len(self.faces)):
+            if index in self.faces[i]:
+                return i
+
+    def getSuroundingTriangles(self):
+        '''returns a list of triangles surrounding the node'''
         for i in range(len(self.vertices)):
-            neighboursThis=[]
-            for j in self.faces:
-                if i in j:
-                    for k in range(3):
-                        if i == j[k]:
-                            continue
-                        else: neighboursThis.append(j[k])
-            neighbours.append(correctList(neighboursThis))
-        return neighbours
+            start = self.findStartTriangle(i)#index innerhalb von self.faces!
+            
+
+
+
+
+
 
 def correctList(old):
     '''ensures that each element appears only once in the list'''
@@ -124,23 +149,23 @@ def calculateNormal(mesh,face):
         return False
 
 #test_EqualDirectionsNormal(mesh)
-test_IfLonelyVertice(mesh)
-print(mesh.openBoundaries)
-x,y = mesh.get2Dcoordinates()
-plt.plot(x,y,'.')
-plt.show()
+#test_IfLonelyVertice(mesh)
+#print(mesh.openBoundaries)
+#x,y = mesh.get2Dcoordinates()
+#plt.plot(x,y,'.')
+#plt.show()
 
 
 ### optische Mesh Kontrolle - nur zur Veranschaulichung
-fig = plt.figure()
-ax = fig.add_subplot(projection='3d')
+#fig = plt.figure()
+#ax = fig.add_subplot(projection='3d')
 
-X=[]
-Y=[]
-Z=[]
-for i in range(len(mesh.vertices)):
-    X.append(mesh.vertices[i][0])
-    Y.append(mesh.vertices[i][1])
-    Z.append(mesh.vertices[i][2])
-ax.scatter3D(X,Y,Z)
-plt.show()
+#X=[]
+#Y=[]
+#Z=[]
+#for i in range(len(mesh.vertices)):
+#    X.append(mesh.vertices[i][0])
+#    Y.append(mesh.vertices[i][1])
+#    Z.append(mesh.vertices[i][2])
+#ax.scatter3D(X,Y,Z)
+#plt.show()
