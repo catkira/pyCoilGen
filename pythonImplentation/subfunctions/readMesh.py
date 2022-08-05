@@ -15,7 +15,17 @@ class CylindricMesh():
         self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
         self.areas = self.getAreas()
         self.current = self.getCurrent()
-        self.test = self.getSuroundingTriangles()
+        self.neighbourcurrents = self.getNeighbourCurrents()
+    
+    def getNeighbourCurrents(self):
+        '''returns the currents of the neighbour triangles for every node'''
+        neighbourcurrents = []
+        for i in range(len(self.vertices)):
+            neighbourcurrentparts=[]
+            for j in self.neighbours[i]:
+                neighbourcurrentparts.append(self.current[j])
+            neighbourcurrents.append(neighbourcurrentparts)
+        return neighbourcurrents
 
     def getCurrent(self):
         '''returns the current for the triangles made with the points in faces
@@ -71,37 +81,26 @@ class CylindricMesh():
         return u,v
 
     def getNeighbourTriangleIndices(self):
-        #faces abrastern und je die andern beiden Punkte in liste schreiben (mit index)
-        #WIP dirty fix
-        neighbourtrianglesIndices=[]
+        '''returns the indices of the neighbour triangles of every node'''
+        neighbourtrianglesIndices=[] 
         for node in self.vertices:
             k=[]
             for i in range(len(self.faces)):
-                if node in self.faces[i]:
+                if node in self.vertices[self.faces[i]]:
                     k.append(i)
             neighbourtrianglesIndices.append(k)
-        # neighbours=[]
-        # for i in range(len(self.vertices)):
-        #     neighboursThis=[]
-        #     for j in self.faces:
-        #         if i in j:
-        #             for k in range(3):
-        #                 if i == j[k]:
-        #                     continue
-        #                 else: neighboursThis.append(j[k])
-        #     neighbours.append(correctList(neighboursThis))
         return neighbourtrianglesIndices
     
-    def findStartTriangle(self,index):
-        '''returns the index of one triangle touching the node index'''
-        for i in range(len(self.faces)):
-            if index in self.faces[i]:
-                return i
+    # def findStartTriangle(self,index):
+    #     '''returns the index of one triangle touching the node index'''
+    #     for i in range(len(self.faces)):
+    #         if index in self.faces[i]:
+    #             return i
 
-    def getSuroundingTriangles(self):
-        '''returns a list of triangles surrounding the node'''
-        for i in range(len(self.vertices)):
-            start = self.findStartTriangle(i)#index innerhalb von self.faces!
+    # def getSuroundingTriangles(self):
+    #     '''returns a list of triangles surrounding the node'''
+    #     for i in range(len(self.vertices)):
+    #         start = self.findStartTriangle(i)#index innerhalb von self.faces!
             
 
 
