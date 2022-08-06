@@ -12,9 +12,9 @@ class CylindricMesh():
         self.normals=self.getNormals
         self.openBoundaries=self.getOpenBoundaries()
         self.u,self.v=self.get2Dcoordinates()
-        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
         self.areas = self.getAreas()
         self.current = self.getCurrent()
+        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourareas = self.getNeighbourAreas()
     
@@ -23,7 +23,7 @@ class CylindricMesh():
         neighbourareas = []
         for i in range(len(self.vertices)):
             neighbourareasparts=[]
-            print("menge neighbours", self.neighbours[i])
+            #print("menge neighbours", self.neighbours[i])
             for j in self.neighbours[i]:
                 neighbourareasparts.append(self.areas[j])
             neighbourareas.append(neighbourareasparts)
@@ -61,7 +61,7 @@ class CylindricMesh():
         '''returns the normals of the faces'''
         normals=[]
         for i in range(len(self.faces)):
-            normals.append(calculateNormal(self, self.faces[i]))
+            normals.append(calculateNormal(self.vertices[self.faces[i]]))
         return normals
     
     def getOpenBoundaries(self):
@@ -121,6 +121,7 @@ class CylindricMesh():
             
 
 def checkIfVecInVeclist(node,vecList):
+    '''returns Boolean if a 3 components vec is in a list of 3 component elements'''
     return (node == vecList[0]).all()|(node == vecList[1]).all()|( node == vecList[2]).all()
 
 
@@ -142,7 +143,7 @@ mesh = CylindricMesh(2,1,10)
 
 def test_EqualDirectionsNormal(mesh): #WIP
     for i in range(len(mesh.faces)):
-        print("Normle Dreieck Nummer ",i, "ist" , calculateNormal(mesh,mesh.faces[i]))
+        print("Normle Dreieck Nummer ",i, "ist" , calculateNormal(mesh.vertices[mesh.faces[i]]))
 
 def test_IfLonelyVertice(mesh):
     for i in range(len(mesh.vertices)):
@@ -152,13 +153,10 @@ def test_IfLonelyVertice(mesh):
     print("finished test")
 
 
-def calculateNormal(mesh,face):
-    if len(face) == 3:
-        point0 = mesh.vertices[face[0]]
-        point1 = mesh.vertices[face[1]]
-        point2 = mesh.vertices[face[2]]
-        v1 = point1 - point0
-        v2 = point2 - point0
+def calculateNormal(vec):
+    if len(vec) == 3:
+        v1 = vec[1] - vec[0]
+        v2 = vec[2] - vec[0]
         return np.cross(v1,v2)
     else:
         #Fall das faces nicht aus 3 Komponenten besteht im Kopf behalten, evtl bei direkter Mesh Einspeisung handeln. (create_unique_noded_mesh)
