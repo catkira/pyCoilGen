@@ -16,7 +16,22 @@ class CylindricMesh():
         self.areas = self.getAreas()
         self.current = self.getCurrent()
         self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbourareas = self.getNeighbourAreas()
     
+    def getNeighbourAreas(self):
+        '''returns the areas of the neighbour triangles for every node'''
+        neighbourareas = []
+        for i in range(len(self.vertices)):
+            neighbourareasparts=[]
+            print("menge neighbours", self.neighbours[i])
+            for j in self.neighbours[i]:
+                neighbourareasparts.append(self.areas[j])
+            neighbourareas.append(neighbourareasparts)
+            #print("step1", neighbourareas)
+        #print("neighbourareas",neighbourareas)
+        return neighbourareas
+
+
     def getNeighbourCurrents(self):
         '''returns the currents of the neighbour triangles for every node'''
         neighbourcurrents = []
@@ -86,7 +101,9 @@ class CylindricMesh():
         for node in self.vertices:
             k=[]
             for i in range(len(self.faces)):
-                if node in self.vertices[self.faces[i]]:
+                vecList = self.vertices[self.faces[i]]
+                if checkIfVecInVeclist(node,vecList):
+                    #print("node", node, "self.vertices[self.faces[i]]", self.vertices[self.faces[i]])
                     k.append(i)
             neighbourtrianglesIndices.append(k)
         return neighbourtrianglesIndices
@@ -103,7 +120,8 @@ class CylindricMesh():
     #         start = self.findStartTriangle(i)#index innerhalb von self.faces!
             
 
-
+def checkIfVecInVeclist(node,vecList):
+    return (node == vecList[0]).all()|(node == vecList[1]).all()|( node == vecList[2]).all()
 
 
 
