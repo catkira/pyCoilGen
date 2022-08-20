@@ -6,25 +6,15 @@ def getSensitivityMatrix(mesh,target,n):
     sensitivityMatrix = []
     [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(n)
     trianglesPerNode = [len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))]
-    xTarget,yTarget,zTarget = splitListColumns(target.vertices)
+    xTarget,yTarget,zTarget = target.vertices
     for nodeIndex in range(len(mesh.vertices)):
         dCx,dCy,dCz =[0,0,0],[0,0,0],[0,0,0]
         for triangleIndex in range(trianglesPerNode[nodeIndex]):
-            nodePoint = mesh.faces[mesh.neighbours[nodeIndex][triangleIndex]][0]
-            pointB = mesh.faces[mesh.neighbours[nodeIndex][triangleIndex]][1]
-            pointC = mesh.faces[mesh.neighbours[nodeIndex][triangleIndex]][2]
-            nodeX = mesh.vertices[nodePoint][0]
-            nodeY = mesh.vertices[nodePoint][1]
-            nodeZ = mesh.vertices[nodePoint][2]
-            bX = mesh.vertices[pointB][0]
-            bY = mesh.vertices[pointB][1]
-            bZ = mesh.vertices[pointB][2]
-            cX = mesh.vertices[pointC][0]
-            cY = mesh.vertices[pointC][1]
-            cZ = mesh.vertices[pointC][2]
-            vX = mesh.current[mesh.neighbours[nodeIndex][triangleIndex]][0]
-            vY = mesh.current[mesh.neighbours[nodeIndex][triangleIndex]][1]
-            vZ = mesh.current[mesh.neighbours[nodeIndex][triangleIndex]][2]
+            nodePoint,pointB,pointC = mesh.faces[mesh.neighbours[nodeIndex][triangleIndex]]
+            nodeX,nodeY,nodeZ = mesh.vertices[nodePoint]
+            bX,bY,bZ = mesh.vertices[pointB]
+            cX,cY,cZ = mesh.vertices[pointC]
+            vX,vY,vZ = mesh.current[mesh.neighbours[nodeIndex][triangleIndex]]
 
             for gaussIndex in range(len(gaussWeight)):
                 xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex])
@@ -34,24 +24,13 @@ def getSensitivityMatrix(mesh,target,n):
                 dCx = dCx + ((-1)*vZ*(yTarget-yGaussInUV)+ vY*(zTarget-zGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCy = dCy + ((-1)*vX*(zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-                #beitrag zur sensitivitätsmatrix dCx,dCy,dCz
+            #beitrag zur sensitivitätsmatrix dCx,dCy,dCz
             dCx *= biotSavatCoeff
             dCy *= biotSavatCoeff
             dCz *= biotSavatCoeff
         sensitivityMatrix.append([dCx,dCy,dCz])
         #print(sensitivityMatrix) #achtung viel output!
     return sensitivityMatrix
-
-def splitListColumns(mehrDimList):#WIP allgemeiner schreiben
-    xTarget=[]
-    yTarget=[]
-    zTarget=[]
-    for i in range(len(mehrDimList)):
-        xTarget.append(mehrDimList[i][0])
-        yTarget.append(mehrDimList[i][1])
-        zTarget.append(mehrDimList[i][2])
-    return xTarget,yTarget,zTarget
-
 
 def gaussLegendreIntegrationPointsTriangle(n):
     u,v,ck=[],[],[]
