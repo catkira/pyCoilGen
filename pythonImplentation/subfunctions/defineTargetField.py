@@ -22,14 +22,14 @@ class TargetField():
                     if distanceBetweenPoints(self.center,[newX[i][j][k],newY[i][j][k],newZ[i][j][k]]) <= self.radius:
                         targetVertices.append([newX[i][j][k],newY[i][j][k],newZ[i][j][k]])
                     else: continue 
-        return targetVertices
+        return np.array(targetVertices)#array is important to be able to do [:,0]
 
     def getMagneticFieldInPoints(self,direction):#0==x,1==y,2==z
         #normiert die Werte -> mapping auf 0 bis 1 was als gewünschtes Feld definiert werden kann 
         magneticFieldValues=[]
-        distance=np.max(self.vertices[direction])-np.min(self.vertices[direction])
-        for i in range(len(self.vertices[direction])):
-            magneticFieldValues.append((self.vertices[direction][i]-np.min(self.vertices[direction]))/distance)
+        distance=np.max(self.vertices[:,direction])-np.min(self.vertices[:,direction])
+        for i in range(len(self.vertices[:,direction])):
+            magneticFieldValues.append((self.vertices[:,direction][i]-np.min(self.vertices[:,direction]))/distance)
         return magneticFieldValues
 
 def distanceBetweenPoints(point1,point2):
