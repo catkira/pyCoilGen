@@ -17,6 +17,7 @@ class CylindricMesh():
         self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourareas = self.getNeighbourAreas()
+        self.currentDensityFaces=[]
     
     def getNeighbourAreas(self):
         '''returns the areas of the neighbour triangles for every node'''
@@ -137,7 +138,7 @@ def correctList(old):
             new.append(i)
     return new
 
-mesh = CylindricMesh(2,1,10)
+mesh = CylindricMesh(5.0,3.0,10)
 
 #TODO test function for normals (nach außen und alle gleich!)
 
@@ -172,15 +173,16 @@ def calculateNormal(vec):
 
 
 ### optische Mesh Kontrolle - nur zur Veranschaulichung
-#fig = plt.figure()
-#ax = fig.add_subplot(projection='3d')
+# fig = plt.figure()
+# ax = fig.add_subplot(projection='3d')
 
-#X=[]
-#Y=[]
-#Z=[]
-#for i in range(len(mesh.vertices)):
-#    X.append(mesh.vertices[i][0])
-#    Y.append(mesh.vertices[i][1])
-#    Z.append(mesh.vertices[i][2])
-#ax.scatter3D(X,Y,Z)
-#plt.show()
+# X=[]
+# Y=[]
+# Z=[]
+# print(np.shape(mesh.vertices))
+# for i in range(len(mesh.vertices)):
+#     X.append(mesh.vertices[i][0])
+#     Y.append(mesh.vertices[i][1])
+#     Z.append(mesh.vertices[i][2])
+# ax.scatter3D(X,Y,Z)
+# plt.show()
