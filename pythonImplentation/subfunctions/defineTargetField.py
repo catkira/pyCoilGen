@@ -15,18 +15,14 @@ class TargetField():
         newY = np.linspace(self.center[1]-self.radius,self.center[1]+self.radius,25)
         newZ = np.linspace(self.center[2]-self.radius,self.center[2]+self.radius,25)
         newX,newY,newZ = np.meshgrid(newX, newY, newZ, indexing='ij')
-        targetVerticesX=[]
-        targetVerticesY=[]
-        targetVerticesZ=[]
+        targetVertices = []
         for i in range(len(newX)):
             for j in range(len(newX)):
                 for k in range(len(newX[i][j])):
                     if distanceBetweenPoints(self.center,[newX[i][j][k],newY[i][j][k],newZ[i][j][k]]) <= self.radius:
-                        targetVerticesX.append(newX[i][j][k])
-                        targetVerticesY.append(newY[i][j][k])
-                        targetVerticesZ.append(newZ[i][j][k])
+                        targetVertices.append([newX[i][j][k],newY[i][j][k],newZ[i][j][k]])
                     else: continue 
-        return [targetVerticesX,targetVerticesY,targetVerticesZ]
+        return targetVertices
 
     def getMagneticFieldInPoints(self,direction):#0==x,1==y,2==z
         #normiert die Werte -> mapping auf 0 bis 1 was als gewünschtes Feld definiert werden kann 
@@ -45,6 +41,7 @@ def distanceBetweenPoints(point1,point2):
 
 #sphere=TargetField([0,0,0],5,1)
 #points = sphere.vertices
+#print(np.shape(points))
 #fig = plt.figure()
 #ax = fig.add_subplot(projection='3d')
 
