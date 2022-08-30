@@ -1,10 +1,16 @@
 ### Input
-
+import numpy as np
 ### MESH
 # generate mesh: define Cylindric_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen)
 from subfunctions.readMesh import CylindricMesh
-Mesh = CylindricMesh(5.0,3.0,100)
-
+Mesh = CylindricMesh(5.0,3.0,10)
+#print("vertices",Mesh.vertices)
+#print("boundaries",Mesh.openBoundaries)
+# with open("mesh", 'wb') as pickle_file:
+#     pickle.dump(all, pickle_file)
+# with open('mesh', 'rb') as pickle_file:
+#     Mesh = pickle.load(pickle_file)
+#Mesh = pickle.load('mesh.txt')
 # not relevant for a generated cylindric mesh: split_disconnected_mesh(Trennt Objekte falls mehrere unverbundene Netze im stl), refine_mesh(Macht aus einem Dreieck 3)
 
 
@@ -13,13 +19,24 @@ Mesh = CylindricMesh(5.0,3.0,100)
 
 # define target field
 from subfunctions.defineTargetField import TargetField
-TargetSphere = TargetField([0,0,0],2.0,1)
+TargetSphere = TargetField([0,0,0],4,1)#center,radius,direction
 
 # calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten (in readMesh)
 
 #-------
 
-# basisfunktionen: Mikrospulen um jeden Knoten -> werden in sensitivity matrix mit dem Zielfeld in Verbindung gebracht
+from subfunctions.sensitivityMatrix import getSensitivityMatrix
+
+gaussOrder = 2
+sensitivityMatrix = getSensitivityMatrix(Mesh,TargetSphere,gaussOrder)
+
+from subfunctions.resistanceMatrix import getResistanceMatrix
+
+resistanceMatirx = getResistanceMatrix(Mesh)
+# basisfunktionen: vorberechnungen für sensitivity matrix -> werden in sensitivity matrix mit dem Zielfeld in Verbindung gebracht (in readMesh)
+tikonovFac = 10000
+from subfunctions.streamFunctionOptimization import streamFunctionOptimization
+streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatirx,tikonovFac)
 
 ### Calculation
 
@@ -40,6 +57,4 @@ TargetSphere = TargetField([0,0,0],2.0,1)
 
 # ouput for 3D
 
-class Coil():
-    def __init__(self,tikonov_factor):
-        self.tikonov_factor = tikonov_factor
+
