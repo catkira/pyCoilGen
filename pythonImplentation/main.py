@@ -1,46 +1,40 @@
-### Input
 import numpy as np
-### MESH
-# generate mesh: define Cylindric_mesh, coil_mesh.vertices (Eckpunkte), coil_mesh.faces(Oberflächen)
-from subfunctions.readMesh import CylindricMesh
-Mesh = CylindricMesh(5.0,3.0,10)
-#print("vertices",Mesh.vertices)
-#print("boundaries",Mesh.openBoundaries)
-# with open("mesh", 'wb') as pickle_file:
-#     pickle.dump(all, pickle_file)
-# with open('mesh', 'rb') as pickle_file:
-#     Mesh = pickle.load(pickle_file)
-#Mesh = pickle.load('mesh.txt')
-# not relevant for a generated cylindric mesh: split_disconnected_mesh(Trennt Objekte falls mehrere unverbundene Netze im stl), refine_mesh(Macht aus einem Dreieck 3)
+
+### Input #################
+meshFile = 'cylinder_radius500mm_length1500mm.stl' #insert Filename of stl mesh or False here
+targetMeshFile = 'sphere_radius150mm.stl' #insert Filename of stl mesh or False here
+gaussOrder = 2
+tikonovFac = 100
 
 
-### STREAM FUNCTION
-# parameterize the mesh: normalen, Planarization, offene Boundaries markieren (Liste welche vertices), auf 2D (evtl z-Axen ausrichtung dafür)
+### MESH ##################
+
+# generate mesh
+from subfunctions.readMesh import CylindricMesh,CylindricMeshGiven
+if meshFile:
+    Mesh = CylindricMeshGiven(meshFile)
+else: Mesh = CylindricMesh(5.0,3.0,10) #length,radius,n
 
 # define target field
-from subfunctions.defineTargetField import TargetField
-TargetSphere = TargetField([0,0,0],4,1)#center,radius,direction
+from subfunctions.defineTargetField import TargetField,TargetFieldGiven
+if targetMeshFile:
+    TargetSphere = TargetFieldGiven(targetMeshFile,1)
+else: TargetSphere = TargetField([0,0,0],4,1) #center,radius,direction
 
-# calculate one ring by mesh: Liste mit allen direkten Nachbarknoten für jeden Knoten (in readMesh)
-
-#-------
-
+#sensitivity matrix
 from subfunctions.sensitivityMatrix import getSensitivityMatrix
-
-gaussOrder = 2
 sensitivityMatrix = getSensitivityMatrix(Mesh,TargetSphere,gaussOrder)
 
+#resistance matrix
 from subfunctions.resistanceMatrix import getResistanceMatrix
-
 resistanceMatirx = getResistanceMatrix(Mesh)
-# basisfunktionen: vorberechnungen für sensitivity matrix -> werden in sensitivity matrix mit dem Zielfeld in Verbindung gebracht (in readMesh)
-tikonovFac = 10000
-from subfunctions.streamFunctionOptimization import streamFunctionOptimization
-streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatirx,tikonovFac)
 
-### Calculation
+
+### Calculation ############
 
 # stream function optimization
+from subfunctions.streamFunctionOptimization import streamFunctionOptimization
+streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatirx,tikonovFac)
 
 # 2D surface projection
 
