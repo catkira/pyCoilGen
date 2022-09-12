@@ -1,11 +1,32 @@
 # we need mesh, vertices and faces from the mesh
-
-#option 1: given mesh 
-#option 2: create cylindric mesh 
 import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
+from stl import mesh
+import trimesh
 
+#option 2: create cylindric mesh 
+def getMesh(filename):
+    your_mesh = mesh.Mesh.from_file(filename)
+    normals = your_mesh.normals
+    vertices = [your_mesh.v0, your_mesh.v1, your_mesh.v2]
+    return normals, vertices
+
+class CylindricMeshGiven():
+    def __init__(self,filename):
+        self.normals, self.vertices = getMesh(filename)
+        self.faces = self.getFacesGiven(filename)
+    
+    def getFacesGiven(self,filename):
+        myobj = trimesh.load_mesh(filename, enable_post_processing=True, solid=True)
+        return myobj.faces
+
+
+givenMesh = CylindricMeshGiven('cylinder_radius500mm_length1500mm.stl')
+print("mesh",givenMesh.faces)
+
+
+#option 1: given mesh 
 class CylindricMesh():
     def __init__(self,coilLength,coilRadius,n):
         self.vertices, self.faces = meshzoo.tube(length=coilLength, radius=coilRadius, n=int(n))#points, cells(index of the points that close the cell)
@@ -24,12 +45,9 @@ class CylindricMesh():
         neighbourareas = []
         for i in range(len(self.vertices)):
             neighbourareasparts=[]
-            #print("menge neighbours", self.neighbours[i])
             for j in self.neighbours[i]:
                 neighbourareasparts.append(self.areas[j])
             neighbourareas.append(neighbourareasparts)
-            #print("step1", neighbourareas)
-        #print("neighbourareas",neighbourareas)
         return neighbourareas
 
 
@@ -104,21 +122,9 @@ class CylindricMesh():
             for i in range(len(self.faces)):
                 vecList = self.vertices[self.faces[i]]
                 if checkIfVecInVeclist(node,vecList):
-                    #print("node", node, "self.vertices[self.faces[i]]", self.vertices[self.faces[i]])
                     k.append(i)
             neighbourtrianglesIndices.append(k)
         return neighbourtrianglesIndices
-    
-    # def findStartTriangle(self,index):
-    #     '''returns the index of one triangle touching the node index'''
-    #     for i in range(len(self.faces)):
-    #         if index in self.faces[i]:
-    #             return i
-
-    # def getSuroundingTriangles(self):
-    #     '''returns a list of triangles surrounding the node'''
-    #     for i in range(len(self.vertices)):
-    #         start = self.findStartTriangle(i)#index innerhalb von self.faces!
             
 
 def checkIfVecInVeclist(node,vecList):
@@ -186,3 +192,4 @@ def calculateNormal(vec):
 #     Z.append(mesh.vertices[i][2])
 # ax.scatter3D(X,Y,Z)
 # plt.show()
+
