@@ -2,6 +2,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from readMesh import getMeshFromSTL
+
 
 class TargetField():
     def __init__(self,center,radius,direction):#direction: 0==x,1==y,2==z
@@ -31,6 +33,11 @@ class TargetField():
         for i in range(len(self.vertices[:,direction])):
             magneticFieldValues.append((self.vertices[:,direction][i]-np.min(self.vertices[:,direction]))/distance)
         return magneticFieldValues
+
+class TargetFieldGiven(TargetField):
+    def __init__(self,filename,direction):
+        self.vertices,self.faces = getMeshFromSTL(filename)
+        self.fieldValues = self.getMagneticFieldInPoints(direction)
 
 def distanceBetweenPoints(point1,point2):
     result = 0
