@@ -5,26 +5,6 @@ import meshzoo
 from stl import mesh
 import trimesh
 
-#option 2: create cylindric mesh 
-def getMesh(filename):
-    your_mesh = mesh.Mesh.from_file(filename)
-    normals = your_mesh.normals
-    vertices = [your_mesh.v0, your_mesh.v1, your_mesh.v2]
-    return normals, vertices
-
-class CylindricMeshGiven():
-    def __init__(self,filename):
-        self.normals, self.vertices = getMesh(filename)
-        self.faces = self.getFacesGiven(filename)
-    
-    def getFacesGiven(self,filename):
-        myobj = trimesh.load_mesh(filename, enable_post_processing=True, solid=True)
-        return myobj.faces
-
-
-givenMesh = CylindricMeshGiven('cylinder_radius500mm_length1500mm.stl')
-print("mesh",givenMesh.faces)
-
 
 #option 1: given mesh 
 class CylindricMesh():
@@ -39,7 +19,14 @@ class CylindricMesh():
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
-    
+
+    def getNormals(self):
+        '''returns the normals of the faces'''
+        normals=[]
+        for i in range(len(self.faces)):
+            normals.append(calculateNormal(self.vertices[self.faces[i]]))
+        return normals
+
     def getNeighbourAreas(self):
         '''returns the areas of the neighbour triangles for every node'''
         neighbourareas = []
@@ -76,13 +63,6 @@ class CylindricMesh():
             areas.append(np.linalg.norm(np.cross((self.vertices[i[1]]-self.vertices[i[0]]),(self.vertices[i[2]]-self.vertices[i[0]]))))
         return areas
 
-    def getNormals(self):
-        '''returns the normals of the faces'''
-        normals=[]
-        for i in range(len(self.faces)):
-            normals.append(calculateNormal(self.vertices[self.faces[i]]))
-        return normals
-    
     def getOpenBoundaries(self):
         '''returns indexes of the nodes at the edges of a cylinder extended in z-direction'''
         max = 0
@@ -126,10 +106,36 @@ class CylindricMesh():
             neighbourtrianglesIndices.append(k)
         return neighbourtrianglesIndices
             
+#option 2: create cylindric mesh 
+def getMesh(filename):
+    myobj = trimesh.load_mesh(filename, enable_post_processing=True, solid=True)
+    return myobj.vertices, myobj.faces
 
+class CylindricMeshGiven(CylindricMesh):
+    def __init__(self,filename):
+        self.vertices,self.faces = getMesh(filename)
+        self.normals=self.getNormals
+        self.openBoundaries=self.getOpenBoundaries()
+        self.u,self.v=self.get2Dcoordinates()
+        self.areas = self.getAreas()
+        self.current = self.getCurrent()
+        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
+        self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbourareas = self.getNeighbourAreas()
+        self.currentDensityFaces=[]
+    
 def checkIfVecInVeclist(node,vecList):
     '''returns Boolean if a 3 components vec is in a list of 3 component elements'''
     return (node == vecList[0]).all()|(node == vecList[1]).all()|( node == vecList[2]).all()
+
+
+
+createdmesh = CylindricMesh(5.0,3.0,10)
+givenMesh = CylindricMeshGiven('cylinder_radius500mm_length1500mm.stl')
+print("given mesh",np.shape(givenMesh.vertices))
+print("created mesh",np.shape(createdmesh.vertices))
+
+
 
 
 
@@ -144,7 +150,6 @@ def correctList(old):
             new.append(i)
     return new
 
-mesh = CylindricMesh(5.0,3.0,10)
 
 #TODO test function for normals (nach außen und alle gleich!)
 
