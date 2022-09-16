@@ -1,10 +1,7 @@
-# we need mesh, vertices and faces from the mesh
 import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
-from stl import mesh
 import trimesh
-
 
 #option 1: given mesh 
 class CylindricMesh():
@@ -19,7 +16,7 @@ class CylindricMesh():
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
-
+    
     def getNormals(self):
         '''returns the normals of the faces'''
         normals=[]
@@ -36,7 +33,6 @@ class CylindricMesh():
                 neighbourareasparts.append(self.areas[j])
             neighbourareas.append(neighbourareasparts)
         return neighbourareas
-
 
     def getNeighbourCurrents(self):
         '''returns the currents of the neighbour triangles for every node'''
@@ -60,7 +56,7 @@ class CylindricMesh():
         '''returns the areas of the triangles made with the points in faces'''
         areas=[]
         for i in self.faces:
-            areas.append(np.linalg.norm(np.cross((self.vertices[i[1]]-self.vertices[i[0]]),(self.vertices[i[2]]-self.vertices[i[0]]))))
+            areas.append(np.linalg.norm(np.cross((self.vertices[i[1]]-self.vertices[i[0]]),(self.vertices[i[2]]-self.vertices[i[0]])))/2)
         return areas
 
     def getOpenBoundaries(self):
@@ -107,13 +103,14 @@ class CylindricMesh():
         return neighbourtrianglesIndices
             
 #option 2: create cylindric mesh 
-def getMesh(filename):
+def getMeshFromSTL(filename):
+    '''returns vertices and faces from given stl file meshes'''
     myobj = trimesh.load_mesh(filename, enable_post_processing=True, solid=True)
     return myobj.vertices, myobj.faces
 
 class CylindricMeshGiven(CylindricMesh):
     def __init__(self,filename):
-        self.vertices,self.faces = getMesh(filename)
+        self.vertices,self.faces = getMeshFromSTL(filename)
         self.normals=self.getNormals
         self.openBoundaries=self.getOpenBoundaries()
         self.u,self.v=self.get2Dcoordinates()
@@ -130,10 +127,10 @@ def checkIfVecInVeclist(node,vecList):
 
 
 
-createdmesh = CylindricMesh(5.0,3.0,10)
-givenMesh = CylindricMeshGiven('cylinder_radius500mm_length1500mm.stl')
-print("given mesh",np.shape(givenMesh.vertices))
-print("created mesh",np.shape(createdmesh.vertices))
+# createdmesh = CylindricMesh(5.0,3.0,10)
+# givenMesh = CylindricMeshGiven('cylinder_radius500mm_length1500mm.stl')
+# print("given mesh",np.shape(givenMesh.vertices))
+# print("created mesh",np.shape(createdmesh.vertices))
 
 
 
