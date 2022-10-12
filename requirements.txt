@@ -1,0 +1,8 @@
+matplotlib==3.5.1
+meshzoo==0.10.2
+numpy==1.22.0
+numpy_stl==2.17.1
+pandas==1.3.4
+scipy==1.7.1
+stl==0.0.3
+trimesh==3.14.1
