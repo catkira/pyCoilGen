@@ -47,7 +47,7 @@ def gaussLegendreIntegrationPointsTriangle(n):
     for i in range(len(eta)):
         for j in range(len(eta)):
             u.append((1+eta[i])/2)
-            v.append((1-eta[i])*(1+eta[j]))
+            v.append((1-eta[i])*(1+eta[j])/4)
             ck.append(((1-eta[i])/8)*w[i]*w[j])
     return [u,v,ck]
 
