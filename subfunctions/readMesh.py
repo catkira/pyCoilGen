@@ -27,7 +27,15 @@ class CylindricMesh():
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
+        self.boundary = self.checkIfBoundary()
         self.test = self.getOneRingList()
+    
+    def checkIfBoundary(self):
+        '''returns a list of boolean if the vertice is a boundary vertice'''
+        boundaryBooleans = []
+        for nodeElements in range(len(self.vertices)):
+            boundaryBooleans.append((nodeElements in self.openBoundaries[0]) | (nodeElements in self.openBoundaries[1]))
+        return boundaryBooleans
     
     def getVertexNormals(self):
         '''returns the normals of the vertices. These are calculated as average of the touching faces normals.'''
@@ -37,7 +45,6 @@ class CylindricMesh():
             for x in np.array(self.neighbours[vertex]):
                 sum+= self.normals[x]
             vertexNormals.append(sum/len(self.neighbours[vertex]))
-            #vertexNormals.append(np.mean(self.neighbours[vertex]))
         return vertexNormals
     
     def getNormals(self):
@@ -132,12 +139,12 @@ class CylindricMesh():
         oneRingList = self.ensureUniformOrientation(oneRingList)
 
                 
-        #order the elements in a circular arrangement
+        #order the elements in a circular arrangement does not fit at the moment 
         for nodeElements in range(len(oneRingList)):
             #for not boundary
-            if (nodeElements in self.openBoundaries[0]) | (nodeElements in self.openBoundaries[1]):
+            if self.boundary[nodeElements]:
                 orderedCell = [oneRingList[nodeElements][0]]
-                #wenn nicht weiter in eine Richtung am Anfang in andere Richtung 
+                
                 nextElement = orderedCell[-1][1]
                 while len(orderedCell) != len(oneRingList[nodeElements]):
                     print("CWERIV")
@@ -200,7 +207,6 @@ class CylindricMesh():
                 crossVec = np.cross(c-b,b-a)
 
                 if np.sign(np.dot(self.vertexNormals[nodeelements],crossVec)) > 0:
-                    print("HELLO ",neighbournodes)
                     before0 = neighbournodes[0]
                     before1 = neighbournodes[1]
                     neighbournodes[0] = before1
@@ -227,6 +233,7 @@ class CylindricMeshGiven(CylindricMesh):
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
+        self.boundary = self.checkIfBoundary()
         self.test = self.getOneRingList()
     
 def checkIfVecInVeclist(node,vecList):
