@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
 import trimesh
+import scipy
 
 def calculateNormal(vec):
     if len(vec) == 3:
@@ -9,7 +10,6 @@ def calculateNormal(vec):
         v2 = vec[2] - vec[0]
         return np.cross(v1,v2)/np.sqrt(np.cross(v1,v2)[0]**2+np.cross(v1,v2)[1]**2+np.cross(v1,v2)[2]**2)
     else:
-        #Fall das faces nicht aus 3 Komponenten besteht im Kopf behalten, evtl bei direkter Mesh Einspeisung handeln. (create_unique_noded_mesh)
         print("Mesh-Generation is going wrong. Faces do not have 3 components")
         return False
 
@@ -22,13 +22,14 @@ class CylindricMesh():
         self.u,self.v=self.get2Dcoordinates()
         self.areas = self.getAreas()
         self.current = self.getCurrent()
-        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
-        self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbours=self.getNeighbourTriangleIndices()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
         self.boundary = self.checkIfBoundary()
-        self.test = self.getOneRingList()
+        self.oneRingList = self.getOneRingList()
+        self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbourcurrentUnsorted = self.getNeighbourCurrentsUnsorted()
     
     def checkIfBoundary(self):
         '''returns a list of boolean if the vertice is a boundary vertice'''
@@ -66,6 +67,16 @@ class CylindricMesh():
 
     def getNeighbourCurrents(self):
         '''returns the currents of the neighbour triangles for every node'''
+        neighbourcurrents = []
+        for i in range(len(self.vertices)):
+            neighbourcurrentparts=[]
+            for j in self.oneRingList[i]:
+                neighbourcurrentparts.append((self.vertices[j[1]] - self.vertices[j[0]])/(scipy.linalg.norm(np.cross(self.vertices[j[1]]-self.vertices[i],self.vertices[j[0]] - self.vertices[i]))))
+            neighbourcurrents.append(neighbourcurrentparts)
+        return neighbourcurrents
+    
+    def getNeighbourCurrentsUnsorted(self):
+        '''returns the currents of the neighbour triangles for every node before sorting'''
         neighbourcurrents = []
         for i in range(len(self.vertices)):
             neighbourcurrentparts=[]
@@ -109,7 +120,6 @@ class CylindricMesh():
             else: continue
         return [upperopen,loweropen]
 
-    #bei z +1 statt wie bei philipp -zmin
     def get2Dcoordinates(self):
         '''returns the from 3D to 2D converted vertices'''
         u=[]
@@ -134,11 +144,9 @@ class CylindricMesh():
     
     def getOneRingList(self):
         '''returns sorted list with nodes around every node'''
-
         oneRingList = self.createOneRingList()
         oneRingList = self.ensureUniformOrientation(oneRingList)
         oneRingList = self.orderElementsInCircularArangement(oneRingList)
-
         return oneRingList
     
     def orderElementsInCircularArangement(self,oneRingList):
@@ -164,15 +172,15 @@ class CylindricMesh():
         '''returns the correct start triangle for ordering the triangles around a boundary vertice'''
         index = 0
         start = oneRingList[nodeNumber][0] 
-        correctstart = self.testStartTriangle(oneRingList[nodeNumber],start)
+        correctstart = self.checkStartTriangle(oneRingList[nodeNumber],start)
         while not correctstart:
             start = oneRingList[nodeNumber][index+1]
-            correctstart = self.testStartTriangle(oneRingList[nodeNumber],start)
+            correctstart = self.checkStartTriangle(oneRingList[nodeNumber],start)
             index+=1
         return start
 
     
-    def testStartTriangle(self,verticeTriangles,start):
+    def checkStartTriangle(self,verticeTriangles,start):
         '''returns boolean if "start" is the correct startTriangle'''
         test = []
         for i in range(len(verticeTriangles)):
@@ -226,13 +234,14 @@ class CylindricMeshGiven(CylindricMesh):
         self.u,self.v=self.get2Dcoordinates()
         self.areas = self.getAreas()
         self.current = self.getCurrent()
-        self.neighbours=self.getNeighbourTriangleIndices()#WIP nicht sortiert ...#we want a list of the triangles/faces aroud the node instead
-        self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbours=self.getNeighbourTriangleIndices()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
         self.boundary = self.checkIfBoundary()
-        self.test = self.getOneRingList()
+        self.oneRingList = self.getOneRingList()
+        self.neighbourcurrents = self.getNeighbourCurrents()
+        self.neighbourcurrentUnsorted = self.getNeighbourCurrentsUnsorted()
     
 def checkIfVecInVeclist(node,vecList):
     '''returns Boolean if a 3 components vec is in a list of 3 component elements'''
@@ -241,8 +250,8 @@ def checkIfVecInVeclist(node,vecList):
 
 
 # createdmesh = CylindricMesh(5.0,3.0,10)
-givenMesh = CylindricMeshGiven('C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl')
-print(givenMesh.test)
+#givenMesh = CylindricMeshGiven('C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl')
+#print(givenMesh.test)
 # print("given mesh",np.shape(givenMesh.vertices))
 # print("created mesh",np.shape(createdmesh.vertices))
 
@@ -256,13 +265,6 @@ def correctList(old):
         else:
             new.append(i)
     return new
-
-
-#TODO test function for normals (nach außen und alle gleich!)
-
-def test_EqualDirectionsNormal(mesh): #WIP
-    for i in range(len(mesh.faces)):
-        print("Normle Dreieck Nummer ",i, "ist" , calculateNormal(mesh.vertices[mesh.faces[i]]))
 
 def test_IfLonelyVertice(mesh):
     for i in range(len(mesh.vertices)):
