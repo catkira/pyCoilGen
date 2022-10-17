@@ -137,50 +137,48 @@ class CylindricMesh():
 
         oneRingList = self.createOneRingList()
         oneRingList = self.ensureUniformOrientation(oneRingList)
-
-                
-        #order the elements in a circular arrangement does not fit at the moment 
-        for nodeElements in range(len(oneRingList)):
-            #for not boundary
-            if self.boundary[nodeElements]:
-                orderedCell = [oneRingList[nodeElements][0]]
-                
-                nextElement = orderedCell[-1][1]
-                while len(orderedCell) != len(oneRingList[nodeElements]):
-                    print("CWERIV")
-                    flag = False
-                    for x in oneRingList[nodeElements]:
-                        if x[0] == nextElement: 
-                            flag = True
-                            orderedCell.append(x)
-                            nextElement = x[1]
-                    if flag == False:
-                        changeElement = orderedCell[0][0]
-                        for y in oneRingList[nodeElements]:
-                            if y[1] == changeElement:
-                                orderedCell2 = [y]
-                                for i in orderedCell:
-                                    orderedCell2.append(i)
-                                orderedCell = np.copy(orderedCell2)
-
-            else:
-                orderedCell = [oneRingList[nodeElements][0]]
-                nextElement = orderedCell[-1][1]
-                while len(orderedCell) != len(oneRingList[nodeElements]):
-                    print("SEVDI")
-                    print("oneRingList[nodeElements]",oneRingList[nodeElements],"next",nextElement)
-                    for x in oneRingList[nodeElements]:
-                        if x[0] == nextElement: 
-                            orderedCell.append(x)
-                            nextElement = x[1]
-                            print("Stups")
-                            break
-
-
-
-            print("cellorder", orderedCell, oneRingList[nodeElements])
+        oneRingList = self.orderElementsInCircularArangement(oneRingList)
 
         return oneRingList
+    
+    def orderElementsInCircularArangement(self,oneRingList):
+        '''returns the List in a circular arrangement'''
+        for nodeElements in range(len(oneRingList)):
+            if self.boundary[nodeElements]:
+                start = self.findStartInBoundaryCase(oneRingList,nodeElements)
+            else:
+                start = oneRingList[nodeElements][0]
+
+            new = [start]
+            while len(new) != len(oneRingList[nodeElements]):
+                for i in oneRingList[nodeElements]:
+                    if len(new) == len(oneRingList[nodeElements]):
+                        break
+                    elif new[-1][1] == i[0]:
+                        new.append(i)
+            oneRingList[nodeElements] = new
+        return oneRingList
+
+
+    def findStartInBoundaryCase(self,oneRingList,nodeNumber):
+        '''returns the correct start triangle for ordering the triangles around a boundary vertice'''
+        index = 0
+        start = oneRingList[nodeNumber][0] 
+        correctstart = self.testStartTriangle(oneRingList[nodeNumber],start)
+        while not correctstart:
+            start = oneRingList[nodeNumber][index+1]
+            correctstart = self.testStartTriangle(oneRingList[nodeNumber],start)
+            index+=1
+        return start
+
+    
+    def testStartTriangle(self,verticeTriangles,start):
+        '''returns boolean if "start" is the correct startTriangle'''
+        test = []
+        for i in range(len(verticeTriangles)):
+            test.append(start[0]==verticeTriangles[i][1])
+        #print("return",not np.any(test),"  start ",start,"  verticeTriangels ",verticeTriangles)
+        return not np.any(test)
     
     def createOneRingList(self):
         '''returns a list with the other two triangle Points for each triangle per node'''
