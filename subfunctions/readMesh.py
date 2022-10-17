@@ -37,6 +37,7 @@ class CylindricMesh():
             for x in np.array(self.neighbours[vertex]):
                 sum+= self.normals[x]
             vertexNormals.append(sum/len(self.neighbours[vertex]))
+            #vertexNormals.append(np.mean(self.neighbours[vertex]))
         return vertexNormals
     
     def getNormals(self):
@@ -126,32 +127,10 @@ class CylindricMesh():
     
     def getOneRingList(self):
         '''returns sorted list with nodes around every node'''
-        #jeweils die anderen beiden Punkte in Liste
-        indices = self.getNeighbourTriangleIndices()
-        oneRingList=[]
-        for i in range(len(indices)):
-            eachnode=[]
-            for k in range(len(indices[i])):
-                new=[]
-                for j in range(3):
-                    if self.faces[indices[i][k]][j] != i:
-                        new.append(self.faces[indices[i][k]][j])
-                eachnode.append(new)
-            oneRingList.append(eachnode)
-        
-        #make sure that the orientation is uniform for all elements
-        for nodeelements in range(len(oneRingList)):
-            for neighbournodes in oneRingList[nodeelements]:
-                b = self.vertices[neighbournodes[0]]
-                c = self.vertices[neighbournodes[1]]
-                a = self.vertices[nodeelements]
-                crossVec = np.cross(c-b,b-a)
 
-                if np.sign(np.dot(self.normals[nodeelements],crossVec)) > 0:
-                    before0 = neighbournodes[0]
-                    before1 = neighbournodes[1]
-                    neighbournodes[0] = before1
-                    neighbournodes[1] = before0
+        oneRingList = self.createOneRingList()
+        oneRingList = self.ensureUniformOrientation(oneRingList)
+
                 
         #order the elements in a circular arrangement
         for nodeElements in range(len(oneRingList)):
@@ -195,6 +174,39 @@ class CylindricMesh():
             print("cellorder", orderedCell, oneRingList[nodeElements])
 
         return oneRingList
+    
+    def createOneRingList(self):
+        '''returns a list with the other two triangle Points for each triangle per node'''
+        indices = self.getNeighbourTriangleIndices()
+        oneRingList=[]
+        for i in range(len(indices)):
+            eachnode=[]
+            for k in range(len(indices[i])):
+                new=[]
+                for j in range(3):
+                    if self.faces[indices[i][k]][j] != i:
+                        new.append(self.faces[indices[i][k]][j])
+                eachnode.append(new)
+            oneRingList.append(eachnode)
+        return oneRingList
+    
+    def ensureUniformOrientation(self,oneRingList):
+        '''returns oneRingList with ensured uniform Orientation'''
+        for nodeelements in range(len(oneRingList)):
+            for neighbournodes in oneRingList[nodeelements]:
+                b = self.vertices[neighbournodes[0]]
+                c = self.vertices[neighbournodes[1]]
+                a = self.vertices[nodeelements]
+                crossVec = np.cross(c-b,b-a)
+
+                if np.sign(np.dot(self.vertexNormals[nodeelements],crossVec)) > 0:
+                    print("HELLO ",neighbournodes)
+                    before0 = neighbournodes[0]
+                    before1 = neighbournodes[1]
+                    neighbournodes[0] = before1
+                    neighbournodes[1] = before0
+        return oneRingList
+
 
 #option 2: create cylindric mesh 
 def getMeshFromSTL(filename):
@@ -228,10 +240,6 @@ givenMesh = CylindricMeshGiven('C:\\Users\Simone\git\Py-CoilGen\cylinder_radius5
 print(givenMesh.test)
 # print("given mesh",np.shape(givenMesh.vertices))
 # print("created mesh",np.shape(createdmesh.vertices))
-
-
-
-
 
 
 def correctList(old):
