@@ -1,23 +1,28 @@
 #Flächenströme der Dreieck um jeden Knoten aufintegrieren
 from itertools import zip_longest
 import numpy as np
+import scipy
 
 def getSensitivityMatrix(mesh,target,n):
+    '''returns the sensitivity Matrix for the mesh'''
     biotSavatCoeff = 10**(-7)
     sensitivityMatrix = []
     [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(n)
-    trianglesPerNode = [len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))]
+    trianglesPerNode=[]
+    trianglesPerNode.append([len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))])
+    trianglesPerNode = trianglesPerNode[0]
     xTarget,yTarget,zTarget = target.vertices[:,0],target.vertices[:,1],target.vertices[:,2]
-    #print(np.shape(mesh.vertices), np.shape(target.vertices))
     xAll,yAll,zAll=[],[],[]
     for nodeIndex in range(len(mesh.vertices)):
         dCx,dCy,dCz = np.zeros(len(xTarget)),np.zeros(len(xTarget)),np.zeros(len(xTarget))
         for triangleIndex in range(trianglesPerNode[nodeIndex]):
-            nodePoint,pointB,pointC = mesh.faces[mesh.neighbours[nodeIndex][triangleIndex]]
-            nodeX,nodeY,nodeZ = mesh.vertices[nodePoint]
-            bX,bY,bZ = mesh.vertices[pointB]
-            cX,cY,cZ = mesh.vertices[pointC]
-            vX,vY,vZ = mesh.current[mesh.neighbours[nodeIndex][triangleIndex]]
+            nodePoint = mesh.vertices[nodeIndex]
+            pointB = mesh.vertices[mesh.oneRingList[nodeIndex][triangleIndex][0]]
+            pointC = mesh.vertices[mesh.oneRingList[nodeIndex][triangleIndex][1]]
+            nodeX,nodeY,nodeZ = nodePoint
+            bX,bY,bZ = pointB
+            cX,cY,cZ = pointC
+            vX,vY,vZ = (pointC - pointB)/(scipy.linalg.norm(np.cross(pointC-nodePoint,pointB-nodePoint)))
 
             for gaussIndex in range(len(gaussWeight)):
                 xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex])#scalar
@@ -28,20 +33,20 @@ def getSensitivityMatrix(mesh,target,n):
                 dCy = dCy + ((-1)*vX*(zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
             #beitrag zur sensitivitätsmatrix dCx,dCy,dCz
-            dCx *= biotSavatCoeff
-            dCy *= biotSavatCoeff
-            dCz *= biotSavatCoeff
+        dCx *= biotSavatCoeff
+        dCy *= biotSavatCoeff
+        dCz *= biotSavatCoeff
         xAll.append(dCx)
         yAll.append(dCy)
         zAll.append(dCz)
-    xAll = np.transpose(xAll)
-    yAll = np.transpose(yAll)
-    zAll = np.transpose(zAll)
-    sensitivityMatrix=[xAll,yAll,zAll]    
-    #print(np.shape(sensitivityMatrix))
+    xAll = xAll
+    yAll = yAll
+    zAll = zAll
+    sensitivityMatrix=[xAll,yAll,zAll]   
     return sensitivityMatrix
 
 def gaussLegendreIntegrationPointsTriangle(n):
+    '''returns the weights and the test point for the gauss legendre'''
     u,v,ck=[],[],[]
     eta,w = calcWeightsGauss(n)
     for i in range(len(eta)):
@@ -50,7 +55,6 @@ def gaussLegendreIntegrationPointsTriangle(n):
             v.append((1-eta[i])*(1+eta[j])/4)
             ck.append(((1-eta[i])/8)*w[i]*w[j])
     return [u,v,ck]
-
 
 def calcWeightsGauss(n):
     '''returns the abscissa and the weights for a Gauss-Legendre quadrature'''
