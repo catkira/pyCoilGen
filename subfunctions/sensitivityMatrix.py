@@ -2,7 +2,7 @@
 from itertools import zip_longest
 import numpy as np
 
-def getSensitivityMatrix(mesh,target,n):#!!!! dimension passt nicht ...
+def getSensitivityMatrix(mesh,target,n):
     biotSavatCoeff = 10**(-7)
     sensitivityMatrix = []
     [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(n)
@@ -53,25 +53,25 @@ def gaussLegendreIntegrationPointsTriangle(n):
 
 
 def calcWeightsGauss(n):
-    #n = n-1 #anpassung matlab n -> python n-1 (index start 1 bzw 0) NOCH NICHT IM VERGLEICH GETESTET !! 
-    abscissa = np.zeros(n+1)
-    weights = abscissa
+    '''returns the abscissa and the weights for a Gauss-Legendre quadrature'''
+    abscissa = np.zeros(n)
+    weights = np.copy(abscissa)
     m = (n+1)/2
     for i in np.arange(1,m).reshape(-1):
         z = np.cos(np.pi*(i-0.25)/(n+0.5))
         z1 = z+1
-    while abs(z-z1)>(2.2204*10**(-16)):#distance from 1.0 to the next larger double precision number
-        p1 = 1
-        p2 = 0
-        for j in np.arange(1,n).reshape(-1):
-            p3 = p2
-            p2 = p1
-            p1 = ((2*j-1)*z*p2-(j-1)*p3)/j
-        pp = n*(z*p1-p2)/(z**2-1)
-        z1 = z
-        z = z1-p1/pp
-    abscissa[int(i)] = -z
-    abscissa[int(n+1-i)] = z
-    weights[int(i)] = 2/((1-z**2)*pp**2)
-    weights[int(n+1-i)] = weights[int(i)]
+        while abs(z-z1)>(2.2204*10**(-16)):#distance from 1.0 to the next larger double precision number
+            p1 = 1
+            p2 = 0
+            for j in range(n):
+                p3 = np.copy(p2)
+                p2 = np.copy(p1)
+                p1 = ((2*(j+1)-1)*z*p2-((j+1)-1)*p3)/(j+1)
+            pp = n*(z*p1-p2)/(z**2-1)
+            z1 = np.copy(z)
+            z = z1-p1/pp
+        abscissa[int(i-1)] = -z
+        abscissa[int(n+1-i-1)] = z
+        weights[int(i-1)] = 2/((1-z**2)*pp**2)
+        weights[int(n+1-i-1)] = weights[int(i-1)]
     return abscissa,weights
