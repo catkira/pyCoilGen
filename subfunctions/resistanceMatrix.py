@@ -3,51 +3,69 @@ from .defineTargetField import distanceBetweenPoints
 
 def getResistanceMatrix(mesh,materialFactor):
     '''returns the resistance Matrix for the given mesh'''
-    nodeAdjacencyMatrix=getNeighbourhoodMatrix(mesh)
-    #nodeAdjacencyMatrix = nodeAdjacencyMatrix | np.matrix.getH(nodeAdjacencyMatrix)
-    neighbourPairs = np.array(np.where(nodeAdjacencyMatrix))
-    neighbourPairs = neighbourPairs[:,neighbourPairs[1].argsort()]
-   
-    matElementsShouldGetValue = [np.concatenate([np.linspace(0,263,264),neighbourPairs[0]]) ,np.concatenate([np.linspace(0,263,264),neighbourPairs[1]])] 
-    #matElementsShouldGetValue = neighbourPairs
-    with open('test2.txt', 'w') as f:
-        for i in range(len(matElementsShouldGetValue[0])):
-            f.write("[0]" + str(matElementsShouldGetValue[0][i]) + "[1]" + str(matElementsShouldGetValue[1][i]))
-            f.write('\n')
-    # #useless at this position ...
-    # nodeAdjacencyMatrix = nodeAdjacencyMatrix | np.matrix.getH(nodeAdjacencyMatrix)
-    
-    # #calc matrix of spatial distances - at the Moment not needed anywhere ...
-    # nodalNeighbourMatrix = getSpatialDistancesMatrix(mesh)
-    
-    resistanceMatrix = np.zeros((len(mesh.vertices),len(mesh.vertices)),dtype=float)
-    
+    matElementsShouldGetValue = getMatElementShouldGetValue(mesh)
+    resistanceMatrix = createPreviousResistanceMat(mesh,matElementsShouldGetValue)
+    resistanceMatrix = formFinalResistanceMat(resistanceMatrix,materialFactor)
+    return resistanceMatrix
+
+def formFinalResistanceMat(resistanceMatrix,materialFactor):
+    '''returns resistanceMatrix in final form. added with its transposed and multiplied with materialFactor'''
+    resistanceMatrix = (resistanceMatrix + np.transpose(resistanceMatrix))*materialFactor
+    return resistanceMatrix
+
+def createPreviousResistanceMat(mesh,matElementsShouldGetValue):
+    '''returns resistanceMatrix mit entries in matElementsShouldGetValue'''
+    resistanceMatrix = np.zeros((len(mesh.vertices),len(mesh.vertices)),dtype=float)    
     for elementIndex in range(len(matElementsShouldGetValue[0])):
         nodeInd1 = int(matElementsShouldGetValue[0][elementIndex])
         nodeInd2 = int(matElementsShouldGetValue[1][elementIndex])
         if nodeInd1 == nodeInd2:
-            resistanceSum = 0
-            for triangle in mesh.oneRingList[nodeInd1]:
-                triangelArea = np.linalg.norm(np.cross((mesh.vertices[triangle[0]]-mesh.vertices[nodeInd1]),(mesh.vertices[triangle[1]]-mesh.vertices[nodeInd1])))/2
-                current = (mesh.vertices[triangle[1]]-mesh.vertices[triangle[0]])/(np.linalg.norm(np.cross((mesh.vertices[triangle[0]]-mesh.vertices[nodeInd1]),(mesh.vertices[triangle[1]]-mesh.vertices[nodeInd1]))))
-                resistanceSum = resistanceSum + np.dot(current,current)*triangelArea**2
+            resistanceSum = getResistanceSumForSame(mesh,nodeInd1)
             resistanceMatrix[nodeInd1][nodeInd1] = resistanceSum
         else:
             trianglesWithBothNodes = [elementInArray(mesh.oneRingList[nodeInd1],nodeInd2),elementInArray(mesh.oneRingList[nodeInd2],nodeInd1)]
-            if trianglesWithBothNodes[0]:
-                resistanceSum =0
-                for triangle in trianglesWithBothNodes[0]:
-                    triangelArea = np.linalg.norm(np.cross((mesh.vertices[triangle[0]]-mesh.vertices[nodeInd1]),(mesh.vertices[triangle[1]]-mesh.vertices[nodeInd1])))/2
-                    primaryCurrent = (mesh.vertices[triangle[1]]-mesh.vertices[triangle[0]])/(np.linalg.norm(np.cross((mesh.vertices[triangle[0]]-mesh.vertices[nodeInd1]),(mesh.vertices[triangle[1]]-mesh.vertices[nodeInd1]))))
-                    partnerElement = getPartnerElement(triangle,trianglesWithBothNodes,nodeInd2)
-                    secondaryCurrent = (mesh.vertices[partnerElement[1]]-mesh.vertices[partnerElement[0]])/(np.linalg.norm(np.cross((mesh.vertices[partnerElement[0]]-mesh.vertices[nodeInd2]),(mesh.vertices[partnerElement[1]]-mesh.vertices[nodeInd2]))))
-                    resistanceSum = resistanceSum + np.dot(primaryCurrent,secondaryCurrent)*(triangelArea**2)
-                resistanceMatrix[nodeInd1][nodeInd2] = resistanceSum
-    resistanceMatrix = resistanceMatrix + np.transpose(resistanceMatrix)
-    resistanceMatrix = resistanceMatrix*materialFactor
+            resistanceSum = getResistanceSumForDifferent(mesh,trianglesWithBothNodes,nodeInd1,nodeInd2)
+            resistanceMatrix[nodeInd1][nodeInd2] = resistanceSum
     return resistanceMatrix
 
+def getResistanceSumForDifferent(mesh,trianglesWithBothNodes,nodeInd1,nodeInd2):   
+    '''returns resistanceSum for the Case node1 and node2 are different''' 
+    resistanceSum =0
+    for triangle in trianglesWithBothNodes[0]:
+        triangelArea = calculateArea(mesh.vertices[nodeInd1],mesh.vertices[triangle[0]],mesh.vertices[triangle[1]])
+        primaryCurrent = calculateCurrent(mesh.vertices[nodeInd1],mesh.vertices[triangle[0]],mesh.vertices[triangle[1]])
+        partnerElement = getPartnerElement(triangle,trianglesWithBothNodes,nodeInd2)
+        secondaryCurrent = calculateCurrent(mesh.vertices[nodeInd2],mesh.vertices[partnerElement[0]],mesh.vertices[partnerElement[1]])
+        resistanceSum = resistanceSum + np.dot(primaryCurrent,secondaryCurrent)*(triangelArea**2)
+    return resistanceSum
+
+def getResistanceSumForSame(mesh,nodeInd1):
+    '''returns resistanceSum for the Case node1 and node2 are the same'''
+    resistanceSum = 0
+    for triangle in mesh.oneRingList[nodeInd1]:
+        triangelArea = calculateArea(mesh.vertices[nodeInd1],mesh.vertices[triangle[0]],mesh.vertices[triangle[1]])
+        current = calculateCurrent(mesh.vertices[nodeInd1],mesh.vertices[triangle[0]],mesh.vertices[triangle[1]])
+        resistanceSum = resistanceSum + np.dot(current,current)*triangelArea**2
+    return resistanceSum
+
+def calculateArea(Point1,Point2,Point3):
+    '''returns the area of a triangle with 3 given Points'''
+    return np.linalg.norm(np.cross((Point2-Point1),(Point3-Point1)))/2
+
+def calculateCurrent(Point1, Point2, Point3):
+    '''returns the current of a triangle with 3 given Points'''
+    return (Point3-Point2)/(np.linalg.norm(np.cross((Point2-Point1),(Point3-Point1))))
+
+def getMatElementShouldGetValue(mesh):
+    '''returns a list with positions in the matix that should get a value (diagonal elements == same nodes and neighbouring nodes)'''
+    nodeAdjacencyMatrix = getNeighbourhoodMatrix(mesh)
+    neighbourPairs = np.array(np.where(nodeAdjacencyMatrix))
+    neighbourPairs = neighbourPairs[:,neighbourPairs[1].argsort()]   
+    matElementsShouldGetValue = [np.concatenate([np.linspace(0,263,264),neighbourPairs[0]]) ,np.concatenate([np.linspace(0,263,264),neighbourPairs[1]])] 
+    return matElementsShouldGetValue
+
 def getPartnerElement(triangle,trianglesWithBothNodes,nodeInd2):
+    '''returns the specified triangle both nodes are in from the oneRingList of the other one node. Important because different Point-orders cause different currents.'''
     partnerElement =0
     for i in triangle: 
         if i != nodeInd2:
