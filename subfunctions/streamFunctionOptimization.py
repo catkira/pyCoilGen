@@ -29,6 +29,50 @@ def streamFunctionOptimization(mesh,target,sensitivityMatrix,resistanceMatrix,ti
     updateMeshCurrentDensityFaces(mesh,optStreamFkt)
     return bFieldOptSF
 
+def reduceMatricesForBoundaryNodes(mesh, matToRed,zeroFlag):
+    '''returns the for the boundary nodes reduced matrix'''
+    dimToRed = getDimToRed(matToRed)
+    if True in dimToRed:
+        reducedMat = getReducedMat(mesh,dimToRed,matToRed,zeroFlag)
+        reducedMat,boundaryNodes,notBoundaryNodes = rearrangeReducedMat(mesh,dimToRed,reducedMat)
+    else: 
+        print("nothing to reduce")                
+    return [reducedMat,boundaryNodes,notBoundaryNodes]
+
+
+
+def rearrangeReducedMat(mesh,dimToRed,reducedMat):    
+    numNodesPerBoundary,notBoundaryNodes,boundaryNodes = getBoundaryDetails(mesh) 
+
+    boundaryNodesFirstInds = [boundaryNodes[i][0] for i in range(len(mesh.openBoundaries))]
+    for dimToRedInd in np.nonzero(dimToRed)[0]:
+        prevReducedMat = np.copy(reducedMat)
+        index1=np.array([':']*np.ndim(prevReducedMat),dtype=object)
+        index2,index3,index4,index5 = np.copy(index1),np.copy(index1),np.copy(index1),np.copy(index1)
+        index1[dimToRedInd] = [i for i in range(len(mesh.openBoundaries))]
+        index2[dimToRedInd] = [x for x in boundaryNodesFirstInds]
+        index3[dimToRedInd] = np.arange((len(mesh.openBoundaries)),(len(notBoundaryNodes)+len(mesh.openBoundaries)))
+        index4[dimToRedInd] = np.transpose(notBoundaryNodes)
+        index5[dimToRedInd] = np.arange(((len(prevReducedMat[0])-(sum(numNodesPerBoundary)-len(mesh.openBoundaries)))), len(prevReducedMat[0]))
+
+        
+        if index1[0] == ':' and index2[0]==':' and index3[0] == ':' and index4[0]==':' and index5[0] == ':':
+            reducedMat[:,index1[1]] = prevReducedMat[:,index2[1]]
+            reducedMat[:,index3[1]] = prevReducedMat[:,index4[1]]
+            reducedMat=np.delete(reducedMat,index5[1],1)
+        else:
+            reducedMat[index1[0]] = prevReducedMat[index2[0]]
+            reducedMat[index3[0]] = prevReducedMat[index4[0]]
+            reducedMat=np.delete(reducedMat,index5[0],0)
+    return reducedMat,boundaryNodes,notBoundaryNodes
+
+def getBoundaryDetails(mesh):
+    '''returns numNodesPerBoundary,notBoundaryNodes,boundaryNodes for the given mesh.'''
+    numNodesPerBoundary = getNumNodesPerBoundary(mesh)  
+    notBoundaryNodes = getNotBoundaryNodes(mesh)
+    boundaryNodes = [mesh.openBoundaries[1],mesh.openBoundaries[0]] 
+    return numNodesPerBoundary,notBoundaryNodes,boundaryNodes
+
 def getReducedMat(mesh,dimToRed,reducedMat,zeroFlag):
     '''returns the reduced matrix'''
     boundaryNodes = [mesh.openBoundaries[1],mesh.openBoundaries[0]]
@@ -47,48 +91,6 @@ def getReducedMat(mesh,dimToRed,reducedMat,zeroFlag):
                     else:
                         reducedMat[index1[0]] = np.sum(np.array(reducedMat)[index2[0]],dimToRedInd)
     return reducedMat
-
-
-def reduceMatricesForBoundaryNodes(mesh, matToRed,zeroFlag):
-    dimToRed = getDimToRed(matToRed)
-    boundaryNodes = [mesh.openBoundaries[1],mesh.openBoundaries[0]]
-    numNodesPerBoundary = getNumNodesPerBoundary(mesh)  
-    notBoundaryNodes = getNotBoundaryNodes(mesh)
-
-    #reduction 
-    if True not in dimToRed:
-        print("nothing to reduce")
-    else: 
-        reducedMat = getReducedMat(mesh,dimToRed,matToRed,zeroFlag)
-
-        #rearange the matrix to its reduces form
-        boundaryNodesFirstInds = [boundaryNodes[i][0] for i in range(len(mesh.openBoundaries))]
-        for dimToRedInd in np.nonzero(dimToRed)[0]:
-            prevReducedMat = np.copy(reducedMat)
-            index1=np.array([':']*np.ndim(matToRed),dtype=object)
-            index2,index3,index4,index5 = np.copy(index1),np.copy(index1),np.copy(index1),np.copy(index1)
-            index1[dimToRedInd] = [i for i in range(len(mesh.openBoundaries))]#passt
-            index2[dimToRedInd] = [x-1 for x in boundaryNodesFirstInds]#passt
-            index3[dimToRedInd] = np.arange((len(mesh.openBoundaries)),(len(notBoundaryNodes)+len(mesh.openBoundaries)))#passt
-            new=[]
-            for i in notBoundaryNodes:
-                if i == 0:
-                    new.append(len(matToRed))
-                else: new.append(i)
-            index4[dimToRedInd] = [x-1 for x in np.sort(new)]#passt
-            index5[dimToRedInd] = np.arange(((len(matToRed[0])-(sum(numNodesPerBoundary)-len(mesh.openBoundaries)))), len(matToRed[0]))#passt
-
-            
-            if index1[0] == ':' and index2[0]==':' and index3[0] == ':' and index4[0]==':' and index5[0] == ':':
-                reducedMat[:,index1[1]] = prevReducedMat[:,index2[1]]
-                reducedMat[:,index3[1]] = prevReducedMat[:,index4[1]]
-                reducedMat=np.delete(reducedMat,index5[1],1)
-            else:
-                reducedMat[index1[0]] = prevReducedMat[index2[0]]
-                reducedMat[index3[0]] = prevReducedMat[index4[0]]
-                reducedMat=np.delete(reducedMat,index5[0],0)
-                
-    return [reducedMat,boundaryNodes,notBoundaryNodes]
 
 def getNotBoundaryNodes(mesh):
     '''returns no-boundary nodes of a given mesh'''
