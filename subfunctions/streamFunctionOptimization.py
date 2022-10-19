@@ -6,18 +6,13 @@ def streamFunctionOptimization(mesh,target,sensitivityMatrix,resistanceMatrix,ti
     PotentialZeroAtBoundaryNodes = False
 
     sensitivityMatrixSingleZKomp=np.transpose(np.array(sensitivityMatrix)[2])
-    targetFieldSingleZKomp = target.fieldValues[2]
 
     redResMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,resistanceMatrix,PotentialZeroAtBoundaryNodes)
     redSenMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,sensitivityMatrixSingleZKomp,PotentialZeroAtBoundaryNodes)
+ 
+    reducedSF = applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target)
 
-    #scale tikonov regularization 
-    tikonovFactor = tikonovFactor*np.shape(redSenMat)[0]/np.shape(redSenMat)[1]
-    tikRegMat = tikonovFactor * redResMat
-    reducedSF = np.dot(sc.pinv(np.dot(np.transpose(np.array(redSenMat)),redSenMat) + np.dot(np.transpose(np.array(tikRegMat)),tikRegMat)),np.dot(np.transpose(np.array(redSenMat)),np.transpose(targetFieldSingleZKomp)))
-
-    #reexpand st stream fuction
-    if PotentialZeroAtBoundaryNodes == False:
+    if not PotentialZeroAtBoundaryNodes:
         optStreamFkt = reexpandSteamFunctionForBoundaryNodes(mesh,reducedSF,boundaryNodes,isNotBoundaryNode,PotentialZeroAtBoundaryNodes)
     else: optStreamFkt = reducedSF
 
@@ -25,6 +20,13 @@ def streamFunctionOptimization(mesh,target,sensitivityMatrix,resistanceMatrix,ti
 
     updateMeshCurrentDensityMeshFaces(mesh,optStreamFkt)
     return bFieldGeneratedByOptSF
+
+def applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target):
+    '''returns the StreamFunction for the reduced Matrix with applied trikonov regularisation.'''
+    tikonovFactor = tikonovFactor*np.shape(redSenMat)[0]/np.shape(redSenMat)[1]
+    tikRegMat = tikonovFactor * redResMat
+    reducedSF = np.dot(sc.pinv(np.dot(np.transpose(np.array(redSenMat)),redSenMat) + np.dot(np.transpose(np.array(tikRegMat)),tikRegMat)),np.dot(np.transpose(np.array(redSenMat)),np.transpose(target.fieldValues[2])))
+    return reducedSF
 
 def reduceMatricesForBoundaryNodes(mesh, matToRed,zeroFlag):
     '''returns the for the boundary nodes reduced matrix'''

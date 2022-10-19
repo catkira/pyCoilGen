@@ -23,7 +23,6 @@ def getSensitivityMatrix(mesh,target,n):
             bX,bY,bZ = pointB
             cX,cY,cZ = pointC
             vX,vY,vZ = (pointC - pointB)/(scipy.linalg.norm(np.cross(pointC-nodePoint,pointB-nodePoint)))
-
             for gaussIndex in range(len(gaussWeight)):
                 xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex])#scalar
                 yGaussInUV = nodeY*u[gaussIndex]+bY*v[gaussIndex]+cY*(1-u[gaussIndex]-v[gaussIndex])#scalar
@@ -32,7 +31,7 @@ def getSensitivityMatrix(mesh,target,n):
                 dCx = dCx + ((-1)*vZ*(yTarget-yGaussInUV)+ vY*(zTarget-zGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCy = dCy + ((-1)*vX*(zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-            #beitrag zur sensitivitätsmatrix dCx,dCy,dCz
+          
         dCx *= biotSavatCoeff
         dCy *= biotSavatCoeff
         dCz *= biotSavatCoeff

@@ -126,6 +126,3 @@ def compareMultipleElementsBooleanTest():
     '''Test function: should always be True'''
     return len(np.where(compareMultipleElementsBoolean()))==1
 
-def triangleAreaTest(): # muss noch eingebaut werden (?) TODO: Nachlesen PyTest
-    '''Test function: should alway be True'''
-    return (mesh.areas[overlappTriangle] ==  max(mesh.neighbourareas[nodeInd1]* np.array(firstNodeTrianglePosition)))

@@ -31,13 +31,14 @@ sensitivityMatrix = getSensitivityMatrix(Mesh,TargetSphere,gaussOrder)
 
 #resistance matrix
 from subfunctions.resistanceMatrix import getResistanceMatrix
-resistanceMatirx = getResistanceMatrix(Mesh,materialFactor)
+resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
 
 ### Calculation ############
 
 # stream function optimization
 from subfunctions.streamFunctionOptimization import streamFunctionOptimization
-streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatirx,tikonovFac)
+streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
+print("SF",streamFunction)
 
 # 2D surface projection
 
