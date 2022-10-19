@@ -8,6 +8,8 @@ tikonovFac = 100
 specificConductivityMaterial = 1.8000*10**-8
 conducterThickness = 0.005 
 materialFactor = specificConductivityMaterial/conducterThickness
+numLevels = 20
+levelOffset = 0.2500
 
 ### MESH ##################
 
@@ -37,12 +39,13 @@ resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
 
 # stream function optimization
 from subfunctions.streamFunctionOptimization import streamFunctionOptimization
-streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
-print("SF",streamFunction)
-
-# 2D surface projection
+bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
+#print("SF",streamFunction)
 
 # potential discretization
+from subfunctions.calcPotentialLevels import calcPotentialLevels
+contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
+
 
 # topological contour sorting
 

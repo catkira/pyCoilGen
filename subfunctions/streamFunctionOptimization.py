@@ -19,7 +19,7 @@ def streamFunctionOptimization(mesh,target,sensitivityMatrix,resistanceMatrix,ti
     bFieldGeneratedByOptSF = [np.dot(np.transpose(sensitivityMatrix[0]),optStreamFkt), np.dot(np.transpose(sensitivityMatrix[1]),optStreamFkt), np.dot(np.transpose(sensitivityMatrix[2]),optStreamFkt)]
 
     updateMeshCurrentDensityMeshFaces(mesh,optStreamFkt)
-    return bFieldGeneratedByOptSF
+    return bFieldGeneratedByOptSF,optStreamFkt
 
 def applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target):
     '''returns the StreamFunction for the reduced Matrix with applied trikonov regularisation.'''
