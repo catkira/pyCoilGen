@@ -1,7 +1,6 @@
 import numpy as np
 
 import sys
-# caution: path[0] is reserved for script path (or '' in REPL)
 sys.path.append('subfunctions/')
 
 ### Input #################
