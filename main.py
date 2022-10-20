@@ -1,5 +1,9 @@
 import numpy as np
 
+import sys
+# caution: path[0] is reserved for script path (or '' in REPL)
+sys.path.append('subfunctions/')
+
 ### Input #################
 meshFile = "cylinder_radius500mm_length1500mm.stl" #insert Filename of stl mesh or False here
 targetMeshFile = "sphere_radius150mm.stl" #insert Filename of stl mesh or False here
@@ -53,5 +57,3 @@ print("SF",streamFunction)
 # plots
 
 # ouput for 3D
-
-

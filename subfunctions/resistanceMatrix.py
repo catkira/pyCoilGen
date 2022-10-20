@@ -1,5 +1,5 @@
 import numpy as np
-from .defineTargetField import distanceBetweenPoints
+from defineTargetField import distanceBetweenPoints
 
 def getResistanceMatrix(mesh,materialFactor):
     '''returns the resistance Matrix for the given mesh'''
