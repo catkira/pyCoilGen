@@ -47,6 +47,9 @@ from subfunctions.calcPotentialLevels import calcPotentialLevels
 contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
 
 
+from subfunctions.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
+contour = calcContoursByTriangluarPotentialCuts(Mesh)
+
 # topological contour sorting
 
 # opening and interconnection wires
