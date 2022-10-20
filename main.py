@@ -1,8 +1,11 @@
 import numpy as np
 
+import sys
+sys.path.append('subfunctions/')
+
 ### Input #################
-meshFile = "C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl" #insert Filename of stl mesh or False here
-targetMeshFile = "C:\\Users\Simone\git\Py-CoilGen\sphere_radius150mm.stl" #insert Filename of stl mesh or False here
+meshFile = "cylinder_radius500mm_length1500mm.stl" #insert Filename of stl mesh or False here
+targetMeshFile = "sphere_radius150mm.stl" #insert Filename of stl mesh or False here
 gaussOrder = 2
 tikonovFac = 100
 specificConductivityMaterial = 1.8000*10**-8
@@ -59,5 +62,3 @@ contour = calcContoursByTriangluarPotentialCuts(Mesh)
 # plots
 
 # ouput for 3D
-
-

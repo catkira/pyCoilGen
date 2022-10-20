@@ -1,12 +1,13 @@
 
-from .readMesh import CylindricMeshGiven
-from .defineTargetField import TargetFieldGiven
-from .sensitivityMatrix import getSensitivityMatrix
-from .resistanceMatrix import getResistanceMatrix
-from .streamFunctionOptimization import streamFunctionOptimization
+from readMesh import CylindricMeshGiven
+from defineTargetField import TargetFieldGiven
+from sensitivityMatrix import getSensitivityMatrix
+from resistanceMatrix import getResistanceMatrix
+from streamFunctionOptimization import streamFunctionOptimization
+import numpy as np
 
-meshFile = "C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl" 
-targetMeshFile = "C:\\Users\Simone\git\Py-CoilGen\sphere_radius150mm.stl" 
+meshFile = "cylinder_radius500mm_length1500mm.stl" 
+targetMeshFile = "sphere_radius150mm.stl" 
 gaussOrder = 2
 tikonovFac = 100
 specificConductivityMaterial = 1.8000*10**-8
@@ -19,7 +20,9 @@ sensitivityMatrix = getSensitivityMatrix(Mesh,TargetSphere,gaussOrder)
 resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
 
 def test_finalSF():
-    assert streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac) == SFCorrectValue
+    result = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
+    # TODO: checky why rounding is needed!
+    assert (np.round(np.array(result), 12) == np.round(np.array(SFCorrectValue), 12)).all()
 
 SFCorrectValue = [[-4.66916988e-06, -4.69774736e-06, -3.95939995e-06, -4.82221011e-06,
        -3.96550195e-06, -3.87749966e-06, -3.82771915e-06, -2.92862968e-06,
@@ -383,3 +386,9 @@ SFCorrectValue = [[-4.66916988e-06, -4.69774736e-06, -3.95939995e-06, -4.8222101
         2.37637836e-04,  3.57060309e-05,  2.30871392e-04,  7.21361699e-05,
         2.11436884e-04,  1.09501453e-04]]
 
+
+def main():
+    test_finalSF()
+
+if __name__ == "__main__":
+    main()

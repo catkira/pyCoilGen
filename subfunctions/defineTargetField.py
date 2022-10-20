@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from .readMesh import getMeshFromSTL
+from readMesh import getMeshFromSTL
 
 
 class TargetField():
