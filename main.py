@@ -1,7 +1,12 @@
 import numpy as np
-
+from decimal import *
 import sys
 sys.path.append('subfunctions/')
+
+
+##### Testing #############
+from subfunctions.test_testCase import Tester
+Test = Tester()
 
 ### Input #################
 meshFile = "cylinder_radius500mm_length1500mm.stl" #insert Filename of stl mesh or False here
@@ -32,8 +37,21 @@ print("vertices",np.shape(TargetSphere.vertices),"faces",np.shape(TargetSphere.f
 
 #sensitivity matrix
 from subfunctions.sensitivityMatrix import getSensitivityMatrix
-sensitivityMatrix = getSensitivityMatrix(Mesh,TargetSphere,gaussOrder)
+sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
 
+
+def getListFormatedForComparing(list):
+    result = ""
+    for i in range(len(list)):            
+        my_list_str = [str(x) for x in list[i]]
+        max_decimal = max([ len(x) - x.find('.') - 1 for x in my_list_str])
+        fmt_str = f"%0.{max_decimal+9}f"
+        my_list_str = [fmt_str % x for x in list[i]]
+        if result == "":
+            result = "[" + ", ".join(my_list_str) + "]"
+        else: result = result + "," + "[" + ", ".join(my_list_str) + "]"
+        
+    return result
 #resistance matrix
 from subfunctions.resistanceMatrix import getResistanceMatrix
 resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
@@ -42,13 +60,13 @@ resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
 
 # stream function optimization
 from subfunctions.streamFunctionOptimization import streamFunctionOptimization
-bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
-#print("SF",streamFunction)
+bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
 
 # potential discretization
 from subfunctions.calcPotentialLevels import calcPotentialLevels
 contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
 
+print("etv",Test.gaußLegendre)
 
 from subfunctions.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
 contour = calcContoursByTriangluarPotentialCuts(Mesh)

@@ -3,11 +3,12 @@ from itertools import zip_longest
 import numpy as np
 import scipy
 
-def getSensitivityMatrix(mesh,target,n):
+def getSensitivityMatrix(test,mesh,target,n):
     '''returns the sensitivity Matrix for the mesh'''
     biotSavatCoeff = 10**(-7)
     sensitivityMatrix = []
     [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(n)
+    test.gaußLegendre = [u,v,gaussWeight]
     trianglesPerNode=[]
     trianglesPerNode.append([len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))])
     trianglesPerNode = trianglesPerNode[0]
