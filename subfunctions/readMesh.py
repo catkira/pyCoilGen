@@ -17,12 +17,14 @@ def calculateNormal(vec):
 class CylindricMesh():
     def __init__(self,coilLength,coilRadius,n):
         self.vertices, self.faces = meshzoo.tube(length=coilLength, radius=coilRadius, n=int(n))#points, cells(index of the points that close the cell)
+        self.vertices = np.array(self.vertices)
         self.normals=self.getNormals()
         self.openBoundaries=self.getOpenBoundaries()
-        self.u,self.v=self.get2Dcoordinates()
         self.areas = self.getAreas()
         self.current = self.getCurrent()
         self.neighbours=self.getNeighbourTriangleIndices()
+        self.rotatedCaylinder=self.getRotatedCopy()
+        self.u,self.v=self.get2Dcoordinates()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
@@ -118,16 +120,110 @@ class CylindricMesh():
             elif self.vertices[i][2]==max:
                 upperopen.append(i)
             else: continue
-        return [upperopen,loweropen]
+        return [upperopen,loweropen]#TODO tauschen
 
+    def getBoundaryEdges(self):
+        '''returns the nodes for each boundary in the correct order'''
+        boundaryEdges=[]
+        for boundary in self.openBoundaries:
+            eachBoundaryEdges=[]
+            for boundaryPoint in boundary:
+                for neighbour in self.faces[self.neighbours[boundaryPoint]]:
+                    for neighbournode in neighbour:
+                        if neighbournode in boundary and neighbournode != boundaryPoint:
+                                eachBoundaryEdges.append([boundaryPoint,neighbournode])
+            eachBoundaryEdges = self.removeDoubleEdges(eachBoundaryEdges)
+            boundaryEdges.append(eachBoundaryEdges)
+        return boundaryEdges
+    
+    def removeDoubleEdges(self,edgeList):
+        '''returns the edgeList with each edge just once.'''
+        newList=np.copy(edgeList)
+        for edgeInd in range(len(newList)):
+            for otheredgeInd in range(len(newList)):
+                if (newList[edgeInd][::-1] == newList[otheredgeInd]).all() and edgeInd < otheredgeInd:
+                    edgeList = self.updateList(edgeList,newList[otheredgeInd])
+        return edgeList
+    
+    def updateList(self,edgeList,otheredge):
+        return [a for a, skip in zip(edgeList, [np.allclose(a, otheredge) for a in edgeList]) if not skip]
+    
+    def getBoundaryLoopNodes(self,boundaryEdges):
+        boundaryLoopNodes=[]
+        for boundary in boundaryEdges:
+            boundaryNodes = np.append(np.array(boundary)[:,0],boundary[0][0])
+            boundaryLoopNodes.append(boundaryNodes)
+        return boundaryLoopNodes
+    
+    def getRotatedCopy(self):
+        '''returns rotated copy of the vertices. If the cylinder is orientated along the z axis we need a rotated copy.'''
+        boundaryEdges = self.getBoundaryEdges()
+        boundaryEdges = self.turnAnsSortElements(boundaryEdges)
+        boundaryEdges = [np.flip(boundaryEdges[1]),boundaryEdges[0]]#für Vergleicbarkeit TODO muss genau so sein? welche regelmäigkeit?
+        boundaryLoopNodes = self.getBoundaryLoopNodes(boundaryEdges)
+         
+        openingMean = [np.mean(self.vertices[boundaryLoopNodes[0]][:,0]),np.mean(self.vertices[boundaryLoopNodes[0]][:,1]),np.mean(self.vertices[boundaryLoopNodes[0]][:,2])]
+        overallMean = np.mean(self.vertices)
+        oldOrientationVec=(openingMean-overallMean)/np.linalg.norm(openingMean-overallMean)
+        zVec = [0,0,1]
+        sina = np.linalg.norm(np.cross(oldOrientationVec,zVec))/(np.linalg.norm(oldOrientationVec)*np.linalg.norm(zVec))
+        cosa = np.linalg.norm(np.dot(oldOrientationVec,zVec))/(np.linalg.norm(oldOrientationVec)*np.linalg.norm(zVec))
+        angle = np.arctan2(sina,cosa)
+        rotationVec = np.cross(oldOrientationVec,zVec)/np.linalg.norm(np.cross(oldOrientationVec,zVec))
+        rotMat = self.calc3DRotMatByVec(rotationVec,angle)
+        rotatedVertices = []
+        for i in self.vertices:
+            rotatedVertices.append(np.dot(rotMat,np.transpose(i)))
+        return rotatedVertices
+
+    def calc3DRotMatByVec(self,rotationVec,angle):
+        uX,uY,uZ = rotationVec
+        tmp1 = np.sin(angle)
+        tmp2 = np.cos(angle)
+        tmp3 = (1-np.cos(angle))
+        rotMat = np.zeros((3,3))
+        rotMat[0][0] = tmp2 + uX*uX*tmp3
+        rotMat[0][1] = uX*uY*tmp3-uZ*tmp1
+        rotMat[0][2] = uX*uZ*tmp3+uY*tmp1
+        rotMat[1][0] = uY*uX*tmp3+uZ*tmp1
+        rotMat[1][1] = tmp2+uY*uY*tmp3
+        rotMat[1][2] = uY*uZ*tmp3-uX*tmp1
+        rotMat[2][0] = uZ*uX*tmp3-uY*tmp1
+        rotMat[2][1] = uZ*uX*tmp3+uX*tmp1
+        rotMat[2][2] = tmp2+uZ*uZ*tmp3
+        return rotMat
+    
+    def turnAnsSortElements(self,boundaryEdges):
+        new=[]
+        for boundary in boundaryEdges:
+            start = boundary[0]
+            newElement = [start]
+            while len(newElement) < len(boundary):
+                for element in boundary:
+                    if start == element:
+                        continue
+                    elif start[1] == element[0]:
+                        if element[1] is not start[0]:
+                            newElement.append(element)
+                            break
+                    elif start[1] == element[1]:
+                        if start[0] is not element[1]:
+                            newElement.append([element[1],element[0]])
+                            break
+                start = newElement[-1]
+            new.append(newElement)
+        return new
+
+        
     def get2Dcoordinates(self):
         '''returns the from 3D to 2D converted vertices'''
-        u=[]
-        v=[]
-        for i in range(len(self.vertices)):
-            r = np.sqrt(self.vertices[i][0]**2+self.vertices[i][1]**2)
-            u.append((r-self.vertices[i][2]+1)*np.sin(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
-            v.append((r-self.vertices[i][2]+1)*np.cos(np.arctan2(self.vertices[i][0],self.vertices[i][1])))
+        corods = np.array(self.rotatedCaylinder)
+        minZCylinder = min(corods[:,2])
+        corods[:,2] = corods[:,2]+minZCylinder
+        phiCoord = np.arctan2(corods[:,1],corods[:,0])
+        r = np.sqrt(corods[:,0]**2+corods[:,1]**2)
+        u = (corods[:,2]-np.mean(r))*np.sin(phiCoord)
+        v = (corods[:,2]- np.mean(r))*np.cos(phiCoord)
         return u,v
 
     def getNeighbourTriangleIndices(self):
@@ -157,16 +253,19 @@ class CylindricMesh():
             else:
                 start = oneRingList[nodeElements][0]
 
-            new = [start]
-            while len(new) != len(oneRingList[nodeElements]):
-                for i in oneRingList[nodeElements]:
-                    if len(new) == len(oneRingList[nodeElements]):
-                        break
-                    elif new[-1][1] == i[0]:
-                        new.append(i)
+            new = self.arrangeCircular(start,oneRingList[nodeElements])
             oneRingList[nodeElements] = new
         return oneRingList
 
+    def arrangeCircular(self,start,Elements):
+        new = [start]
+        while len(new) != len(Elements):
+            for i in Elements:
+                if len(new) == len(Elements):
+                    break
+                elif new[-1][1] == i[0]:
+                    new.append(i)
+        return new
 
     def findStartInBoundaryCase(self,oneRingList,nodeNumber):
         '''returns the correct start triangle for ordering the triangles around a boundary vertice'''
@@ -229,12 +328,14 @@ def getMeshFromSTL(filename):
 class CylindricMeshGiven(CylindricMesh):
     def __init__(self,filename):
         self.vertices,self.faces = getMeshFromSTL(filename)
+        self.vertices = np.array(self.vertices)
         self.normals=self.getNormals()
         self.openBoundaries=self.getOpenBoundaries()
-        self.u,self.v=self.get2Dcoordinates()
         self.areas = self.getAreas()
         self.current = self.getCurrent()
         self.neighbours=self.getNeighbourTriangleIndices()
+        self.rotatedCaylinder=self.getRotatedCopy()
+        self.u,self.v=self.get2Dcoordinates()
         self.neighbourareas = self.getNeighbourAreas()
         self.currentDensityFaces=[]
         self.vertexNormals=self.getVertexNormals()
