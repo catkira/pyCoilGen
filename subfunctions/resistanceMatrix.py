@@ -1,9 +1,10 @@
 import numpy as np
 from defineTargetField import distanceBetweenPoints
 
-def getResistanceMatrix(mesh,materialFactor):
+def getResistanceMatrix(test,mesh,materialFactor):
     '''returns the resistance Matrix for the given mesh'''
     matElementsShouldGetValue = getMatElementShouldGetValue(mesh)
+    test.matElementsShouldGetValue = matElementsShouldGetValue
     resistanceMatrix = createPreviousResistanceMat(mesh,matElementsShouldGetValue)
     resistanceMatrix = formFinalResistanceMat(resistanceMatrix,materialFactor)
     return resistanceMatrix

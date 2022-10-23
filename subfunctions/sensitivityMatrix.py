@@ -7,7 +7,7 @@ def getSensitivityMatrix(test,mesh,target,n):
     '''returns the sensitivity Matrix for the mesh'''
     biotSavatCoeff = 10**(-7)
     sensitivityMatrix = []
-    [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(n)
+    [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(test,n)
     test.gaußLegendre = [u,v,gaussWeight]
     trianglesPerNode=[]
     trianglesPerNode.append([len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))])
@@ -45,10 +45,11 @@ def getSensitivityMatrix(test,mesh,target,n):
     sensitivityMatrix=[xAll,yAll,zAll]   
     return sensitivityMatrix
 
-def gaussLegendreIntegrationPointsTriangle(n):
+def gaussLegendreIntegrationPointsTriangle(test,n):
     '''returns the weights and the test point for the gauss legendre'''
     u,v,ck=[],[],[]
     eta,w = calcWeightsGauss(n)
+    test.calcWeightsGauss = eta,w
     for i in range(len(eta)):
         for j in range(len(eta)):
             u.append((1+eta[i])/2)

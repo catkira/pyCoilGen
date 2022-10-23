@@ -3,14 +3,14 @@ import scipy.linalg as sc
 
 def getListFormatedForComparing(list):
     result = ""
-    #for i in range(len(list)):            
-    my_list_str = [str(x) for x in list]
-    max_decimal = max([ len(x) - x.find('.') - 1 for x in my_list_str])
-    fmt_str = f"%0.{max_decimal+9}f"
-    my_list_str = [fmt_str % x for x in list]
-    if result == "":
-        result = "[" + ", ".join(my_list_str) + "]"
-    else: result = result + "," + "[" + ", ".join(my_list_str) + "]"
+    for i in range(len(list)):            
+        my_list_str = [str(x) for x in list[i]]
+        max_decimal = max([ len(x) - x.find('.') - 1 for x in my_list_str])
+        fmt_str = f"%0.{max_decimal+9}f"
+        my_list_str = [fmt_str % x for x in list[i]]
+        if result == "":
+            result = "[" + ", ".join(my_list_str) + "]"
+        else: result = result + "," + "[" + ", ".join(my_list_str) + "]"
         
     return result
 
@@ -22,6 +22,7 @@ def streamFunctionOptimization(test,mesh,target,sensitivityMatrix,resistanceMatr
 
     redResMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,resistanceMatrix,PotentialZeroAtBoundaryNodes)
     redSenMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,sensitivityMatrixSingleZKomp,PotentialZeroAtBoundaryNodes)
+    #print("redResMat",redResMat)
  
     reducedSF = applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target)
     test.reducedSF = reducedSF
