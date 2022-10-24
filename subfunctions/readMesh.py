@@ -13,6 +13,9 @@ def calculateNormal(vec):
         print("Mesh-Generation is going wrong. Faces do not have 3 components")
         return False
 
+def updateList(edgeList,otheredge):
+    return [a for a, skip in zip(edgeList, [np.allclose(a, otheredge) for a in edgeList]) if not skip]
+
 #option 1: create mesh 
 class CylindricMesh():
     def __init__(self,coilLength,coilRadius,n):
@@ -142,13 +145,14 @@ class CylindricMesh():
         for edgeInd in range(len(newList)):
             for otheredgeInd in range(len(newList)):
                 if (newList[edgeInd][::-1] == newList[otheredgeInd]).all() and edgeInd < otheredgeInd:
-                    edgeList = self.updateList(edgeList,newList[otheredgeInd])
+                    edgeList = updateList(edgeList,newList[otheredgeInd])
         return edgeList
     
-    def updateList(self,edgeList,otheredge):
-        return [a for a, skip in zip(edgeList, [np.allclose(a, otheredge) for a in edgeList]) if not skip]
-    
-    def getBoundaryLoopNodes(self,boundaryEdges):
+    def getBoundaryLoopNodes(self):
+        '''returns the unsorted nodes for the boundaryLoop.'''
+        boundaryEdges = self.getBoundaryEdges()
+        boundaryEdges = self.turnAnsSortElements(boundaryEdges)
+        boundaryEdges = [np.flip(boundaryEdges[1]),boundaryEdges[0]] #TODO welche Regelmäßigkeit, warum so?
         boundaryLoopNodes=[]
         for boundary in boundaryEdges:
             boundaryNodes = np.append(np.array(boundary)[:,0],boundary[0][0])
@@ -157,11 +161,21 @@ class CylindricMesh():
     
     def getRotatedCopy(self):
         '''returns rotated copy of the vertices. If the cylinder is orientated along the z axis we need a rotated copy.'''
-        boundaryEdges = self.getBoundaryEdges()
-        boundaryEdges = self.turnAnsSortElements(boundaryEdges)
-        boundaryEdges = [np.flip(boundaryEdges[1]),boundaryEdges[0]]#für Vergleicbarkeit TODO muss genau so sein? welche regelmäigkeit?
-        boundaryLoopNodes = self.getBoundaryLoopNodes(boundaryEdges)
-         
+        boundaryLoopNodes = self.getBoundaryLoopNodes()
+        rotationVec,angle = self.calcRotationVec(boundaryLoopNodes)
+        rotMat = self.calc3DRotMatByVec(rotationVec,angle)
+        rotatedVertices = self.getRotatedVertices(rotMat)
+        return rotatedVertices
+    
+    def getRotatedVertices(self,rotMat):
+        '''returns the rotated vertices (multiplication with rotMat).'''
+        rotatedVertices = []
+        for i in self.vertices:
+            rotatedVertices.append(np.dot(rotMat,np.transpose(i)))
+        return rotatedVertices
+
+    def calcRotationVec(self,boundaryLoopNodes):
+        '''returns the rotationVector and the angle based on the boundaryLoopNodes.'''
         openingMean = [np.mean(self.vertices[boundaryLoopNodes[0]][:,0]),np.mean(self.vertices[boundaryLoopNodes[0]][:,1]),np.mean(self.vertices[boundaryLoopNodes[0]][:,2])]
         overallMean = np.mean(self.vertices)
         oldOrientationVec=(openingMean-overallMean)/np.linalg.norm(openingMean-overallMean)
@@ -170,13 +184,10 @@ class CylindricMesh():
         cosa = np.linalg.norm(np.dot(oldOrientationVec,zVec))/(np.linalg.norm(oldOrientationVec)*np.linalg.norm(zVec))
         angle = np.arctan2(sina,cosa)
         rotationVec = np.cross(oldOrientationVec,zVec)/np.linalg.norm(np.cross(oldOrientationVec,zVec))
-        rotMat = self.calc3DRotMatByVec(rotationVec,angle)
-        rotatedVertices = []
-        for i in self.vertices:
-            rotatedVertices.append(np.dot(rotMat,np.transpose(i)))
-        return rotatedVertices
+        return rotationVec,angle
 
     def calc3DRotMatByVec(self,rotationVec,angle):
+        '''returns the rotation matrix calculated from the rotationVector'''
         uX,uY,uZ = rotationVec
         tmp1 = np.sin(angle)
         tmp2 = np.cos(angle)
@@ -194,6 +205,7 @@ class CylindricMesh():
         return rotMat
     
     def turnAnsSortElements(self,boundaryEdges):
+        '''returns the given list in sorted. If needed single elements were turned to close the loop.'''
         new=[]
         for boundary in boundaryEdges:
             start = boundary[0]
@@ -284,7 +296,6 @@ class CylindricMesh():
         test = []
         for i in range(len(verticeTriangles)):
             test.append(start[0]==verticeTriangles[i][1])
-        #print("return",not np.any(test),"  start ",start,"  verticeTriangels ",verticeTriangles)
         return not np.any(test)
     
     def createOneRingList(self):
@@ -352,33 +363,7 @@ def checkIfVecInVeclist(node,vecList):
 
 # createdmesh = CylindricMesh(5.0,3.0,10)
 #givenMesh = CylindricMeshGiven('C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl')
-#print(givenMesh.test)
-# print("given mesh",np.shape(givenMesh.vertices))
-# print("created mesh",np.shape(createdmesh.vertices))
 
-
-def correctList(old):
-    '''ensures that each element appears only once in the list'''
-    new=[]
-    for i in old:
-        if i in new:
-            continue
-        else:
-            new.append(i)
-    return new
-
-def test_IfLonelyVertice(mesh):
-    for i in range(len(mesh.vertices)):
-        if(any(i in sublist for sublist in mesh.faces)):
-             continue
-        else:print("LONELY POINT: ", i)   
-    print("finished test")
-
-
-
-#test_EqualDirectionsNormal(mesh)
-#test_IfLonelyVertice(mesh)
-#print(mesh.openBoundaries)
 #x,y = mesh.get2Dcoordinates()
 #plt.plot(x,y,'.')
 #plt.show()
