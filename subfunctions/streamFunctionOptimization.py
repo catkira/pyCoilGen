@@ -22,7 +22,6 @@ def streamFunctionOptimization(test,mesh,target,sensitivityMatrix,resistanceMatr
 
     redResMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,resistanceMatrix,PotentialZeroAtBoundaryNodes)
     redSenMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,sensitivityMatrixSingleZKomp,PotentialZeroAtBoundaryNodes)
-    #print("redResMat",redResMat)
  
     reducedSF = applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target)
     test.reducedSF = reducedSF

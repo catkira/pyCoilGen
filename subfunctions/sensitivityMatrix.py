@@ -1,17 +1,17 @@
 #Flächenströme der Dreieck um jeden Knoten aufintegrieren
-from itertools import zip_longest
 import numpy as np
 import scipy
 
 def getSensitivityMatrix(test,mesh,target,n):
     '''returns the sensitivity Matrix for the mesh'''
     biotSavatCoeff = 10**(-7)
-    sensitivityMatrix = []
     [u,v,gaussWeight] = gaussLegendreIntegrationPointsTriangle(test,n)
-    test.gaußLegendre = [u,v,gaussWeight]
-    trianglesPerNode=[]
-    trianglesPerNode.append([len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))])
-    trianglesPerNode = trianglesPerNode[0]
+    sensitivityMatrix = calcSensitivityMat(mesh,biotSavatCoeff,target,u,v,gaussWeight)
+    return sensitivityMatrix
+
+def calcSensitivityMat(mesh,biotSavatCoeff,target,u,v,gaussWeight):
+    '''returns the calculated sensitivityMatrix'''
+    trianglesPerNode = [len(mesh.neighbours[x]) for x in range(len(mesh.neighbours))]
     xTarget,yTarget,zTarget = target.vertices[:,0],target.vertices[:,1],target.vertices[:,2]
     xAll,yAll,zAll=[],[],[]
     for nodeIndex in range(len(mesh.vertices)):
@@ -31,19 +31,14 @@ def getSensitivityMatrix(test,mesh,target,n):
                 distanceNorm = (np.square(xGaussInUV-xTarget)+np.square(yGaussInUV-yTarget)+np.square(zGaussInUV-zTarget))**(-3/2)#for biot savat #len of target
                 dCx = dCx + ((-1)*vZ*(yTarget-yGaussInUV)+ vY*(zTarget-zGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
                 dCy = dCy + ((-1)*vX*(zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-                dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-          
+                dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]          
         dCx *= biotSavatCoeff
         dCy *= biotSavatCoeff
         dCz *= biotSavatCoeff
         xAll.append(dCx)
         yAll.append(dCy)
         zAll.append(dCz)
-    xAll = xAll
-    yAll = yAll
-    zAll = zAll
-    sensitivityMatrix=[xAll,yAll,zAll]   
-    return sensitivityMatrix
+    return [xAll,yAll,zAll]   
 
 def gaussLegendreIntegrationPointsTriangle(test,n):
     '''returns the weights and the test point for the gauss legendre'''
@@ -55,6 +50,7 @@ def gaussLegendreIntegrationPointsTriangle(test,n):
             u.append((1+eta[i])/2)
             v.append((1-eta[i])*(1+eta[j])/4)
             ck.append(((1-eta[i])/8)*w[i]*w[j])
+    test.gaußLegendre = [u,v,ck]
     return [u,v,ck]
 
 def calcWeightsGauss(n):

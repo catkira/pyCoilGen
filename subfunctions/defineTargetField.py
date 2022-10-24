@@ -34,14 +34,6 @@ class TargetField():
         targetField = targetField*targetStrength
         return targetField
 
-    def getMagneticFieldInPoints(self,direction):#0==x,1==y,2==z
-        #normiert die Werte -> mapping auf 0 bis 1 was als gewünschtes Feld definiert werden kann 
-        magneticFieldValues=[]
-        distance=np.max(self.vertices[:,direction])-np.min(self.vertices[:,direction])
-        for i in range(len(self.vertices[:,direction])):
-            magneticFieldValues.append((self.vertices[:,direction][i]-np.min(self.vertices[:,direction]))/distance)
-        return magneticFieldValues
-
 class TargetFieldGiven(TargetField):
     def __init__(self,filename,direction):
         self.vertices,self.faces = getMeshFromSTL(filename)

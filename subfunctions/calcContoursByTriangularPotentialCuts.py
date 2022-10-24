@@ -1,15 +1,59 @@
-from .resistanceMatrix import getNeighbourhoodMatrix
 import numpy as np
-from.readMesh import updateList
+from .readMesh import updateList
 
-def calcContoursByTriangluarPotentialCuts(mesh):
+def calcContoursByTriangluarPotentialCuts(mesh,potentialLevelList,streamFunction):
 
     edges = getEdges(mesh)
     edgeAttachedTriangles = getEdgeAttachedTriangles(edges,mesh)
     numAttachedTriangles = getNumAttachedTriangles(edgeAttachedTriangles)
     innerEdges, innerEdgesTrianglesInds = getInnerEdges(edges,numAttachedTriangles,edgeAttachedTriangles)
     innerEdgeTriangleNodes = getInnerEdegTriangleNodes(innerEdgesTrianglesInds,mesh)
-    edgeOpposedNode = getEdgeOpposedNode(innerEdgeTriangleNodes,innerEdges)
+    innerEdgeOpposedNode = getEdgeOpposedNode(innerEdgeTriangleNodes,innerEdges)
+
+    contourLevelList = potentialLevelList
+    edgeNodePotentials = streamFunction[innerEdges]
+    minEdgePotential=[]
+    maxEgdePotential = []
+    for x in range(len(edgeNodePotentials)):
+        minEdgePotential.append(min(edgeNodePotentials[x]))
+        maxEgdePotential.append(max(edgeNodePotentials[x]))
+    triBelowPotStep = []
+    triAbovePotStep = []
+    for i in range(len(maxEgdePotential)):
+        triBelowPotStep.append(maxEgdePotential[i]>contourLevelList)
+        triAbovePotStep.append(minEdgePotential[i]<contourLevelList)
+    potentialCutCriteria = np.array(triBelowPotStep) & np.array(triAbovePotStep)
+    innerEdges = np.array(innerEdges)
+    edgeLength = np.sqrt((mesh.u[innerEdges[:,0]]-mesh.u[innerEdges[:,1]])**2 + (mesh.v[innerEdges[:,0]]-mesh.v[innerEdges[:,1]])**2)
+    edgePotentialSpan = edgeNodePotentials[:,1]-edgeNodePotentials[:,0]
+
+    potDistToStep = []
+    cutPointDistanceToEdgeNode=[]
+    for x in range(len(edgeNodePotentials)):
+        potDistToStepPart = []
+        cutPointDistanceToEdgeNodePart = []
+        for y in range(len(contourLevelList)):
+            potDistToStepPart.append(contourLevelList[y]-edgeNodePotentials[x][0])
+            cutPointDistanceToEdgeNodePart.append(np.abs(edgeLength[x]/edgePotentialSpan[x] * (contourLevelList[y]-edgeNodePotentials[x][0])))
+        potDistToStep.append(potDistToStepPart)
+        cutPointDistanceToEdgeNode.append(cutPointDistanceToEdgeNodePart)
+
+    uKompEdgeVec = mesh.u[innerEdges[:,1]] - mesh.u[innerEdges[:,0]]
+    vKompEdgeVec = mesh.v[innerEdges[:,1]] - mesh.v[innerEdges[:,0]]
+    uCutPoint,vCutPoint=[],[]
+    for x in range(len(edgeLength)):
+        uCutPoint.append(potentialCutCriteria[x] * (mesh.u[innerEdges[:,0]][x] + cutPointDistanceToEdgeNode[x]/edgeLength[x] *uKompEdgeVec[x]))
+        vCutPoint.append(potentialCutCriteria[x] * (mesh.v[innerEdges[:,0]][x] + cutPointDistanceToEdgeNode[x]/edgeLength[x] *vKompEdgeVec[x]))
+    
+    potentialSortedCutPoints = []
+    for potInd in range(len(potentialLevelList)):
+        listelement = []
+        for edgeInd in range(len(uCutPoint)):
+            if uCutPoint[edgeInd][potInd] != 0:
+                listelement.append([uCutPoint[edgeInd][potInd],vCutPoint[edgeInd][potInd],edgeInd])
+        potentialSortedCutPoints.append(listelement)
+
+
 
     contours=0
     return contours

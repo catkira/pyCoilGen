@@ -4,7 +4,7 @@ import sys
 sys.path.append('subfunctions/')
 
 
-##### Testing #############
+### Testing ###############
 from subfunctions.Tester import Tester
 Test = Tester()
 
@@ -21,21 +21,16 @@ levelOffset = 0.2500
 
 ### MESH ##################
 
-# generate mesh
 from subfunctions.readMesh import CylindricMesh,CylindricMeshGiven
 if meshFile:
     Mesh = CylindricMeshGiven(meshFile)
-else: Mesh = CylindricMesh(5.0,3.0,10) #length,radius,n
-print("vertices",np.shape(Mesh.vertices),"faces",np.shape(Mesh.faces))
+else: Mesh = CylindricMesh(5.0,3.0,10) 
 
-# define target field
 from subfunctions.defineTargetField import TargetField,TargetFieldGiven
 if targetMeshFile:
     TargetSphere = TargetFieldGiven(targetMeshFile,1)
-else: TargetSphere = TargetField([0,0,0],4,1) #center,radius,direction
-print("vertices",np.shape(TargetSphere.vertices),"faces",np.shape(TargetSphere.faces))
+else: TargetSphere = TargetField([0,0,0],4,1)
 
-#sensitivity matrix
 from subfunctions.sensitivityMatrix import getSensitivityMatrix
 sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
 
@@ -52,21 +47,17 @@ def getListFormatedForComparing(list):
         else: result = result + "," + "[" + ", ".join(my_list_str) + "]"
         
     return result
-#resistance matrix
+    
 from subfunctions.resistanceMatrix import getResistanceMatrix
 resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
 
 ### Calculation ############
 
-# stream function optimization
 from subfunctions.streamFunctionOptimization import streamFunctionOptimization
 bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
 
-# potential discretization
 from subfunctions.calcPotentialLevels import calcPotentialLevels
 contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
-
-#print("etv",Test.matElementsShouldGetValue)
 
 from subfunctions.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
 contour = calcContoursByTriangluarPotentialCuts(Mesh,potentialLevelList,streamFunction)

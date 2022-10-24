@@ -225,8 +225,7 @@ class CylindricMesh():
                 start = newElement[-1]
             new.append(newElement)
         return new
-
-        
+     
     def get2Dcoordinates(self):
         '''returns the from 3D to 2D converted vertices'''
         corods = np.array(self.rotatedCaylinder)
@@ -290,7 +289,6 @@ class CylindricMesh():
             index+=1
         return start
 
-    
     def checkStartTriangle(self,verticeTriangles,start):
         '''returns boolean if "start" is the correct startTriangle'''
         test = []
