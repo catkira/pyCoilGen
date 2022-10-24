@@ -4,6 +4,7 @@ from defineTargetField import TargetFieldGiven
 from sensitivityMatrix import getSensitivityMatrix
 from resistanceMatrix import getResistanceMatrix
 from streamFunctionOptimization import streamFunctionOptimization
+from Tester import Tester
 import numpy as np
 
 meshFile = "cylinder_radius500mm_length1500mm.stl" 
@@ -14,19 +15,12 @@ specificConductivityMaterial = 1.8000*10**-8
 conducterThickness = 0.005 
 materialFactor = specificConductivityMaterial/conducterThickness
 
-class Tester():
-    def __init__(self):
-        self.gaußLegendre = []
-        self.reducedSF = []
-        self.calcWeightsGauss = []
-        self.matElementsShouldGetValue = []
-
-#Test = Tester()
-#Mesh = CylindricMeshGiven(meshFile)
-#TargetSphere = TargetFieldGiven(targetMeshFile,1)
-#sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
-#resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
-#BField,SFOpt = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
+Test = Tester()
+Mesh = CylindricMeshGiven(meshFile)
+TargetSphere = TargetFieldGiven(targetMeshFile,1)
+sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
+resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
+BField,SFOpt = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
 
 # SF Optimization
 

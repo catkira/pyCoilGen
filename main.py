@@ -5,7 +5,7 @@ sys.path.append('subfunctions/')
 
 
 ##### Testing #############
-from subfunctions.test_testCase import Tester
+from subfunctions.Tester import Tester
 Test = Tester()
 
 ### Input #################
@@ -54,7 +54,7 @@ def getListFormatedForComparing(list):
     return result
 #resistance matrix
 from subfunctions.resistanceMatrix import getResistanceMatrix
-resistanceMatrix = getResistanceMatrix(Mesh,materialFactor)
+resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
 
 ### Calculation ############
 
@@ -66,10 +66,10 @@ bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Test,Mesh,Tar
 from subfunctions.calcPotentialLevels import calcPotentialLevels
 contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
 
-print("etv",Test.gaußLegendre)
+#print("etv",Test.matElementsShouldGetValue)
 
 from subfunctions.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
-contour = calcContoursByTriangluarPotentialCuts(Mesh)
+contour = calcContoursByTriangluarPotentialCuts(Mesh,potentialLevelList,streamFunction)
 
 # topological contour sorting
 
