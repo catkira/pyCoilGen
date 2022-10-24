@@ -3,6 +3,12 @@
 
  <img src="./Documentation/GoilGen_Logo.png" width="300">
 
+## Testing with Pytest
+
+If not already installed run: pip install -U pytest
+
+To run the tests: pytest main.py (alternative: the specific file you want to test)
+
 
 
 
