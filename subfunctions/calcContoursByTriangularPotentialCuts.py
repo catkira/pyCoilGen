@@ -3,45 +3,36 @@ from .readMesh import updateList
 
 def calcContoursByTriangluarPotentialCuts(mesh,potentialLevelList,streamFunction):
 
-    edges = getEdges(mesh)
-    edgeAttachedTriangles = getEdgeAttachedTriangles(edges,mesh)
-    numAttachedTriangles = getNumAttachedTriangles(edgeAttachedTriangles)
-    innerEdges, innerEdgesTrianglesInds = getInnerEdges(edges,numAttachedTriangles,edgeAttachedTriangles)
-    innerEdgeTriangleNodes = getInnerEdegTriangleNodes(innerEdgesTrianglesInds,mesh)
-    innerEdgeOpposedNode = getEdgeOpposedNode(innerEdgeTriangleNodes,innerEdges)
+    innerEdges, innerEdgesTrianglesInds = getInnerEdges(mesh)
+    innerEdgeOpposedNode = getEdgeOpposedNode(mesh,innerEdgesTrianglesInds,innerEdges)
 
     edgeNodePotentials = streamFunction[innerEdges]
     potentialCutCriteria = getPotentialCutCriteria(edgeNodePotentials,potentialLevelList)
-    innerEdges = np.array(innerEdges)
     edgeLength = np.sqrt((mesh.u[innerEdges[:,0]]-mesh.u[innerEdges[:,1]])**2 + (mesh.v[innerEdges[:,0]]-mesh.v[innerEdges[:,1]])**2)
-    edgePotentialSpan = edgeNodePotentials[:,1]-edgeNodePotentials[:,0]
+    cutPointDistanceToEdgeNode=getCutDistancesToEdgeNodes(edgeNodePotentials,potentialLevelList,edgeLength)
+    uCutPoint, vCutPoint = getuvCutPoints(mesh,innerEdges,edgeLength,potentialCutCriteria,cutPointDistanceToEdgeNode)
+    
+    potentialSortedCutPoints = getPotentialSortedCutPoints(potentialLevelList,uCutPoint,vCutPoint)
+    rawUnsortedPoints = getRawUnsortedPoints(potentialLevelList,potentialSortedCutPoints)
+    rawUnarrangedLoops = getRawUnarrangedLoops(rawUnsortedPoints,innerEdges,innerEdgeOpposedNode)
+ 
+    #TODO: next step Matlab calc_contours_by trianglar_potential_cuts line 179 "evaluate for each loop the current orientation"
 
-    potDistToStep = []
-    cutPointDistanceToEdgeNode=[]
-    for x in range(len(edgeNodePotentials)):
-        potDistToStepPart = []
-        cutPointDistanceToEdgeNodePart = []
-        for y in range(len(potentialLevelList)):
-            potDistToStepPart.append(potentialLevelList[y]-edgeNodePotentials[x][0])
-            cutPointDistanceToEdgeNodePart.append(np.abs(edgeLength[x]/edgePotentialSpan[x] * (potentialLevelList[y]-edgeNodePotentials[x][0])))
-        potDistToStep.append(potDistToStepPart)
-        cutPointDistanceToEdgeNode.append(cutPointDistanceToEdgeNodePart)
+    contours=0
+    return contours
 
+def getuvCutPoints(mesh,innerEdges,edgeLength,potentialCutCriteria,cutPointDistanceToEdgeNode):    
+    '''returns ucutPoint and vCutPoint'''
     uKompEdgeVec = mesh.u[innerEdges[:,1]] - mesh.u[innerEdges[:,0]]
     vKompEdgeVec = mesh.v[innerEdges[:,1]] - mesh.v[innerEdges[:,0]]
     uCutPoint,vCutPoint=[],[]
     for x in range(len(edgeLength)):
         uCutPoint.append(potentialCutCriteria[x] * (mesh.u[innerEdges[:,0]][x] + cutPointDistanceToEdgeNode[x]/edgeLength[x] *uKompEdgeVec[x]))
         vCutPoint.append(potentialCutCriteria[x] * (mesh.v[innerEdges[:,0]][x] + cutPointDistanceToEdgeNode[x]/edgeLength[x] *vKompEdgeVec[x]))
-    
-    potentialSortedCutPoints = []
-    for potInd in range(len(potentialLevelList)):
-        listelement = []
-        for edgeInd in range(len(uCutPoint)):
-            if uCutPoint[edgeInd][potInd] != 0:
-                listelement.append([uCutPoint[edgeInd][potInd],vCutPoint[edgeInd][potInd],int(edgeInd)])
-        potentialSortedCutPoints.append(listelement)
+    return uCutPoint, vCutPoint
 
+def getRawUnsortedPoints(potentialLevelList,potentialSortedCutPoints):
+    '''returns rawUnsortedPoints'''
     rawUnsortedPoints = []
     for i in range(len(potentialLevelList)):
         rawUnsortedPointsDict = {
@@ -50,15 +41,33 @@ def calcContoursByTriangluarPotentialCuts(mesh,potentialLevelList,streamFunction
             "uv": [np.array(potentialSortedCutPoints[i])[:,0],np.array(potentialSortedCutPoints[i])[:,1]],
         }
         rawUnsortedPoints.append(rawUnsortedPointsDict)
+    return rawUnsortedPoints
 
-    rawUnarrangedLoops = getRawUnarrangedLoops(rawUnsortedPoints,innerEdges,innerEdgeOpposedNode)
- 
-    #TODO: next step Matlab calc_contours_by trianglar_potential_cuts line 179 "evaluate for each loop the current orientation"
+def getPotentialSortedCutPoints(potentialLevelList,uCutPoint,vCutPoint):
+    '''returns potentialSortedCutPoints'''
+    potentialSortedCutPoints = []
+    for potInd in range(len(potentialLevelList)):
+        listelement = []
+        for edgeInd in range(len(uCutPoint)):
+            if uCutPoint[edgeInd][potInd] != 0:
+                listelement.append([uCutPoint[edgeInd][potInd],vCutPoint[edgeInd][potInd],int(edgeInd)])
+        potentialSortedCutPoints.append(listelement)
+    return potentialSortedCutPoints
 
-    contours=0
-    return contours
+def getCutDistancesToEdgeNodes(edgeNodePotentials,potentialLevelList,edgeLength):   
+    ''' returns the cutPointDistanceToEdgeNode'''
+    edgePotentialSpan = edgeNodePotentials[:,1]-edgeNodePotentials[:,0]
+    cutPointDistanceToEdgeNode=[]
+    for x in range(len(edgeNodePotentials)):
+        cutPointDistanceToEdgeNodePart = []
+        for y in range(len(potentialLevelList)):
+            cutPointDistanceToEdgeNodePart.append(np.abs(edgeLength[x]/edgePotentialSpan[x] * (potentialLevelList[y]-edgeNodePotentials[x][0])))
+        cutPointDistanceToEdgeNode.append(cutPointDistanceToEdgeNodePart)
+    return cutPointDistanceToEdgeNode
+    
 
 def getPotentialCutCriteria(edgeNodePotentials,potentialLevelList):
+    '''returns the PotentialCutCriteria'''
     minEdgePotential=[]
     maxEgdePotential = []
     for x in range(len(edgeNodePotentials)):
@@ -144,8 +153,9 @@ def checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges, allCurrentOpp
         testtestElement.append(testElement2)
     return testElement,testtestElement
 
-def getEdgeOpposedNode(innerEdgeTriangleNodes,innerEdges):
+def getEdgeOpposedNode(mesh,innerEdgesTrianglesInds,innerEdges):
     '''returns the to the edge opposed node for each attached triangle'''
+    innerEdgeTriangleNodes = getInnerEdegTriangleNodes(innerEdgesTrianglesInds,mesh)
     edgeOpposedNodes = []
     for edgeInd in range(len(innerEdges)):
         oneEdgeOpposedNodes= []
@@ -165,15 +175,18 @@ def getInnerEdegTriangleNodes(innerEdgesTrianglesInds,mesh):
         innerEdgeTriangleNodes.append([np.array(mesh.faces[innerEdgesTrianglesInds[edgeInd][0]]),np.array(mesh.faces[innerEdgesTrianglesInds[edgeInd][1]])])
     return innerEdgeTriangleNodes
 
-def getInnerEdges(edges,numAttachedTriangles,edgeAttachedTriangles):
+def getInnerEdges(mesh):
     '''returns the inner edges an the corresponding triangleInds.'''
+    edges = getEdges(mesh)
+    edgeAttachedTriangles = getEdgeAttachedTriangles(edges,mesh)
+    numAttachedTriangles = getNumAttachedTriangles(edgeAttachedTriangles)
     innerEdges =[]
     innerEdgesTrianglesInds = []
     for index in range(len(edges)):
         if numAttachedTriangles[index] == 2:
             innerEdges.append(edges[index])
             innerEdgesTrianglesInds.append(edgeAttachedTriangles[index])
-    return innerEdges, innerEdgesTrianglesInds
+    return np.array(innerEdges), innerEdgesTrianglesInds
 
 def getNumAttachedTriangles(edgeAttachedTriangles):
     '''returns the number of attached triangles per edge.'''
