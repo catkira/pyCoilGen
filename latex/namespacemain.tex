@@ -1,0 +1,240 @@
+\hypertarget{namespacemain}{}\doxysection{main Namespace Reference}
+\label{namespacemain}\index{main@{main}}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{Test}} = Tester()
+\item 
+string \mbox{\hyperlink{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}{mesh\+File}} = \char`\"{}cylinder\+\_\+radius500mm\+\_\+length1500mm.\+stl\char`\"{}
+\begin{DoxyCompactList}\small\item\em Input \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}{target\+Mesh\+File}} = \char`\"{}sphere\+\_\+radius150mm.\+stl\char`\"{}
+\item 
+int \mbox{\hyperlink{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}{gauss\+Order}} = 2
+\item 
+int \mbox{\hyperlink{namespacemain_a5752781fcc4a69e7ce26d735a57fe718}{tikonov\+Fac}} = 100
+\item 
+float \mbox{\hyperlink{namespacemain_a3070685f35b7df011963e130407b3c41}{specific\+Conductivity\+Material}} = 1.\+8000$\ast$10$\ast$$\ast$-\/8
+\item 
+float \mbox{\hyperlink{namespacemain_a646e40b2f819c34de7614a3df0017c40}{conducter\+Thickness}} = 0.\+005
+\item 
+float \mbox{\hyperlink{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}{material\+Factor}} = \mbox{\hyperlink{namespacemain_a3070685f35b7df011963e130407b3c41}{specific\+Conductivity\+Material}}/\mbox{\hyperlink{namespacemain_a646e40b2f819c34de7614a3df0017c40}{conducter\+Thickness}}
+\item 
+int \mbox{\hyperlink{namespacemain_aadbc3dc0916c0483a6fee807a1935bfc}{num\+Levels}} = 20
+\item 
+float \mbox{\hyperlink{namespacemain_aaa858cd3d53df705ab7911ad79d2a26b}{level\+Offset}} = 0.\+2500
+\item 
+\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}} = Cylindric\+Mesh\+Given(\mbox{\hyperlink{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}{mesh\+File}})
+\item 
+\mbox{\hyperlink{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}{Target\+Sphere}} = Target\+Field\+Given(\mbox{\hyperlink{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}{target\+Mesh\+File}},1)
+\item 
+\mbox{\hyperlink{namespacemain_aa14a5f90723bf0213febc7e3848715e8}{sensitivity\+Matrix}} = get\+Sensitivity\+Matrix(\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{Test}},\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}{Target\+Sphere}},\mbox{\hyperlink{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}{gauss\+Order}})
+\item 
+\mbox{\hyperlink{namespacemain_a9018226ff99014e3295902f5d9167789}{resistance\+Matrix}} = get\+Resistance\+Matrix(\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{Test}},\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}{material\+Factor}})
+\item 
+\mbox{\hyperlink{namespacemain_a79feaf569364ebea60c421ffdbced9d8}{b\+Field\+Generated\+By\+Opt\+SF}}
+\item 
+\mbox{\hyperlink{namespacemain_a8ec74924c7f91054fac96174f852a944}{stream\+Function}}
+\item 
+\mbox{\hyperlink{namespacemain_ab701b4a7e49a60f6f57b9618deb55aa0}{contour\+Step}}
+\item 
+\mbox{\hyperlink{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}{potential\+Level\+List}}
+\item 
+\mbox{\hyperlink{namespacemain_a572b3f46b448417c1d8e528876bdf027}{contour}} = calc\+Contours\+By\+Triangluar\+Potential\+Cuts(\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}{potential\+Level\+List}},\mbox{\hyperlink{namespacemain_a8ec74924c7f91054fac96174f852a944}{stream\+Function}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemain_a79feaf569364ebea60c421ffdbced9d8}\label{namespacemain_a79feaf569364ebea60c421ffdbced9d8}} 
+\index{main@{main}!bFieldGeneratedByOptSF@{bFieldGeneratedByOptSF}}
+\index{bFieldGeneratedByOptSF@{bFieldGeneratedByOptSF}!main@{main}}
+\doxysubsubsection{\texorpdfstring{bFieldGeneratedByOptSF}{bFieldGeneratedByOptSF}}
+{\footnotesize\ttfamily main.\+b\+Field\+Generated\+By\+Opt\+SF}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00043}{43}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a646e40b2f819c34de7614a3df0017c40}\label{namespacemain_a646e40b2f819c34de7614a3df0017c40}} 
+\index{main@{main}!conducterThickness@{conducterThickness}}
+\index{conducterThickness@{conducterThickness}!main@{main}}
+\doxysubsubsection{\texorpdfstring{conducterThickness}{conducterThickness}}
+{\footnotesize\ttfamily float main.\+conducter\+Thickness = 0.\+005}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00017}{17}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a572b3f46b448417c1d8e528876bdf027}\label{namespacemain_a572b3f46b448417c1d8e528876bdf027}} 
+\index{main@{main}!contour@{contour}}
+\index{contour@{contour}!main@{main}}
+\doxysubsubsection{\texorpdfstring{contour}{contour}}
+{\footnotesize\ttfamily main.\+contour = calc\+Contours\+By\+Triangluar\+Potential\+Cuts(\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}{potential\+Level\+List}},\mbox{\hyperlink{namespacemain_a8ec74924c7f91054fac96174f852a944}{stream\+Function}})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00049}{49}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_ab701b4a7e49a60f6f57b9618deb55aa0}\label{namespacemain_ab701b4a7e49a60f6f57b9618deb55aa0}} 
+\index{main@{main}!contourStep@{contourStep}}
+\index{contourStep@{contourStep}!main@{main}}
+\doxysubsubsection{\texorpdfstring{contourStep}{contourStep}}
+{\footnotesize\ttfamily main.\+contour\+Step}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00046}{46}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}\label{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}} 
+\index{main@{main}!gaussOrder@{gaussOrder}}
+\index{gaussOrder@{gaussOrder}!main@{main}}
+\doxysubsubsection{\texorpdfstring{gaussOrder}{gaussOrder}}
+{\footnotesize\ttfamily int main.\+gauss\+Order = 2}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00014}{14}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_aaa858cd3d53df705ab7911ad79d2a26b}\label{namespacemain_aaa858cd3d53df705ab7911ad79d2a26b}} 
+\index{main@{main}!levelOffset@{levelOffset}}
+\index{levelOffset@{levelOffset}!main@{main}}
+\doxysubsubsection{\texorpdfstring{levelOffset}{levelOffset}}
+{\footnotesize\ttfamily float main.\+level\+Offset = 0.\+2500}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00020}{20}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}\label{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}} 
+\index{main@{main}!materialFactor@{materialFactor}}
+\index{materialFactor@{materialFactor}!main@{main}}
+\doxysubsubsection{\texorpdfstring{materialFactor}{materialFactor}}
+{\footnotesize\ttfamily float main.\+material\+Factor = \mbox{\hyperlink{namespacemain_a3070685f35b7df011963e130407b3c41}{specific\+Conductivity\+Material}}/\mbox{\hyperlink{namespacemain_a646e40b2f819c34de7614a3df0017c40}{conducter\+Thickness}}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00018}{18}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}\label{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}} 
+\index{main@{main}!Mesh@{Mesh}}
+\index{Mesh@{Mesh}!main@{main}}
+\doxysubsubsection{\texorpdfstring{Mesh}{Mesh}}
+{\footnotesize\ttfamily main.\+Mesh = Cylindric\+Mesh\+Given(\mbox{\hyperlink{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}{mesh\+File}})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00026}{26}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}\label{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}} 
+\index{main@{main}!meshFile@{meshFile}}
+\index{meshFile@{meshFile}!main@{main}}
+\doxysubsubsection{\texorpdfstring{meshFile}{meshFile}}
+{\footnotesize\ttfamily string main.\+mesh\+File = \char`\"{}cylinder\+\_\+radius500mm\+\_\+length1500mm.\+stl\char`\"{}}
+
+
+
+Input \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#. 
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00012}{12}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_aadbc3dc0916c0483a6fee807a1935bfc}\label{namespacemain_aadbc3dc0916c0483a6fee807a1935bfc}} 
+\index{main@{main}!numLevels@{numLevels}}
+\index{numLevels@{numLevels}!main@{main}}
+\doxysubsubsection{\texorpdfstring{numLevels}{numLevels}}
+{\footnotesize\ttfamily int main.\+num\+Levels = 20}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00019}{19}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}\label{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}} 
+\index{main@{main}!potentialLevelList@{potentialLevelList}}
+\index{potentialLevelList@{potentialLevelList}!main@{main}}
+\doxysubsubsection{\texorpdfstring{potentialLevelList}{potentialLevelList}}
+{\footnotesize\ttfamily main.\+potential\+Level\+List}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00046}{46}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a9018226ff99014e3295902f5d9167789}\label{namespacemain_a9018226ff99014e3295902f5d9167789}} 
+\index{main@{main}!resistanceMatrix@{resistanceMatrix}}
+\index{resistanceMatrix@{resistanceMatrix}!main@{main}}
+\doxysubsubsection{\texorpdfstring{resistanceMatrix}{resistanceMatrix}}
+{\footnotesize\ttfamily main.\+resistance\+Matrix = get\+Resistance\+Matrix(\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{Test}},\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}{material\+Factor}})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00038}{38}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_aa14a5f90723bf0213febc7e3848715e8}\label{namespacemain_aa14a5f90723bf0213febc7e3848715e8}} 
+\index{main@{main}!sensitivityMatrix@{sensitivityMatrix}}
+\index{sensitivityMatrix@{sensitivityMatrix}!main@{main}}
+\doxysubsubsection{\texorpdfstring{sensitivityMatrix}{sensitivityMatrix}}
+{\footnotesize\ttfamily main.\+sensitivity\+Matrix = get\+Sensitivity\+Matrix(\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{Test}},\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{Mesh}},\mbox{\hyperlink{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}{Target\+Sphere}},\mbox{\hyperlink{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}{gauss\+Order}})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00035}{35}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a3070685f35b7df011963e130407b3c41}\label{namespacemain_a3070685f35b7df011963e130407b3c41}} 
+\index{main@{main}!specificConductivityMaterial@{specificConductivityMaterial}}
+\index{specificConductivityMaterial@{specificConductivityMaterial}!main@{main}}
+\doxysubsubsection{\texorpdfstring{specificConductivityMaterial}{specificConductivityMaterial}}
+{\footnotesize\ttfamily float main.\+specific\+Conductivity\+Material = 1.\+8000$\ast$10$\ast$$\ast$-\/8}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00016}{16}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a8ec74924c7f91054fac96174f852a944}\label{namespacemain_a8ec74924c7f91054fac96174f852a944}} 
+\index{main@{main}!streamFunction@{streamFunction}}
+\index{streamFunction@{streamFunction}!main@{main}}
+\doxysubsubsection{\texorpdfstring{streamFunction}{streamFunction}}
+{\footnotesize\ttfamily main.\+stream\+Function}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00043}{43}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}\label{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}} 
+\index{main@{main}!targetMeshFile@{targetMeshFile}}
+\index{targetMeshFile@{targetMeshFile}!main@{main}}
+\doxysubsubsection{\texorpdfstring{targetMeshFile}{targetMeshFile}}
+{\footnotesize\ttfamily string main.\+target\+Mesh\+File = \char`\"{}sphere\+\_\+radius150mm.\+stl\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00013}{13}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}\label{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}} 
+\index{main@{main}!TargetSphere@{TargetSphere}}
+\index{TargetSphere@{TargetSphere}!main@{main}}
+\doxysubsubsection{\texorpdfstring{TargetSphere}{TargetSphere}}
+{\footnotesize\ttfamily main.\+Target\+Sphere = Target\+Field\+Given(\mbox{\hyperlink{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}{target\+Mesh\+File}},1)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00031}{31}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_aa72723d95eb166fdb901b082e4d3a888}\label{namespacemain_aa72723d95eb166fdb901b082e4d3a888}} 
+\index{main@{main}!Test@{Test}}
+\index{Test@{Test}!main@{main}}
+\doxysubsubsection{\texorpdfstring{Test}{Test}}
+{\footnotesize\ttfamily main.\+Test = Tester()}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00009}{9}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\mbox{\Hypertarget{namespacemain_a5752781fcc4a69e7ce26d735a57fe718}\label{namespacemain_a5752781fcc4a69e7ce26d735a57fe718}} 
+\index{main@{main}!tikonovFac@{tikonovFac}}
+\index{tikonovFac@{tikonovFac}!main@{main}}
+\doxysubsubsection{\texorpdfstring{tikonovFac}{tikonovFac}}
+{\footnotesize\ttfamily int main.\+tikonov\+Fac = 100}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00015}{15}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+

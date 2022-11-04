@@ -1,0 +1,48 @@
+\hypertarget{main_8py}{}\doxysection{main.\+py File Reference}
+\label{main_8py}\index{main.py@{main.py}}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacemain}{main}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemain_aa72723d95eb166fdb901b082e4d3a888}{main.\+Test}} = Tester()
+\item 
+string \mbox{\hyperlink{namespacemain_a2ed983950e5afdcbddf78df09cea42d4}{main.\+mesh\+File}} = \char`\"{}cylinder\+\_\+radius500mm\+\_\+length1500mm.\+stl\char`\"{}
+\begin{DoxyCompactList}\small\item\em Input \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{namespacemain_a11f2feb8d7bcc0d9beda74cba19f7ce3}{main.\+target\+Mesh\+File}} = \char`\"{}sphere\+\_\+radius150mm.\+stl\char`\"{}
+\item 
+int \mbox{\hyperlink{namespacemain_a8457d7e8974fc0c4dbefe0be06f3342f}{main.\+gauss\+Order}} = 2
+\item 
+int \mbox{\hyperlink{namespacemain_a5752781fcc4a69e7ce26d735a57fe718}{main.\+tikonov\+Fac}} = 100
+\item 
+float \mbox{\hyperlink{namespacemain_a3070685f35b7df011963e130407b3c41}{main.\+specific\+Conductivity\+Material}} = 1.\+8000$\ast$10$\ast$$\ast$-\/8
+\item 
+float \mbox{\hyperlink{namespacemain_a646e40b2f819c34de7614a3df0017c40}{main.\+conducter\+Thickness}} = 0.\+005
+\item 
+float \mbox{\hyperlink{namespacemain_a7d5353d0f602e0b74a0384c575ac767c}{main.\+material\+Factor}} = specific\+Conductivity\+Material/conducter\+Thickness
+\item 
+int \mbox{\hyperlink{namespacemain_aadbc3dc0916c0483a6fee807a1935bfc}{main.\+num\+Levels}} = 20
+\item 
+float \mbox{\hyperlink{namespacemain_aaa858cd3d53df705ab7911ad79d2a26b}{main.\+level\+Offset}} = 0.\+2500
+\item 
+\mbox{\hyperlink{namespacemain_a093be3e902cd50c9c8aa4b3806ad19d3}{main.\+Mesh}} = Cylindric\+Mesh\+Given(mesh\+File)
+\item 
+\mbox{\hyperlink{namespacemain_a36fd97f7b9367533f4ca773e0c5cf2d1}{main.\+Target\+Sphere}} = Target\+Field\+Given(target\+Mesh\+File,1)
+\item 
+\mbox{\hyperlink{namespacemain_aa14a5f90723bf0213febc7e3848715e8}{main.\+sensitivity\+Matrix}} = get\+Sensitivity\+Matrix(Test,Mesh,Target\+Sphere,gauss\+Order)
+\item 
+\mbox{\hyperlink{namespacemain_a9018226ff99014e3295902f5d9167789}{main.\+resistance\+Matrix}} = get\+Resistance\+Matrix(Test,Mesh,material\+Factor)
+\item 
+\mbox{\hyperlink{namespacemain_a79feaf569364ebea60c421ffdbced9d8}{main.\+b\+Field\+Generated\+By\+Opt\+SF}}
+\item 
+\mbox{\hyperlink{namespacemain_a8ec74924c7f91054fac96174f852a944}{main.\+stream\+Function}}
+\item 
+\mbox{\hyperlink{namespacemain_ab701b4a7e49a60f6f57b9618deb55aa0}{main.\+contour\+Step}}
+\item 
+\mbox{\hyperlink{namespacemain_a8a9dea08fea00dc1dd378dc67addb5be}{main.\+potential\+Level\+List}}
+\item 
+\mbox{\hyperlink{namespacemain_a572b3f46b448417c1d8e528876bdf027}{main.\+contour}} = calc\+Contours\+By\+Triangluar\+Potential\+Cuts(Mesh,potential\+Level\+List,stream\+Function)
+\end{DoxyCompactItemize}

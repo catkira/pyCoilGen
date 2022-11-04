@@ -1,4 +1,4 @@
-#kugel in zylinder, gleichmäßig im Volumen verteilte Punkte, mit gewünschtem Feld (absolute Werte?)
+#kugel in zylinder, gleichmäßig im Volumen verteilte Punkte, mit gewünschtem Feld 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,6 +13,7 @@ class TargetField():
         self.fieldValues = self.getMagneticFieldValues(direction)
 
     def getTargetPoints(self):
+        '''generate Target Points within a circle with the given specifications'''
         newX = np.linspace(self.center[0]-self.radius,self.center[0]+self.radius,25)
         newY = np.linspace(self.center[1]-self.radius,self.center[1]+self.radius,25)
         newZ = np.linspace(self.center[2]-self.radius,self.center[2]+self.radius,25)
@@ -40,12 +41,13 @@ class TargetFieldGiven(TargetField):
         self.fieldValues = self.getMagneticFieldValues(direction)
 
 def distanceBetweenPoints(point1,point2):
+    '''returns the distance between two given points'''
     result = 0
     for i in range(len(point1)):
         result += (point1[i]-point2[i])**2
     return np.sqrt(result)
 
-
+## Testing ###
 #sphere=TargetField([0,0,0],5,1)
 #points = sphere.vertices
 #print(np.shape(points))

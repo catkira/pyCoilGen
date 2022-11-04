@@ -34,20 +34,6 @@ else: TargetSphere = TargetField([0,0,0],4,1)
 from subfunctions.sensitivityMatrix import getSensitivityMatrix
 sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
 
-
-def getListFormatedForComparing(list):
-    result = ""
-    for i in range(len(list)):            
-        my_list_str = [str(x) for x in list[i]]
-        max_decimal = max([ len(x) - x.find('.') - 1 for x in my_list_str])
-        fmt_str = f"%0.{max_decimal+9}f"
-        my_list_str = [fmt_str % x for x in list[i]]
-        if result == "":
-            result = "[" + ", ".join(my_list_str) + "]"
-        else: result = result + "," + "[" + ", ".join(my_list_str) + "]"
-        
-    return result
-    
 from subfunctions.resistanceMatrix import getResistanceMatrix
 resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
 

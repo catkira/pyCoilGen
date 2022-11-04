@@ -1,0 +1,203 @@
+\hypertarget{namespaceresistance_matrix}{}\doxysection{resistance\+Matrix Namespace Reference}
+\label{namespaceresistance_matrix}\index{resistanceMatrix@{resistanceMatrix}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_ac8d510852e51a4b508dc722dc16e03d7}{get\+Resistance\+Matrix}} (test, mesh, material\+Factor)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_ae5f45a15007888d04dfb201989f51ce1}{form\+Final\+Resistance\+Mat}} (resistance\+Matrix, material\+Factor)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a6cac4db0b9ba501aa30fdaba4dd2f980}{create\+Previous\+Resistance\+Mat}} (mesh, mat\+Elements\+Should\+Get\+Value)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a67ffdcadebf1bc642fdfa32dfc2b8bb8}{get\+Resistance\+Sum\+For\+Different}} (mesh, triangles\+With\+Both\+Nodes, node\+Ind1, node\+Ind2)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a126a744904ed04b4c9b5de6ae476b984}{get\+Resistance\+Sum\+For\+Same}} (mesh, node\+Ind1)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a92a49d44a6d08a4baa415e788ccd51df}{calculate\+Area}} (Point1, Point2, Point3)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_ab61a9dd553bb4346641813b0840ff9b4}{calculate\+Current}} (Point1, Point2, Point3)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a177355250f2f63867ba9e64562ec7515}{get\+Mat\+Element\+Should\+Get\+Value}} (mesh)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a898f8be19fbceefd97fafc18584b4025}{get\+Partner\+Element}} (triangle, triangles\+With\+Both\+Nodes, node\+Ind2)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a6bfd143d32d11149f45722ac12a89d7f}{element\+In\+Array}} (array, value)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a5a56527e36d216a4223d5583de912a13}{element\+In\+AandB}} (a, b)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_aabc815cd4c730609cc22076ee5740c3d}{compare\+Multiple\+Elements\+Boolean}} (elements, testelements)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a10aa92868d1fa0dd584a4b509bb5a419}{get\+Spatial\+Distances\+Matrix}} (mesh)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a9d82f51d58f2208f1a5b01286be353d1}{get\+Neighbourhood\+Matrix}} (mesh)
+\item 
+def \mbox{\hyperlink{namespaceresistance_matrix_a652486537e35bbccb2a5f5501455d8c0}{compare\+Multiple\+Elements\+Boolean\+Test}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceresistance_matrix_a92a49d44a6d08a4baa415e788ccd51df}\label{namespaceresistance_matrix_a92a49d44a6d08a4baa415e788ccd51df}} 
+\index{resistanceMatrix@{resistanceMatrix}!calculateArea@{calculateArea}}
+\index{calculateArea@{calculateArea}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{calculateArea()}{calculateArea()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+calculate\+Area (\begin{DoxyParamCaption}\item[{}]{Point1,  }\item[{}]{Point2,  }\item[{}]{Point3 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the area of a triangle with 3 given Points\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00052}{52}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_ab61a9dd553bb4346641813b0840ff9b4}\label{namespaceresistance_matrix_ab61a9dd553bb4346641813b0840ff9b4}} 
+\index{resistanceMatrix@{resistanceMatrix}!calculateCurrent@{calculateCurrent}}
+\index{calculateCurrent@{calculateCurrent}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{calculateCurrent()}{calculateCurrent()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+calculate\+Current (\begin{DoxyParamCaption}\item[{}]{Point1,  }\item[{}]{Point2,  }\item[{}]{Point3 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the current of a triangle with 3 given Points\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00056}{56}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_aabc815cd4c730609cc22076ee5740c3d}\label{namespaceresistance_matrix_aabc815cd4c730609cc22076ee5740c3d}} 
+\index{resistanceMatrix@{resistanceMatrix}!compareMultipleElementsBoolean@{compareMultipleElementsBoolean}}
+\index{compareMultipleElementsBoolean@{compareMultipleElementsBoolean}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{compareMultipleElementsBoolean()}{compareMultipleElementsBoolean()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+compare\+Multiple\+Elements\+Boolean (\begin{DoxyParamCaption}\item[{}]{elements,  }\item[{}]{testelements }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a array with boolean elements in the length of elements, True if the value is in testelements False otherwise\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00094}{94}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a652486537e35bbccb2a5f5501455d8c0}\label{namespaceresistance_matrix_a652486537e35bbccb2a5f5501455d8c0}} 
+\index{resistanceMatrix@{resistanceMatrix}!compareMultipleElementsBooleanTest@{compareMultipleElementsBooleanTest}}
+\index{compareMultipleElementsBooleanTest@{compareMultipleElementsBooleanTest}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{compareMultipleElementsBooleanTest()}{compareMultipleElementsBooleanTest()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+compare\+Multiple\+Elements\+Boolean\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test function: should always be True\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00123}{123}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a6cac4db0b9ba501aa30fdaba4dd2f980}\label{namespaceresistance_matrix_a6cac4db0b9ba501aa30fdaba4dd2f980}} 
+\index{resistanceMatrix@{resistanceMatrix}!createPreviousResistanceMat@{createPreviousResistanceMat}}
+\index{createPreviousResistanceMat@{createPreviousResistanceMat}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{createPreviousResistanceMat()}{createPreviousResistanceMat()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+create\+Previous\+Resistance\+Mat (\begin{DoxyParamCaption}\item[{}]{mesh,  }\item[{}]{mat\+Elements\+Should\+Get\+Value }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns resistanceMatrix mit entries in matElementsShouldGetValue\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00017}{17}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a5a56527e36d216a4223d5583de912a13}\label{namespaceresistance_matrix_a5a56527e36d216a4223d5583de912a13}} 
+\index{resistanceMatrix@{resistanceMatrix}!elementInAandB@{elementInAandB}}
+\index{elementInAandB@{elementInAandB}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{elementInAandB()}{elementInAandB()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+element\+In\+AandB (\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a list with elements that are in a and b\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00087}{87}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a6bfd143d32d11149f45722ac12a89d7f}\label{namespaceresistance_matrix_a6bfd143d32d11149f45722ac12a89d7f}} 
+\index{resistanceMatrix@{resistanceMatrix}!elementInArray@{elementInArray}}
+\index{elementInArray@{elementInArray}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{elementInArray()}{elementInArray()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+element\+In\+Array (\begin{DoxyParamCaption}\item[{}]{array,  }\item[{}]{value }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a list with the elements the contain "value"\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00079}{79}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_ae5f45a15007888d04dfb201989f51ce1}\label{namespaceresistance_matrix_ae5f45a15007888d04dfb201989f51ce1}} 
+\index{resistanceMatrix@{resistanceMatrix}!formFinalResistanceMat@{formFinalResistanceMat}}
+\index{formFinalResistanceMat@{formFinalResistanceMat}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{formFinalResistanceMat()}{formFinalResistanceMat()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+form\+Final\+Resistance\+Mat (\begin{DoxyParamCaption}\item[{}]{resistance\+Matrix,  }\item[{}]{material\+Factor }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns resistanceMatrix in final form. added with its transposed and multiplied with materialFactor\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00012}{12}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a177355250f2f63867ba9e64562ec7515}\label{namespaceresistance_matrix_a177355250f2f63867ba9e64562ec7515}} 
+\index{resistanceMatrix@{resistanceMatrix}!getMatElementShouldGetValue@{getMatElementShouldGetValue}}
+\index{getMatElementShouldGetValue@{getMatElementShouldGetValue}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getMatElementShouldGetValue()}{getMatElementShouldGetValue()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Mat\+Element\+Should\+Get\+Value (\begin{DoxyParamCaption}\item[{}]{mesh }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a list with positions in the matix that should get a value (diagonal elements == same nodes and neighbouring nodes)\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00060}{60}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a9d82f51d58f2208f1a5b01286be353d1}\label{namespaceresistance_matrix_a9d82f51d58f2208f1a5b01286be353d1}} 
+\index{resistanceMatrix@{resistanceMatrix}!getNeighbourhoodMatrix@{getNeighbourhoodMatrix}}
+\index{getNeighbourhoodMatrix@{getNeighbourhoodMatrix}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getNeighbourhoodMatrix()}{getNeighbourhoodMatrix()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Neighbourhood\+Matrix (\begin{DoxyParamCaption}\item[{}]{mesh }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a boolean matrix with information if node i and node j are neighbours\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00112}{112}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a898f8be19fbceefd97fafc18584b4025}\label{namespaceresistance_matrix_a898f8be19fbceefd97fafc18584b4025}} 
+\index{resistanceMatrix@{resistanceMatrix}!getPartnerElement@{getPartnerElement}}
+\index{getPartnerElement@{getPartnerElement}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getPartnerElement()}{getPartnerElement()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Partner\+Element (\begin{DoxyParamCaption}\item[{}]{triangle,  }\item[{}]{triangles\+With\+Both\+Nodes,  }\item[{}]{node\+Ind2 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the specified triangle both nodes are in from the oneRingList of the other one node. Important because different Point-orders cause different currents.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00068}{68}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_ac8d510852e51a4b508dc722dc16e03d7}\label{namespaceresistance_matrix_ac8d510852e51a4b508dc722dc16e03d7}} 
+\index{resistanceMatrix@{resistanceMatrix}!getResistanceMatrix@{getResistanceMatrix}}
+\index{getResistanceMatrix@{getResistanceMatrix}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getResistanceMatrix()}{getResistanceMatrix()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Resistance\+Matrix (\begin{DoxyParamCaption}\item[{}]{test,  }\item[{}]{mesh,  }\item[{}]{material\+Factor }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the resistance Matrix for the given mesh\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00004}{4}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a67ffdcadebf1bc642fdfa32dfc2b8bb8}\label{namespaceresistance_matrix_a67ffdcadebf1bc642fdfa32dfc2b8bb8}} 
+\index{resistanceMatrix@{resistanceMatrix}!getResistanceSumForDifferent@{getResistanceSumForDifferent}}
+\index{getResistanceSumForDifferent@{getResistanceSumForDifferent}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getResistanceSumForDifferent()}{getResistanceSumForDifferent()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Resistance\+Sum\+For\+Different (\begin{DoxyParamCaption}\item[{}]{mesh,  }\item[{}]{triangles\+With\+Both\+Nodes,  }\item[{}]{node\+Ind1,  }\item[{}]{node\+Ind2 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns resistanceSum for the Case node1 and node2 are different\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00032}{32}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a126a744904ed04b4c9b5de6ae476b984}\label{namespaceresistance_matrix_a126a744904ed04b4c9b5de6ae476b984}} 
+\index{resistanceMatrix@{resistanceMatrix}!getResistanceSumForSame@{getResistanceSumForSame}}
+\index{getResistanceSumForSame@{getResistanceSumForSame}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getResistanceSumForSame()}{getResistanceSumForSame()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Resistance\+Sum\+For\+Same (\begin{DoxyParamCaption}\item[{}]{mesh,  }\item[{}]{node\+Ind1 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns resistanceSum for the Case node1 and node2 are the same\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00043}{43}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespaceresistance_matrix_a10aa92868d1fa0dd584a4b509bb5a419}\label{namespaceresistance_matrix_a10aa92868d1fa0dd584a4b509bb5a419}} 
+\index{resistanceMatrix@{resistanceMatrix}!getSpatialDistancesMatrix@{getSpatialDistancesMatrix}}
+\index{getSpatialDistancesMatrix@{getSpatialDistancesMatrix}!resistanceMatrix@{resistanceMatrix}}
+\doxysubsubsection{\texorpdfstring{getSpatialDistancesMatrix()}{getSpatialDistancesMatrix()}}
+{\footnotesize\ttfamily def resistance\+Matrix.\+get\+Spatial\+Distances\+Matrix (\begin{DoxyParamCaption}\item[{}]{mesh }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns a matrix containing the spatial distance between node i and node j\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{resistance_matrix_8py_source_l00104}{104}} of file \mbox{\hyperlink{resistance_matrix_8py_source}{resistance\+Matrix.\+py}}.
+

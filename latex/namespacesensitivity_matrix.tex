@@ -1,0 +1,60 @@
+\hypertarget{namespacesensitivity_matrix}{}\doxysection{sensitivity\+Matrix Namespace Reference}
+\label{namespacesensitivity_matrix}\index{sensitivityMatrix@{sensitivityMatrix}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacesensitivity_matrix_a036ad084ef8cd5d13106886088db8191}{get\+Sensitivity\+Matrix}} (test, mesh, target, n)
+\item 
+def \mbox{\hyperlink{namespacesensitivity_matrix_afb301c05e0455e56a4d17c43117f1a5f}{calc\+Sensitivity\+Mat}} (mesh, biot\+Savat\+Coeff, target, u, v, gauss\+Weight)
+\item 
+def \mbox{\hyperlink{namespacesensitivity_matrix_a8830ac13cad7ab0e4e9c5add38f0aaec}{gauss\+Legendre\+Integration\+Points\+Triangle}} (test, n)
+\item 
+def \mbox{\hyperlink{namespacesensitivity_matrix_a70b51e012cc74114bd3a81bd8187a02e}{calc\+Weights\+Gauss}} (n)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacesensitivity_matrix_afb301c05e0455e56a4d17c43117f1a5f}\label{namespacesensitivity_matrix_afb301c05e0455e56a4d17c43117f1a5f}} 
+\index{sensitivityMatrix@{sensitivityMatrix}!calcSensitivityMat@{calcSensitivityMat}}
+\index{calcSensitivityMat@{calcSensitivityMat}!sensitivityMatrix@{sensitivityMatrix}}
+\doxysubsubsection{\texorpdfstring{calcSensitivityMat()}{calcSensitivityMat()}}
+{\footnotesize\ttfamily def sensitivity\+Matrix.\+calc\+Sensitivity\+Mat (\begin{DoxyParamCaption}\item[{}]{mesh,  }\item[{}]{biot\+Savat\+Coeff,  }\item[{}]{target,  }\item[{}]{u,  }\item[{}]{v,  }\item[{}]{gauss\+Weight }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the calculated sensitivityMatrix\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{sensitivity_matrix_8py_source_l00012}{12}} of file \mbox{\hyperlink{sensitivity_matrix_8py_source}{sensitivity\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespacesensitivity_matrix_a70b51e012cc74114bd3a81bd8187a02e}\label{namespacesensitivity_matrix_a70b51e012cc74114bd3a81bd8187a02e}} 
+\index{sensitivityMatrix@{sensitivityMatrix}!calcWeightsGauss@{calcWeightsGauss}}
+\index{calcWeightsGauss@{calcWeightsGauss}!sensitivityMatrix@{sensitivityMatrix}}
+\doxysubsubsection{\texorpdfstring{calcWeightsGauss()}{calcWeightsGauss()}}
+{\footnotesize\ttfamily def sensitivity\+Matrix.\+calc\+Weights\+Gauss (\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the abscissa and the weights for a Gauss-Legendre quadrature\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{sensitivity_matrix_8py_source_l00056}{56}} of file \mbox{\hyperlink{sensitivity_matrix_8py_source}{sensitivity\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespacesensitivity_matrix_a8830ac13cad7ab0e4e9c5add38f0aaec}\label{namespacesensitivity_matrix_a8830ac13cad7ab0e4e9c5add38f0aaec}} 
+\index{sensitivityMatrix@{sensitivityMatrix}!gaussLegendreIntegrationPointsTriangle@{gaussLegendreIntegrationPointsTriangle}}
+\index{gaussLegendreIntegrationPointsTriangle@{gaussLegendreIntegrationPointsTriangle}!sensitivityMatrix@{sensitivityMatrix}}
+\doxysubsubsection{\texorpdfstring{gaussLegendreIntegrationPointsTriangle()}{gaussLegendreIntegrationPointsTriangle()}}
+{\footnotesize\ttfamily def sensitivity\+Matrix.\+gauss\+Legendre\+Integration\+Points\+Triangle (\begin{DoxyParamCaption}\item[{}]{test,  }\item[{}]{n }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the weights and the test point for the gauss legendre\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{sensitivity_matrix_8py_source_l00043}{43}} of file \mbox{\hyperlink{sensitivity_matrix_8py_source}{sensitivity\+Matrix.\+py}}.
+
+\mbox{\Hypertarget{namespacesensitivity_matrix_a036ad084ef8cd5d13106886088db8191}\label{namespacesensitivity_matrix_a036ad084ef8cd5d13106886088db8191}} 
+\index{sensitivityMatrix@{sensitivityMatrix}!getSensitivityMatrix@{getSensitivityMatrix}}
+\index{getSensitivityMatrix@{getSensitivityMatrix}!sensitivityMatrix@{sensitivityMatrix}}
+\doxysubsubsection{\texorpdfstring{getSensitivityMatrix()}{getSensitivityMatrix()}}
+{\footnotesize\ttfamily def sensitivity\+Matrix.\+get\+Sensitivity\+Matrix (\begin{DoxyParamCaption}\item[{}]{test,  }\item[{}]{mesh,  }\item[{}]{target,  }\item[{}]{n }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the sensitivity Matrix for the mesh\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{sensitivity_matrix_8py_source_l00005}{5}} of file \mbox{\hyperlink{sensitivity_matrix_8py_source}{sensitivity\+Matrix.\+py}}.
+

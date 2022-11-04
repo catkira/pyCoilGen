@@ -1,0 +1,67 @@
+\hypertarget{namespaceread_mesh}{}\doxysection{read\+Mesh Namespace Reference}
+\label{namespaceread_mesh}\index{readMesh@{readMesh}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classread_mesh_1_1_cylindric_mesh}{Cylindric\+Mesh}}
+\item 
+class \mbox{\hyperlink{classread_mesh_1_1_cylindric_mesh_given}{Cylindric\+Mesh\+Given}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceread_mesh_a790d285ac904b49af0485b53e460eea0}{calculate\+Normal}} (vec)
+\item 
+def \mbox{\hyperlink{namespaceread_mesh_a746c5c1b8312e41137cb734630b9658d}{update\+List}} (edge\+List, otheredge)
+\item 
+def \mbox{\hyperlink{namespaceread_mesh_a588d4330bd6ec0c332547f11e5998260}{get\+Mesh\+From\+STL}} (filename)
+\item 
+def \mbox{\hyperlink{namespaceread_mesh_a99250e4547bb73113be1e4b6504f7c12}{check\+If\+Vec\+In\+Veclist}} (node, vec\+List)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceread_mesh_a790d285ac904b49af0485b53e460eea0}\label{namespaceread_mesh_a790d285ac904b49af0485b53e460eea0}} 
+\index{readMesh@{readMesh}!calculateNormal@{calculateNormal}}
+\index{calculateNormal@{calculateNormal}!readMesh@{readMesh}}
+\doxysubsubsection{\texorpdfstring{calculateNormal()}{calculateNormal()}}
+{\footnotesize\ttfamily def read\+Mesh.\+calculate\+Normal (\begin{DoxyParamCaption}\item[{}]{vec }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the norm for a given 3d vector\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{read_mesh_8py_source_l00007}{7}} of file \mbox{\hyperlink{read_mesh_8py_source}{read\+Mesh.\+py}}.
+
+\mbox{\Hypertarget{namespaceread_mesh_a99250e4547bb73113be1e4b6504f7c12}\label{namespaceread_mesh_a99250e4547bb73113be1e4b6504f7c12}} 
+\index{readMesh@{readMesh}!checkIfVecInVeclist@{checkIfVecInVeclist}}
+\index{checkIfVecInVeclist@{checkIfVecInVeclist}!readMesh@{readMesh}}
+\doxysubsubsection{\texorpdfstring{checkIfVecInVeclist()}{checkIfVecInVeclist()}}
+{\footnotesize\ttfamily def read\+Mesh.\+check\+If\+Vec\+In\+Veclist (\begin{DoxyParamCaption}\item[{}]{node,  }\item[{}]{vec\+List }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns Boolean if a 3 components vec is in a list of 3 component elements\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{read_mesh_8py_source_l00359}{359}} of file \mbox{\hyperlink{read_mesh_8py_source}{read\+Mesh.\+py}}.
+
+\mbox{\Hypertarget{namespaceread_mesh_a588d4330bd6ec0c332547f11e5998260}\label{namespaceread_mesh_a588d4330bd6ec0c332547f11e5998260}} 
+\index{readMesh@{readMesh}!getMeshFromSTL@{getMeshFromSTL}}
+\index{getMeshFromSTL@{getMeshFromSTL}!readMesh@{readMesh}}
+\doxysubsubsection{\texorpdfstring{getMeshFromSTL()}{getMeshFromSTL()}}
+{\footnotesize\ttfamily def read\+Mesh.\+get\+Mesh\+From\+STL (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns vertices and faces from given stl file meshes\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{read_mesh_8py_source_l00335}{335}} of file \mbox{\hyperlink{read_mesh_8py_source}{read\+Mesh.\+py}}.
+
+\mbox{\Hypertarget{namespaceread_mesh_a746c5c1b8312e41137cb734630b9658d}\label{namespaceread_mesh_a746c5c1b8312e41137cb734630b9658d}} 
+\index{readMesh@{readMesh}!updateList@{updateList}}
+\index{updateList@{updateList}!readMesh@{readMesh}}
+\doxysubsubsection{\texorpdfstring{updateList()}{updateList()}}
+{\footnotesize\ttfamily def read\+Mesh.\+update\+List (\begin{DoxyParamCaption}\item[{}]{edge\+List,  }\item[{}]{otheredge }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}returns the edgeList without otheredge\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{read_mesh_8py_source_l00017}{17}} of file \mbox{\hyperlink{read_mesh_8py_source}{read\+Mesh.\+py}}.
+

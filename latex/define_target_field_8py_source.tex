@@ -1,0 +1,59 @@
+\hypertarget{define_target_field_8py_source}{}\doxysection{define\+Target\+Field.\+py}
+\label{define_target_field_8py_source}\index{subfunctions/defineTargetField.py@{subfunctions/defineTargetField.py}}
+\mbox{\hyperlink{define_target_field_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00001}\mbox{\hyperlink{namespacedefine_target_field}{00001}} \textcolor{comment}{\#kugel in zylinder, gleichmäßig im Volumen verteilte Punkte, mit gewünschtem Feld }}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00002}00002 \textcolor{keyword}{import} numpy \textcolor{keyword}{as} np}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00003}00003 \textcolor{keyword}{import} pandas \textcolor{keyword}{as} pd}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00004}00004 \textcolor{keyword}{import} matplotlib.pyplot \textcolor{keyword}{as} plt}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00005}00005 \textcolor{keyword}{from} readMesh \textcolor{keyword}{import} getMeshFromSTL}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00008}\mbox{\hyperlink{classdefine_target_field_1_1_target_field}{00008}} \textcolor{keyword}{class }\mbox{\hyperlink{classdefine_target_field_1_1_target_field}{TargetField}}():}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00009}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aea5deb6058dbf2de69797bea1f9017d7}{00009}}     \textcolor{keyword}{def }\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aea5deb6058dbf2de69797bea1f9017d7}{\_\_init\_\_}}(self,center,radius,direction):\textcolor{comment}{\#direction: 0==x,1==y,2==z}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00010}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{00010}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}} = center}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00011}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{00011}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}} = radius}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00012}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aa93b449cb6f7c066e63a7c7481d9a78a}{00012}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aa93b449cb6f7c066e63a7c7481d9a78a}{vertices}} = self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a576a8f4228f9a4820e975af1b81dd70b}{getTargetPoints}}()}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00013}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a638e12f041b02f4f96cc2b7abdf2b785}{00013}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a638e12f041b02f4f96cc2b7abdf2b785}{fieldValues}} = self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad93e5b91c50ddba7b2836a2e9194fb1b}{getMagneticFieldValues}}(direction)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00015}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a576a8f4228f9a4820e975af1b81dd70b}{00015}}     \textcolor{keyword}{def }\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a576a8f4228f9a4820e975af1b81dd70b}{getTargetPoints}}(self):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00016}00016         \textcolor{stringliteral}{'''generate Target Points within a circle with the given specifications'''}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00017}00017         newX = np.linspace(self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[0]-\/self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[0]+self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},25)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00018}00018         newY = np.linspace(self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[1]-\/self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[1]+self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},25)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00019}00019         newZ = np.linspace(self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[2]-\/self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}}[2]+self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}},25)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00020}00020         newX,newY,newZ = np.meshgrid(newX, newY, newZ, indexing=\textcolor{stringliteral}{'ij'})}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00021}00021         targetVertices = []}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00022}00022         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(newX)):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00023}00023             \textcolor{keywordflow}{for} j \textcolor{keywordflow}{in} range(len(newX)):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00024}00024                 \textcolor{keywordflow}{for} k \textcolor{keywordflow}{in} range(len(newX[i][j])):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00025}00025                     \textcolor{keywordflow}{if} \mbox{\hyperlink{namespacedefine_target_field_a90eae15e13195426a5916f7a6b64dea2}{distanceBetweenPoints}}(self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a1741c8edeeee9e29eb028084721a9225}{center}},[newX[i][j][k],newY[i][j][k],newZ[i][j][k]]) <= self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad71ab4efbc87be259158398dd97700bf}{radius}}:}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00026}00026                         targetVertices.append([newX[i][j][k],newY[i][j][k],newZ[i][j][k]])}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00027}00027                     \textcolor{keywordflow}{else}: \textcolor{keywordflow}{continue} }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00028}00028         \textcolor{keywordflow}{return} np.array(targetVertices)\textcolor{comment}{\#array is important to be able to do [:,0]}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00030}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad93e5b91c50ddba7b2836a2e9194fb1b}{00030}}     \textcolor{keyword}{def }\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad93e5b91c50ddba7b2836a2e9194fb1b}{getMagneticFieldValues}}(self,direction):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00031}00031         \textcolor{stringliteral}{'''returns magnetic field values analogus to matlab skript'''}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00032}00032         targetStrength = 0.1}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00033}00033         targetField = np.zeros((3,len(self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aa93b449cb6f7c066e63a7c7481d9a78a}{vertices}})))}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00034}00034         targetField[2] = self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aa93b449cb6f7c066e63a7c7481d9a78a}{vertices}}[:,direction]}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00035}00035         targetField = targetField*targetStrength}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00036}00036         \textcolor{keywordflow}{return} targetField}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00038}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given}{00038}} \textcolor{keyword}{class }\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given}{TargetFieldGiven}}(\mbox{\hyperlink{classdefine_target_field_1_1_target_field}{TargetField}}):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00039}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_a20b57be060a2fd8f505c399f979dd4cf}{00039}}     \textcolor{keyword}{def }\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_a20b57be060a2fd8f505c399f979dd4cf}{\_\_init\_\_}}(self,filename,direction):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00040}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_a898f8160278a54b9ae15c1a4d18a3600}{00040}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_aa93b449cb6f7c066e63a7c7481d9a78a}{vertices}},self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_a898f8160278a54b9ae15c1a4d18a3600}{faces}} = \mbox{\hyperlink{namespaceread_mesh_a588d4330bd6ec0c332547f11e5998260}{getMeshFromSTL}}(filename)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00041}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_acf9f418ca948b9e0030713dcaba7119d}{00041}}         self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_a638e12f041b02f4f96cc2b7abdf2b785}{fieldValues}}\mbox{\hyperlink{classdefine_target_field_1_1_target_field_given_acf9f418ca948b9e0030713dcaba7119d}{fieldValues}} = self.\mbox{\hyperlink{classdefine_target_field_1_1_target_field_ad93e5b91c50ddba7b2836a2e9194fb1b}{getMagneticFieldValues}}(direction)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00043}\mbox{\hyperlink{namespacedefine_target_field_a90eae15e13195426a5916f7a6b64dea2}{00043}} \textcolor{keyword}{def }\mbox{\hyperlink{namespacedefine_target_field_a90eae15e13195426a5916f7a6b64dea2}{distanceBetweenPoints}}(point1,point2):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00044}00044     \textcolor{stringliteral}{'''returns the distance between two given points'''}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00045}00045     result = 0}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00046}00046     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(point1)):}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00047}00047         result += (point1[i]-\/point2[i])**2}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00048}00048     \textcolor{keywordflow}{return} np.sqrt(result)}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00057}00057 \textcolor{comment}{\#ax.scatter3D(points[0],points[1],points[2])}}
+\DoxyCodeLine{\Hypertarget{define_target_field_8py_source_l00058}00058 \textcolor{comment}{\#plt.show()}}
+
+\end{DoxyCode}

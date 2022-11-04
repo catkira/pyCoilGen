@@ -91,7 +91,6 @@ def elementInAandB(a, b):
         if i in b: solution.append(i)
     return solution
 
-
 def compareMultipleElementsBoolean(elements,testelements):
     '''returns a array with boolean elements in the length of elements, True if the value is in testelements False otherwise'''
     comparisonResult=[]
@@ -102,7 +101,6 @@ def compareMultipleElementsBoolean(elements,testelements):
             comparisonResult.append(False)
     return comparisonResult
 
-
 def getSpatialDistancesMatrix(mesh):
     '''returns a matrix containing the spatial distance between node i and node j'''
     nodalNeighbourMatrix = np.full((len(mesh.vertices),len(mesh.vertices)), 0,dtype=float)
@@ -110,7 +108,6 @@ def getSpatialDistancesMatrix(mesh):
         for j in range(len(mesh.vertices)):
             nodalNeighbourMatrix[i][j] = distanceBetweenPoints(mesh.vertices[i],mesh.vertices[j])
     return nodalNeighbourMatrix
-
 
 def getNeighbourhoodMatrix(mesh):
     '''returns a boolean matrix with information if node i and node j are neighbours'''
@@ -126,4 +123,3 @@ def getNeighbourhoodMatrix(mesh):
 def compareMultipleElementsBooleanTest():
     '''Test function: should always be True'''
     return len(np.where(compareMultipleElementsBoolean()))==1
-

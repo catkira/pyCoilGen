@@ -5,6 +5,7 @@ import trimesh
 import scipy
 
 def calculateNormal(vec):
+    '''returns the norm for a given 3d vector'''
     if len(vec) == 3:
         v1 = vec[1] - vec[0]
         v2 = vec[2] - vec[0]
@@ -14,6 +15,7 @@ def calculateNormal(vec):
         return False
 
 def updateList(edgeList,otheredge):
+    '''returns the edgeList without otheredge'''
     return [a for a, skip in zip(edgeList, [np.allclose(a, otheredge) for a in edgeList]) if not skip]
 
 #option 1: create mesh 
@@ -269,6 +271,7 @@ class CylindricMesh():
         return oneRingList
 
     def arrangeCircular(self,start,Elements):
+        '''returns the elements in a circular order beginning with start'''
         new = [start]
         while len(new) != len(Elements):
             for i in Elements:
@@ -359,6 +362,8 @@ def checkIfVecInVeclist(node,vecList):
 
 
 
+
+## Testing ##
 # createdmesh = CylindricMesh(5.0,3.0,10)
 #givenMesh = CylindricMeshGiven('C:\\Users\Simone\git\Py-CoilGen\cylinder_radius500mm_length1500mm.stl')
 

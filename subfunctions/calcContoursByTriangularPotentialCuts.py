@@ -1,5 +1,5 @@
 import numpy as np
-from .readMesh import updateList
+from readMesh import updateList
 
 def calcContoursByTriangluarPotentialCuts(mesh,potentialLevelList,streamFunction):
 
