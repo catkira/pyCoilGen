@@ -6,8 +6,7 @@
 ## Testing with Pytest
 
 If not already installed run: pip install -U pytest
-
-To run the tests: pytest main.py (alternative: the specific file you want to test)
+To run the tests: pytest 
 
 
 
