@@ -7,6 +7,6 @@ var dir_5c0f42c48f60616d4a4198ae653153f4 =
     [ "resistanceMatrix.py", "resistance_matrix_8py.html", "resistance_matrix_8py" ],
     [ "sensitivityMatrix.py", "sensitivity_matrix_8py.html", "sensitivity_matrix_8py" ],
     [ "streamFunctionOptimization.py", "stream_function_optimization_8py.html", "stream_function_optimization_8py" ],
-    [ "test_testCase.py", "test__test_case_8py.html", "test__test_case_8py" ],
+    [ "testCase.py", "test_case_8py.html", "test_case_8py" ],
     [ "Tester.py", "_tester_8py.html", "_tester_8py" ]
 ];

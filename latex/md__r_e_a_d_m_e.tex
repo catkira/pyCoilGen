@@ -1,9 +1,18 @@
 
 
-\hypertarget{md__r_e_a_d_m_e_autotoc_md0}{}\doxysubsection{Testing with Pytest}\label{md__r_e_a_d_m_e_autotoc_md0}
-If not already installed run\+: pip install -\/U pytest
+\hypertarget{md__r_e_a_d_m_e_autotoc_md0}{}\doxysubsection{Python Implementation}\label{md__r_e_a_d_m_e_autotoc_md0}
+This project is the python implementation of the matlab project\+: \href{https://github.com/Philipp-MR/CoilGen}{\texttt{ Coil\+Gen (https\+://github.\+com/\+Philipp-\/\+MR/\+Coil\+Gen)}}.
 
-To run the tests\+: pytest \mbox{\hyperlink{main_8py}{main.\+py}} (alternative\+: the specific file you want to test)\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{Citation}\label{md__r_e_a_d_m_e_autotoc_md1}
+The python project reprogrammed the functionalitys starting in the Heard file\+: {\ttfamily Coil\+Gen\textbackslash{}Coil\+Gen.\+m}. When the functionality is fine the stucture and the code itself was cleaned up and changes that do not change the results were made.
+
+State 2022-\/11-\/07 working was stopped in calc\+Countours\+By\+Triangular\+Potential\+Cuts.\+py (there is a TODO with further explaintation). Until there in a testcase the results are similar to the ones in the matlab implementation. The testcase in Matlab could be found in\+: {\ttfamily Coil\+Gen\textbackslash{}Examples\textbackslash{}ygradient\+\_\+coil.\+m}.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{Testing with Pytest}\label{md__r_e_a_d_m_e_autotoc_md1}
+There is a testcase implemented in \mbox{\hyperlink{test_case_8py}{test\+Case.\+py}}, on which it could be evaluated if the program still does what it should do. The results there are checked against the ones of the same case in the matlab project. For testing pytest is used.
+
+
+\begin{DoxyEnumerate}
+\item If not already installed run\+: pip install -\/U pytest
+\item To run the tests, navigate to the Py\+\_\+\+Coilgen folder and run\+: pytest
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{Citation}\label{md__r_e_a_d_m_e_autotoc_md2}
 For citation of this work, please refer to the following publication\+: \href{https://onlinelibrary.wiley.com/doi/10.1002/mrm.29294}{\texttt{ https\+://onlinelibrary.\+wiley.\+com/doi/10.\+1002/mrm.\+29294}} \href{https://doi.org/10.1002/mrm.29294}{\texttt{ https\+://doi.\+org/10.\+1002/mrm.\+29294}}
 
 (\href{\#top}{\texttt{ back to top}})

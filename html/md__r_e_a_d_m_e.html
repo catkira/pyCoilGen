@@ -88,10 +88,18 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 <div class="contents">
 <div class="textblock"><div id="top"></div><p ><img src="./Documentation/GoilGen_Logo.png" alt="" width="300" class="inline"/></p>
 <h2><a class="anchor" id="autotoc_md0"></a>
-Testing with Pytest</h2>
-<p >If not already installed run: pip install -U pytest</p>
-<p >To run the tests: pytest <a class="el" href="main_8py.html">main.py</a> (alternative: the specific file you want to test)</p>
+Python Implementation</h2>
+<p >This project is the python implementation of the matlab project: <a href="https://github.com/Philipp-MR/CoilGen">CoilGen (https://github.com/Philipp-MR/CoilGen)</a>.</p>
+<p >The python project reprogrammed the functionalitys starting in the Heard file: <code>CoilGen\CoilGen.m</code>. When the functionality is fine the stucture and the code itself was cleaned up and changes that do not change the results were made.</p>
+<p >State 2022-11-07 working was stopped in calcCountoursByTriangularPotentialCuts.py (there is a TODO with further explaintation). Until there in a testcase the results are similar to the ones in the matlab implementation. The testcase in Matlab could be found in: <code>CoilGen\Examples\ygradient_coil.m</code>.</p>
 <h2><a class="anchor" id="autotoc_md1"></a>
+Testing with Pytest</h2>
+<p >There is a testcase implemented in <a class="el" href="test_case_8py.html">testCase.py</a>, on which it could be evaluated if the program still does what it should do. The results there are checked against the ones of the same case in the matlab project. For testing pytest is used.</p>
+<ol type="1">
+<li>If not already installed run: pip install -U pytest</li>
+<li>To run the tests, navigate to the Py_Coilgen folder and run: pytest</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md2"></a>
 Citation</h2>
 <p >For citation of this work, please refer to the following publication: <a href="https://onlinelibrary.wiley.com/doi/10.1002/mrm.29294">https://onlinelibrary.wiley.com/doi/10.1002/mrm.29294</a> <a href="https://doi.org/10.1002/mrm.29294">https://doi.org/10.1002/mrm.29294</a></p>
 <p >(<a href="#top">back to top</a>)</p>

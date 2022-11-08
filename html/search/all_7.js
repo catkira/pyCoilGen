@@ -1,9 +1,9 @@
 var searchData=
 [
   ['gaußlegendre_0',['gaußLegendre',['../class_tester_1_1_tester.html#adada4e597791ee6d99732ab1f78b9ee3',1,'Tester::Tester']]],
-  ['gaußlegendrecorrect_1',['gaußLegendreCorrect',['../namespacetest__test_case.html#a0baf19c8214733b418343556df8cd093',1,'test_testCase']]],
+  ['gaußlegendrecorrect_1',['gaußLegendreCorrect',['../namespacetest_case.html#aa28901982c052168f2f7980a6c94dca6',1,'testCase']]],
   ['gausslegendreintegrationpointstriangle_2',['gaussLegendreIntegrationPointsTriangle',['../namespacesensitivity_matrix.html#a8830ac13cad7ab0e4e9c5add38f0aaec',1,'sensitivityMatrix']]],
-  ['gaussorder_3',['gaussOrder',['../namespacemain.html#a8457d7e8974fc0c4dbefe0be06f3342f',1,'main.gaussOrder()'],['../namespacetest__test_case.html#ada447d6493ed46fbdbdff131bac751c3',1,'test_testCase.gaussOrder()']]],
+  ['gaussorder_3',['gaussOrder',['../namespacemain.html#a8457d7e8974fc0c4dbefe0be06f3342f',1,'main.gaussOrder()'],['../namespacetest_case.html#afe1a6e76378158f346699327d303bed8',1,'testCase.gaussOrder()']]],
   ['get2dcoordinates_4',['get2Dcoordinates',['../classread_mesh_1_1_cylindric_mesh.html#a6639d42b064b568bc108cf6e983efd8c',1,'readMesh::CylindricMesh']]],
   ['getareas_5',['getAreas',['../classread_mesh_1_1_cylindric_mesh.html#a5f9bb2d3755615bdc5d1a5bbeffb4c34',1,'readMesh::CylindricMesh']]],
   ['getboundarydetails_6',['getBoundaryDetails',['../namespacestream_function_optimization.html#a8b2eb9ed25809d0d56cdfc5bdbc19924',1,'streamFunctionOptimization']]],

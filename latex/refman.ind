@@ -1,0 +1,585 @@
+\begin{theindex}
+
+  \item {\_\_init\_\_}
+    \subitem {defineTargetField.TargetField}, \hyperpage{95}
+    \subitem {defineTargetField.TargetFieldGiven}, \hyperpage{97}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{80}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+    \subitem {showSTLMesh.CylindricMeshGiven}, \hyperpage{94}
+    \subitem {Tester.Tester}, \hyperpage{98}
+
+  \indexspace
+
+  \item {applyTikonovRegularisation}
+    \subitem {streamFunctionOptimization}, \hyperpage{28}
+  \item {areas}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{87}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+  \item {arrangeCircular}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{80}
+  \item {axes}
+    \subitem {showSTLMesh}, \hyperpage{27}
+
+  \indexspace
+
+  \item {BField}
+    \subitem {testCase}, \hyperpage{54}
+  \item {bFieldCorrectValue}
+    \subitem {testCase}, \hyperpage{54}
+  \item {bFieldGeneratedByOptSF}
+    \subitem {main}, \hyperpage{17}
+  \item {boundary}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{87}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+
+  \indexspace
+
+  \item {calc3DRotMatByVec}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{81}
+  \item {calcContoursByTriangluarPotentialCuts}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{11}
+  \item {calcContoursByTriangularPotentialCuts}, \hyperpage{11}
+    \subitem {calcContoursByTriangluarPotentialCuts}, \hyperpage{11}
+    \subitem {checkIfPositionsElementIdenticalWithFirstList}, 
+		\hyperpage{11}
+    \subitem {getCutDistancesToEdgeNodes}, \hyperpage{12}
+    \subitem {getEdgeAttachedTriangles}, \hyperpage{12}
+    \subitem {getEdgeOpposedNode}, \hyperpage{12}
+    \subitem {getEdges}, \hyperpage{12}
+    \subitem {getInnerEdegTriangleNodes}, \hyperpage{13}
+    \subitem {getInnerEdges}, \hyperpage{13}
+    \subitem {getNumAttachedTriangles}, \hyperpage{13}
+    \subitem {getPotentialCutCriteria}, \hyperpage{13}
+    \subitem {getPotentialSortedCutPoints}, \hyperpage{14}
+    \subitem {getRawUnarrangedLoops}, \hyperpage{14}
+    \subitem {getRawUnsortedPoints}, \hyperpage{14}
+    \subitem {getuvCutPoints}, \hyperpage{14}
+    \subitem {removeTwoElementsFromArray}, \hyperpage{15}
+  \item {calcPotentialLevels}, \hyperpage{15}
+    \subitem {calcPotentialLevels}, \hyperpage{15}
+  \item {calcRotationVec}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{81}
+  \item {calcSensitivityMat}
+    \subitem {sensitivityMatrix}, \hyperpage{25}
+  \item {calculateArea}
+    \subitem {resistanceMatrix}, \hyperpage{22}
+  \item {calculateCurrent}
+    \subitem {resistanceMatrix}, \hyperpage{22}
+  \item {calculateNormal}
+    \subitem {readMesh}, \hyperpage{20}
+  \item {calcWeightsGauss}
+    \subitem {sensitivityMatrix}, \hyperpage{26}
+    \subitem {Tester.Tester}, \hyperpage{99}
+  \item {calcWeightsGaussCorrect}
+    \subitem {testCase}, \hyperpage{63}
+  \item {center}
+    \subitem {defineTargetField.TargetField}, \hyperpage{96}
+  \item {checkIfBoundary}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{81}
+  \item {checkIfPositionsElementIdenticalWithFirstList}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{11}
+  \item {checkIfVecInVeclist}
+    \subitem {readMesh}, \hyperpage{20}
+  \item {checkStartTriangle}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{81}
+  \item {compareMultipleElementsBoolean}
+    \subitem {resistanceMatrix}, \hyperpage{22}
+  \item {compareMultipleElementsBooleanTest}
+    \subitem {resistanceMatrix}, \hyperpage{22}
+  \item {conducterThickness}
+    \subitem {main}, \hyperpage{17}
+    \subitem {testCase}, \hyperpage{63}
+  \item {contour}
+    \subitem {main}, \hyperpage{17}
+  \item {contourStep}
+    \subitem {main}, \hyperpage{17}
+  \item {createOneRingList}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{82}
+  \item {createPreviousResistanceMat}
+    \subitem {resistanceMatrix}, \hyperpage{22}
+  \item {current}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{87}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+  \item {currentDensityFaces}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{87}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+
+  \indexspace
+
+  \item {defineTargetField}, \hyperpage{16}
+    \subitem {distanceBetweenPoints}, \hyperpage{16}
+  \item {defineTargetField.TargetField}, \hyperpage{95}
+    \subitem {\_\_init\_\_}, \hyperpage{95}
+    \subitem {center}, \hyperpage{96}
+    \subitem {fieldValues}, \hyperpage{96}
+    \subitem {getMagneticFieldValues}, \hyperpage{95}
+    \subitem {getTargetPoints}, \hyperpage{96}
+    \subitem {radius}, \hyperpage{96}
+    \subitem {vertices}, \hyperpage{96}
+  \item {defineTargetField.TargetFieldGiven}, \hyperpage{97}
+    \subitem {\_\_init\_\_}, \hyperpage{97}
+    \subitem {faces}, \hyperpage{98}
+    \subitem {fieldValues}, \hyperpage{98}
+  \item {distanceBetweenPoints}
+    \subitem {defineTargetField}, \hyperpage{16}
+
+  \indexspace
+
+  \item {elementInAandB}
+    \subitem {resistanceMatrix}, \hyperpage{23}
+  \item {elementInArray}
+    \subitem {resistanceMatrix}, \hyperpage{23}
+  \item {ensureUniformOrientation}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{82}
+
+  \indexspace
+
+  \item {faces}
+    \subitem {defineTargetField.TargetFieldGiven}, \hyperpage{98}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{91}
+  \item {fieldValues}
+    \subitem {defineTargetField.TargetField}, \hyperpage{96}
+    \subitem {defineTargetField.TargetFieldGiven}, \hyperpage{98}
+  \item {figure}
+    \subitem {showSTLMesh}, \hyperpage{27}
+  \item {findStartInBoundaryCase}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{82}
+  \item {formFinalResistanceMat}
+    \subitem {resistanceMatrix}, \hyperpage{23}
+
+  \indexspace
+
+  \item {gaussLegendreIntegrationPointsTriangle}
+    \subitem {sensitivityMatrix}, \hyperpage{26}
+  \item {gaussOrder}
+    \subitem {main}, \hyperpage{17}
+    \subitem {testCase}, \hyperpage{63}
+  \item {gaußLegendre}
+    \subitem {Tester.Tester}, \hyperpage{99}
+  \item {gaußLegendreCorrect}
+    \subitem {testCase}, \hyperpage{63}
+  \item {get2Dcoordinates}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{82}
+  \item {getAreas}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{83}
+  \item {getBoundaryDetails}
+    \subitem {streamFunctionOptimization}, \hyperpage{29}
+  \item {getBoundaryEdges}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{83}
+  \item {getBoundaryLoopNodes}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{83}
+  \item {getCurrent}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{83}
+  \item {getCutDistancesToEdgeNodes}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{12}
+  \item {getDimToRed}
+    \subitem {streamFunctionOptimization}, \hyperpage{29}
+  \item {getEdgeAttachedTriangles}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{12}
+  \item {getEdgeOpposedNode}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{12}
+  \item {getEdges}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{12}
+  \item {getInnerEdegTriangleNodes}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{13}
+  \item {getInnerEdges}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{13}
+  \item {getMagneticFieldValues}
+    \subitem {defineTargetField.TargetField}, \hyperpage{95}
+  \item {getMatElementShouldGetValue}
+    \subitem {resistanceMatrix}, \hyperpage{23}
+  \item {getMesh}
+    \subitem {showSTLMesh}, \hyperpage{27}
+  \item {getMeshFromSTL}
+    \subitem {readMesh}, \hyperpage{21}
+  \item {getNeighbourAreas}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{84}
+  \item {getNeighbourCurrents}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{84}
+  \item {getNeighbourCurrentsUnsorted}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{84}
+  \item {getNeighbourhoodMatrix}
+    \subitem {resistanceMatrix}, \hyperpage{24}
+  \item {getNeighbourTriangleIndices}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{84}
+  \item {getNormals}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{85}
+  \item {getNotBoundaryNodes}
+    \subitem {streamFunctionOptimization}, \hyperpage{29}
+  \item {getNumAttachedTriangles}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{13}
+  \item {getNumNodesPerBoundary}
+    \subitem {streamFunctionOptimization}, \hyperpage{29}
+  \item {getOneRingList}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{85}
+  \item {getOpenBoundaries}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{85}
+  \item {getPartnerElement}
+    \subitem {resistanceMatrix}, \hyperpage{24}
+  \item {getPotentialCutCriteria}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{13}
+  \item {getPotentialSortedCutPoints}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{14}
+  \item {getRawUnarrangedLoops}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{14}
+  \item {getRawUnsortedPoints}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{14}
+  \item {getReducedMat}
+    \subitem {streamFunctionOptimization}, \hyperpage{30}
+  \item {getResistanceMatrix}
+    \subitem {resistanceMatrix}, \hyperpage{24}
+  \item {getResistanceSumForDifferent}
+    \subitem {resistanceMatrix}, \hyperpage{24}
+  \item {getResistanceSumForSame}
+    \subitem {resistanceMatrix}, \hyperpage{25}
+  \item {getRotatedCopy}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{85}
+  \item {getRotatedVertices}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{86}
+  \item {getSensitivityMatrix}
+    \subitem {sensitivityMatrix}, \hyperpage{26}
+  \item {getSpatialDistancesMatrix}
+    \subitem {resistanceMatrix}, \hyperpage{25}
+  \item {getTargetPoints}
+    \subitem {defineTargetField.TargetField}, \hyperpage{96}
+  \item {getuvCutPoints}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{14}
+  \item {getVertexNormals}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{86}
+  \item {givenMesh}
+    \subitem {showSTLMesh}, \hyperpage{27}
+
+  \indexspace
+
+  \item {levelOffset}
+    \subitem {main}, \hyperpage{17}
+
+  \indexspace
+
+  \item {main}, \hyperpage{16}
+    \subitem {bFieldGeneratedByOptSF}, \hyperpage{17}
+    \subitem {conducterThickness}, \hyperpage{17}
+    \subitem {contour}, \hyperpage{17}
+    \subitem {contourStep}, \hyperpage{17}
+    \subitem {gaussOrder}, \hyperpage{17}
+    \subitem {levelOffset}, \hyperpage{17}
+    \subitem {materialFactor}, \hyperpage{18}
+    \subitem {Mesh}, \hyperpage{18}
+    \subitem {meshFile}, \hyperpage{18}
+    \subitem {numLevels}, \hyperpage{18}
+    \subitem {potentialLevelList}, \hyperpage{18}
+    \subitem {resistanceMatrix}, \hyperpage{18}
+    \subitem {sensitivityMatrix}, \hyperpage{19}
+    \subitem {specificConductivityMaterial}, \hyperpage{19}
+    \subitem {streamFunction}, \hyperpage{19}
+    \subitem {targetMeshFile}, \hyperpage{19}
+    \subitem {TargetSphere}, \hyperpage{19}
+    \subitem {Test}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{53}
+    \subitem {tikonovFac}, \hyperpage{20}
+  \item {main.py}, \hyperpage{101}
+  \item {matElementsShouldGetValue}
+    \subitem {Tester.Tester}, \hyperpage{99}
+  \item {matElementsShouldGetValueCorrect}
+    \subitem {testCase}, \hyperpage{64}
+  \item {materialFactor}
+    \subitem {main}, \hyperpage{18}
+    \subitem {testCase}, \hyperpage{74}
+  \item {Mesh}
+    \subitem {main}, \hyperpage{18}
+    \subitem {testCase}, \hyperpage{74}
+  \item {meshFile}
+    \subitem {main}, \hyperpage{18}
+    \subitem {testCase}, \hyperpage{74}
+
+  \indexspace
+
+  \item {neighbourareas}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {neighbourcurrents}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {neighbourcurrentUnsorted}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {neighbours}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {normals}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{88}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {numLevels}
+    \subitem {main}, \hyperpage{18}
+
+  \indexspace
+
+  \item {oneRingList}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{92}
+  \item {openBoundaries}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{93}
+  \item {orderElementsInCircularArangement}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{86}
+
+  \indexspace
+
+  \item {potentialLevelList}
+    \subitem {main}, \hyperpage{18}
+
+  \indexspace
+
+  \item {radius}
+    \subitem {defineTargetField.TargetField}, \hyperpage{96}
+  \item {README.md}, \hyperpage{102}
+  \item {readMesh}, \hyperpage{20}
+    \subitem {calculateNormal}, \hyperpage{20}
+    \subitem {checkIfVecInVeclist}, \hyperpage{20}
+    \subitem {getMeshFromSTL}, \hyperpage{21}
+    \subitem {updateList}, \hyperpage{21}
+  \item {readMesh.CylindricMesh}, \hyperpage{79}
+    \subitem {\_\_init\_\_}, \hyperpage{80}
+    \subitem {areas}, \hyperpage{87}
+    \subitem {arrangeCircular}, \hyperpage{80}
+    \subitem {boundary}, \hyperpage{87}
+    \subitem {calc3DRotMatByVec}, \hyperpage{81}
+    \subitem {calcRotationVec}, \hyperpage{81}
+    \subitem {checkIfBoundary}, \hyperpage{81}
+    \subitem {checkStartTriangle}, \hyperpage{81}
+    \subitem {createOneRingList}, \hyperpage{82}
+    \subitem {current}, \hyperpage{87}
+    \subitem {currentDensityFaces}, \hyperpage{87}
+    \subitem {ensureUniformOrientation}, \hyperpage{82}
+    \subitem {faces}, \hyperpage{88}
+    \subitem {findStartInBoundaryCase}, \hyperpage{82}
+    \subitem {get2Dcoordinates}, \hyperpage{82}
+    \subitem {getAreas}, \hyperpage{83}
+    \subitem {getBoundaryEdges}, \hyperpage{83}
+    \subitem {getBoundaryLoopNodes}, \hyperpage{83}
+    \subitem {getCurrent}, \hyperpage{83}
+    \subitem {getNeighbourAreas}, \hyperpage{84}
+    \subitem {getNeighbourCurrents}, \hyperpage{84}
+    \subitem {getNeighbourCurrentsUnsorted}, \hyperpage{84}
+    \subitem {getNeighbourTriangleIndices}, \hyperpage{84}
+    \subitem {getNormals}, \hyperpage{85}
+    \subitem {getOneRingList}, \hyperpage{85}
+    \subitem {getOpenBoundaries}, \hyperpage{85}
+    \subitem {getRotatedCopy}, \hyperpage{85}
+    \subitem {getRotatedVertices}, \hyperpage{86}
+    \subitem {getVertexNormals}, \hyperpage{86}
+    \subitem {neighbourareas}, \hyperpage{88}
+    \subitem {neighbourcurrents}, \hyperpage{88}
+    \subitem {neighbourcurrentUnsorted}, \hyperpage{88}
+    \subitem {neighbours}, \hyperpage{88}
+    \subitem {normals}, \hyperpage{88}
+    \subitem {oneRingList}, \hyperpage{89}
+    \subitem {openBoundaries}, \hyperpage{89}
+    \subitem {orderElementsInCircularArangement}, \hyperpage{86}
+    \subitem {removeDoubleEdges}, \hyperpage{86}
+    \subitem {rotatedCaylinder}, \hyperpage{89}
+    \subitem {turnAnsSortElements}, \hyperpage{87}
+    \subitem {v}, \hyperpage{89}
+    \subitem {vertexNormals}, \hyperpage{89}
+    \subitem {vertices}, \hyperpage{89}
+  \item {readMesh.CylindricMeshGiven}, \hyperpage{90}
+    \subitem {\_\_init\_\_}, \hyperpage{91}
+    \subitem {areas}, \hyperpage{91}
+    \subitem {boundary}, \hyperpage{91}
+    \subitem {current}, \hyperpage{91}
+    \subitem {currentDensityFaces}, \hyperpage{91}
+    \subitem {faces}, \hyperpage{91}
+    \subitem {neighbourareas}, \hyperpage{92}
+    \subitem {neighbourcurrents}, \hyperpage{92}
+    \subitem {neighbourcurrentUnsorted}, \hyperpage{92}
+    \subitem {neighbours}, \hyperpage{92}
+    \subitem {normals}, \hyperpage{92}
+    \subitem {oneRingList}, \hyperpage{92}
+    \subitem {openBoundaries}, \hyperpage{93}
+    \subitem {rotatedCaylinder}, \hyperpage{93}
+    \subitem {v}, \hyperpage{93}
+    \subitem {vertexNormals}, \hyperpage{93}
+    \subitem {vertices}, \hyperpage{93}
+  \item {rearrangeReducedMat}
+    \subitem {streamFunctionOptimization}, \hyperpage{30}
+  \item {reducedSF}
+    \subitem {Tester.Tester}, \hyperpage{99}
+  \item {reducedSFCorrect}
+    \subitem {testCase}, \hyperpage{74}
+  \item {reduceMatricesForBoundaryNodes}
+    \subitem {streamFunctionOptimization}, \hyperpage{30}
+  \item {reexpandSteamFunctionForBoundaryNodes}
+    \subitem {streamFunctionOptimization}, \hyperpage{30}
+  \item {removeDoubleEdges}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{86}
+  \item {removeTwoElementsFromArray}
+    \subitem {calcContoursByTriangularPotentialCuts}, \hyperpage{15}
+  \item {resistanceMatrix}, \hyperpage{21}
+    \subitem {calculateArea}, \hyperpage{22}
+    \subitem {calculateCurrent}, \hyperpage{22}
+    \subitem {compareMultipleElementsBoolean}, \hyperpage{22}
+    \subitem {compareMultipleElementsBooleanTest}, \hyperpage{22}
+    \subitem {createPreviousResistanceMat}, \hyperpage{22}
+    \subitem {elementInAandB}, \hyperpage{23}
+    \subitem {elementInArray}, \hyperpage{23}
+    \subitem {formFinalResistanceMat}, \hyperpage{23}
+    \subitem {getMatElementShouldGetValue}, \hyperpage{23}
+    \subitem {getNeighbourhoodMatrix}, \hyperpage{24}
+    \subitem {getPartnerElement}, \hyperpage{24}
+    \subitem {getResistanceMatrix}, \hyperpage{24}
+    \subitem {getResistanceSumForDifferent}, \hyperpage{24}
+    \subitem {getResistanceSumForSame}, \hyperpage{25}
+    \subitem {getSpatialDistancesMatrix}, \hyperpage{25}
+    \subitem {main}, \hyperpage{18}
+    \subitem {testCase}, \hyperpage{75}
+  \item {rotatedCaylinder}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{93}
+
+  \indexspace
+
+  \item {scale}
+    \subitem {showSTLMesh}, \hyperpage{28}
+  \item {sensitivityMatrix}, \hyperpage{25}
+    \subitem {calcSensitivityMat}, \hyperpage{25}
+    \subitem {calcWeightsGauss}, \hyperpage{26}
+    \subitem {gaussLegendreIntegrationPointsTriangle}, \hyperpage{26}
+    \subitem {getSensitivityMatrix}, \hyperpage{26}
+    \subitem {main}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{76}
+  \item {SFCorrectValue}
+    \subitem {testCase}, \hyperpage{76}
+  \item {SFOpt}
+    \subitem {testCase}, \hyperpage{77}
+  \item {showSTLMesh}, \hyperpage{27}
+    \subitem {axes}, \hyperpage{27}
+    \subitem {figure}, \hyperpage{27}
+    \subitem {getMesh}, \hyperpage{27}
+    \subitem {givenMesh}, \hyperpage{27}
+    \subitem {scale}, \hyperpage{28}
+    \subitem {your\_mesh}, \hyperpage{28}
+  \item {showSTLMesh.CylindricMeshGiven}, \hyperpage{94}
+    \subitem {\_\_init\_\_}, \hyperpage{94}
+    \subitem {vertices}, \hyperpage{94}
+  \item {showSTLMesh.py}, \hyperpage{102}
+  \item {specificConductivityMaterial}
+    \subitem {main}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{77}
+  \item {streamFunction}
+    \subitem {main}, \hyperpage{19}
+  \item {streamFunctionOptimization}, \hyperpage{28}
+    \subitem {applyTikonovRegularisation}, \hyperpage{28}
+    \subitem {getBoundaryDetails}, \hyperpage{29}
+    \subitem {getDimToRed}, \hyperpage{29}
+    \subitem {getNotBoundaryNodes}, \hyperpage{29}
+    \subitem {getNumNodesPerBoundary}, \hyperpage{29}
+    \subitem {getReducedMat}, \hyperpage{30}
+    \subitem {rearrangeReducedMat}, \hyperpage{30}
+    \subitem {reduceMatricesForBoundaryNodes}, \hyperpage{30}
+    \subitem {reexpandSteamFunctionForBoundaryNodes}, \hyperpage{30}
+    \subitem {streamFunctionOptimization}, \hyperpage{31}
+    \subitem {updateMeshCurrentDensityMeshFaces}, \hyperpage{31}
+  \item {subfunctions/calcContoursByTriangularPotentialCuts.py}, 
+		\hyperpage{103, 104}
+  \item {subfunctions/calcPotentialLevels.py}, \hyperpage{107}
+  \item {subfunctions/defineTargetField.py}, \hyperpage{108}
+  \item {subfunctions/readMesh.py}, \hyperpage{109}
+  \item {subfunctions/resistanceMatrix.py}, \hyperpage{114}
+  \item {subfunctions/sensitivityMatrix.py}, \hyperpage{116}
+  \item {subfunctions/streamFunctionOptimization.py}, 
+		\hyperpage{117, 118}
+  \item {subfunctions/testCase.py}, \hyperpage{120}, \hyperpage{141}
+  \item {subfunctions/Tester.py}, \hyperpage{156}
+
+  \indexspace
+
+  \item {targetMeshFile}
+    \subitem {main}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{77}
+  \item {TargetSphere}
+    \subitem {main}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{78}
+  \item {Test}
+    \subitem {main}, \hyperpage{19}
+    \subitem {testCase}, \hyperpage{78}
+  \item {test\_bFieldGeneratedByOptSF}
+    \subitem {testCase}, \hyperpage{53}
+  \item {test\_finalSF}
+    \subitem {testCase}, \hyperpage{53}
+  \item {test\_gaußLegendre}
+    \subitem {testCase}, \hyperpage{53}
+  \item {test\_matElementsShouldGetValue}
+    \subitem {testCase}, \hyperpage{54}
+  \item {test\_reducedSF}
+    \subitem {testCase}, \hyperpage{54}
+  \item {test\_WeightsGauss}
+    \subitem {testCase}, \hyperpage{54}
+  \item {testCase}, \hyperpage{31}
+    \subitem {BField}, \hyperpage{54}
+    \subitem {bFieldCorrectValue}, \hyperpage{54}
+    \subitem {calcWeightsGaussCorrect}, \hyperpage{63}
+    \subitem {conducterThickness}, \hyperpage{63}
+    \subitem {gaussOrder}, \hyperpage{63}
+    \subitem {gaußLegendreCorrect}, \hyperpage{63}
+    \subitem {main}, \hyperpage{53}
+    \subitem {matElementsShouldGetValueCorrect}, \hyperpage{64}
+    \subitem {materialFactor}, \hyperpage{74}
+    \subitem {Mesh}, \hyperpage{74}
+    \subitem {meshFile}, \hyperpage{74}
+    \subitem {reducedSFCorrect}, \hyperpage{74}
+    \subitem {resistanceMatrix}, \hyperpage{75}
+    \subitem {sensitivityMatrix}, \hyperpage{76}
+    \subitem {SFCorrectValue}, \hyperpage{76}
+    \subitem {SFOpt}, \hyperpage{77}
+    \subitem {specificConductivityMaterial}, \hyperpage{77}
+    \subitem {targetMeshFile}, \hyperpage{77}
+    \subitem {TargetSphere}, \hyperpage{78}
+    \subitem {Test}, \hyperpage{78}
+    \subitem {test\_bFieldGeneratedByOptSF}, \hyperpage{53}
+    \subitem {test\_finalSF}, \hyperpage{53}
+    \subitem {test\_gaußLegendre}, \hyperpage{53}
+    \subitem {test\_matElementsShouldGetValue}, \hyperpage{54}
+    \subitem {test\_reducedSF}, \hyperpage{54}
+    \subitem {test\_WeightsGauss}, \hyperpage{54}
+    \subitem {tikonovFac}, \hyperpage{78}
+  \item {Tester}, \hyperpage{78}
+  \item {Tester.Tester}, \hyperpage{98}
+    \subitem {\_\_init\_\_}, \hyperpage{98}
+    \subitem {calcWeightsGauss}, \hyperpage{99}
+    \subitem {gaußLegendre}, \hyperpage{99}
+    \subitem {matElementsShouldGetValue}, \hyperpage{99}
+    \subitem {reducedSF}, \hyperpage{99}
+  \item {tikonovFac}
+    \subitem {main}, \hyperpage{20}
+    \subitem {testCase}, \hyperpage{78}
+  \item {turnAnsSortElements}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{87}
+
+  \indexspace
+
+  \item {updateList}
+    \subitem {readMesh}, \hyperpage{21}
+  \item {updateMeshCurrentDensityMeshFaces}
+    \subitem {streamFunctionOptimization}, \hyperpage{31}
+
+  \indexspace
+
+  \item {v}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{93}
+  \item {vertexNormals}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{93}
+  \item {vertices}
+    \subitem {defineTargetField.TargetField}, \hyperpage{96}
+    \subitem {readMesh.CylindricMesh}, \hyperpage{89}
+    \subitem {readMesh.CylindricMeshGiven}, \hyperpage{93}
+    \subitem {showSTLMesh.CylindricMeshGiven}, \hyperpage{94}
+
+  \indexspace
+
+  \item {your\_mesh}
+    \subitem {showSTLMesh}, \hyperpage{28}
+
+\end{theindex}
