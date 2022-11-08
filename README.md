@@ -5,8 +5,11 @@
 
 ## Python Implementation
  
-This project is the python implementation of this matlab project: https://github.com/Philipp-MR/CoilGen.
-At the moment it is NOT finished. Working was stopped in calcCountoursByTriangularPotentialCuts.py, until there in a testcase the results are similar to the ones in the matlab implementation.
+This project is the python implementation of the matlab project: [CoilGen (https://github.com/Philipp-MR/CoilGen)](https://github.com/Philipp-MR/CoilGen).
+
+The python project reprogrammed the functionalitys starting in the Heard file: `CoilGen\CoilGen.m`. When the functionality is fine the stucture and the code itself was cleaned up and changes that do not change the results were made.
+
+State 2022-11-07 working was stopped in calcCountoursByTriangularPotentialCuts.py (there is a TODO with further explaintation). Until there in a testcase the results are similar to the ones in the matlab implementation. The testcase in Matlab could be found in: `CoilGen\Examples\ygradient_coil.m`.
 
 
 ## Testing with Pytest
@@ -14,7 +17,8 @@ At the moment it is NOT finished. Working was stopped in calcCountoursByTriangul
 There is a testcase implemented in testCase.py, on which it could be evaluated if the program still does what it should do. The results there are checked against the ones of the same case in the matlab project. For testing pytest is used. 
 
 If not already installed run: pip install -U pytest
-To run the tests: pytest 
+
+To run the tests, navigate to the Py_Coilgen folder and run: pytest 
 
 
 ## Citation
