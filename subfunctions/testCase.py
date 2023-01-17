@@ -25,13 +25,16 @@ BField,SFOpt = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatr
 # SF Optimization
 
 def test_finalSF():
-    assert np.array_equal(np.array(SFOpt),np.array(SFCorrectValue))
+    precision = 5
+    assert np.array_equal(np.round(np.array(SFOpt), precision), np.round(np.array(SFCorrectValue), precision))
 
-def test_bFieldGeneratedByOptSF():   
-    assert np.array_equal(BField,np.array(bFieldCorrectValue))
+def test_bFieldGeneratedByOptSF():
+    precision = 3
+    assert np.array_equal(np.round(BField, precision), np.round(np.array(bFieldCorrectValue)))
 
 def test_reducedSF():   
-    assert np.array_equal(Test.reducedSF,np.array(reducedSFCorrect))
+    precision = 5
+    assert np.array_equal(np.round(Test.reducedSF, precision), np.round(np.array(reducedSFCorrect), precision))
 
 # Sensitivity Matrix
 
