@@ -23,7 +23,7 @@ def calcSensitivityMat(mesh,biotSavatCoeff,target,u,v,gaussWeight):
             nodeX,nodeY,nodeZ = nodePoint
             bX,bY,bZ = pointB
             cX,cY,cZ = pointC
-            vX,vY,vZ = (pointC - pointB)/(scipy.linalg.norm(np.cross(pointC-nodePoint,pointB-nodePoint)))
+            vX,vY,vZ = (pointC - pointB)/mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]/2
             for gaussIndex in range(len(gaussWeight)):
                 xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex])#scalar
                 yGaussInUV = nodeY*u[gaussIndex]+bY*v[gaussIndex]+cY*(1-u[gaussIndex]-v[gaussIndex])#scalar
@@ -61,7 +61,7 @@ def calcWeightsGauss(n):
     for i in np.arange(1,m).reshape(-1):
         z = np.cos(np.pi*(i-0.25)/(n+0.5))
         z1 = z+1
-        while abs(z-z1)>(2.2204*10**(-16)):#distance from 1.0 to the next larger double precision number
+        while abs(z-z1)>(2.220446049250313*10**(-16)):#distance from 1.0 to the next larger double precision number
             p1 = 1
             p2 = 0
             for j in range(n):

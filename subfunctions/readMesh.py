@@ -255,7 +255,7 @@ class CylindricMesh():
         '''returns sorted list with nodes around every node'''
         oneRingList = self.createOneRingList()
         oneRingList = self.ensureUniformOrientation(oneRingList)
-        oneRingList = self.orderElementsInCircularArangement(oneRingList)
+        #oneRingList = self.orderElementsInCircularArangement(oneRingList)
         return oneRingList
     
     def orderElementsInCircularArangement(self,oneRingList):

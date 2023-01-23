@@ -11,12 +11,12 @@ def getResistanceMatrix(test,mesh,materialFactor):
 
 def formFinalResistanceMat(resistanceMatrix,materialFactor):
     '''returns resistanceMatrix in final form. added with its transposed and multiplied with materialFactor'''
-    resistanceMatrix = (resistanceMatrix + np.transpose(resistanceMatrix))*materialFactor
+    resistanceMatrix = (resistanceMatrix + np.array(resistanceMatrix).T)*materialFactor
     return resistanceMatrix
 
 def createPreviousResistanceMat(mesh,matElementsShouldGetValue):
     '''returns resistanceMatrix mit entries in matElementsShouldGetValue'''
-    resistanceMatrix = np.zeros((len(mesh.vertices),len(mesh.vertices)),dtype=float)    
+    resistanceMatrix = np.zeros((len(mesh.vertices),len(mesh.vertices)),dtype=float)
     for elementIndex in range(len(matElementsShouldGetValue[0])):
         nodeInd1 = int(matElementsShouldGetValue[0][elementIndex])
         nodeInd2 = int(matElementsShouldGetValue[1][elementIndex])
@@ -60,9 +60,10 @@ def calculateCurrent(Point1, Point2, Point3):
 def getMatElementShouldGetValue(mesh):
     '''returns a list with positions in the matix that should get a value (diagonal elements == same nodes and neighbouring nodes)'''
     nodeAdjacencyMatrix = getNeighbourhoodMatrix(mesh)
-    neighbourPairs = np.array(np.where(nodeAdjacencyMatrix))
-    neighbourPairs = neighbourPairs[:,neighbourPairs[1].argsort()]   
-    matElementsShouldGetValue = [np.concatenate([np.linspace(0,263,264),neighbourPairs[0]]) ,np.concatenate([np.linspace(0,263,264),neighbourPairs[1]])] 
+    neighbourPairs = np.array(np.where(nodeAdjacencyMatrix.T))
+    #neighbourPairs = neighbourPairs[:,neighbourPairs[1].argsort()]
+    len = nodeAdjacencyMatrix.shape[0]
+    matElementsShouldGetValue = [np.concatenate([np.arange(len), neighbourPairs[0]]) ,np.concatenate([np.arange(len), neighbourPairs[1]])] 
     return matElementsShouldGetValue
 
 def getPartnerElement(triangle,trianglesWithBothNodes,nodeInd2):
