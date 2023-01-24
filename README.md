@@ -1,7 +1,5 @@
-<div id="top"></div>
-
-
- <img src="./Documentation/GoilGen_Logo.png" width="300">
+[![CI](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml/badge.svg)](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml)
+[![Pylint](https://catkira.github.io/pyCoilGen/pylint.svg)](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml)
 
 ## Python Implementation
  
