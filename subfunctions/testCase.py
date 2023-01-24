@@ -3,6 +3,7 @@ from defineTargetField import TargetFieldGiven
 from sensitivityMatrix import getSensitivityMatrix
 from resistanceMatrix import getResistanceMatrix
 from streamFunctionOptimization import streamFunctionOptimization
+from calcPotentialLevels import calcPotentialLevels
 from Tester import Tester
 import numpy as np
 import scipy
@@ -14,6 +15,8 @@ tikonovFac = 100
 specificConductivityMaterial = 1.8000*10**-8
 conducterThickness = 0.005
 materialFactor = specificConductivityMaterial/conducterThickness
+numLevels = 20
+levelOffset = 0.2500
 
 # load test data from Matlab for comparison
 matlabData = scipy.io.loadmat('matlabData.mat')
@@ -21,6 +24,7 @@ sensitivityMatrixMatlab = np.array(matlabData['coil_parts'][0][0][11]).transpose
 resistanceMatrixMatlab = np.array(matlabData['coil_parts'][0][0][14]).T
 SFOptMatlab = scipy.io.loadmat('opt_stream_func.mat')['opt_stream_func'].ravel()
 BFieldMatlab = scipy.io.loadmat('sf_b_field.mat')['sf_b_field']
+potentialLevelListMatlab = np.array(matlabData['coil_parts'][0][0][15]).ravel()
 
 calcWeightsGaussCorrect = [[-0.5773502691896257310588680, 0.5773502691896257310588680],[1.0000000000000004440892099, 1.0000000000000004440892099]]
 gaußLegendreCorrect = [[0.21132486540518713, 0.21132486540518713, 0.7886751345948129, 0.7886751345948129], [0.16666666666666669, 0.6220084679281462, 0.044658198738520456, 0.16666666666666669], [0.19716878364870338, 0.19716878364870338, 0.052831216351296825, 0.052831216351296825]]
@@ -73,6 +77,11 @@ TargetSphere = TargetFieldGiven(targetMeshFile,1)
 sensitivityMatrix = np.array(getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder))
 resistanceMatrix = np.array(getResistanceMatrix(Test,Mesh,materialFactor))
 BField,SFOpt = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
+contourStep, potentialLevelList = calcPotentialLevels(SFOpt, numLevels, levelOffset)
+
+def test_potentialLevelList():
+    precision = 16
+    assert np.array_equal(np.round(potentialLevelList, precision), np.round(potentialLevelListMatlab, precision))
 
 def test_sensitivityMatrix():
     precision = 16
@@ -103,6 +112,7 @@ def main():
     test_resistanceMatrix()
     test_finalSF()
     test_bFieldGeneratedByOptSF()
+    test_potentialLevelList()
     test_gaußLegendre()
     test_WeightsGauss()
 
