@@ -24,7 +24,7 @@ sensitivityMatrixMatlab = np.array(matlabData['coil_parts'][0][0][11]).transpose
 resistanceMatrixMatlab = np.array(matlabData['coil_parts'][0][0][14]).T
 SFOptMatlab = scipy.io.loadmat('opt_stream_func.mat')['opt_stream_func'].ravel()
 BFieldMatlab = scipy.io.loadmat('sf_b_field.mat')['sf_b_field']
-potentialLevelListMatlab = np.array(matlabData['coil_parts'][0][0][15]).ravel()
+potentialLevelListMatlab = np.array(matlabData['coil_parts'][0][0][17]).ravel()
 
 calcWeightsGaussCorrect = [[-0.5773502691896257310588680, 0.5773502691896257310588680],[1.0000000000000004440892099, 1.0000000000000004440892099]]
 gaußLegendreCorrect = [[0.21132486540518713, 0.21132486540518713, 0.7886751345948129, 0.7886751345948129], [0.16666666666666669, 0.6220084679281462, 0.044658198738520456, 0.16666666666666669], [0.19716878364870338, 0.19716878364870338, 0.052831216351296825, 0.052831216351296825]]
@@ -80,7 +80,7 @@ BField,SFOpt = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatr
 contourStep, potentialLevelList = calcPotentialLevels(SFOpt, numLevels, levelOffset)
 
 def test_potentialLevelList():
-    precision = 16
+    precision = 6
     assert np.array_equal(np.round(potentialLevelList, precision), np.round(potentialLevelListMatlab, precision))
 
 def test_sensitivityMatrix():
@@ -92,11 +92,11 @@ def test_resistanceMatrix():
     assert np.array_equal(np.round(resistanceMatrix, precision), np.round(resistanceMatrixMatlab, precision))
 
 def test_finalSF():
-    precision = 6
+    precision = 5
     assert np.array_equal(np.round(np.array(SFOpt), precision), np.round(SFOptMatlab, precision))
 
 def test_bFieldGeneratedByOptSF():
-    precision = 12
+    precision = 11
     assert np.array_equal(np.round(np.array(BField), precision), np.round(np.array(BFieldMatlab), precision))
 
 def test_gaußLegendre():

@@ -58,4 +58,4 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: |
-          pytest subfunctions/testCase.py/
+          pytest subfunctions/testCase.py
