@@ -12,8 +12,8 @@ State 2022-11-07: working was stopped in calcCountoursByTriangularPotentialCuts.
 
 There is a testcase implemented in testCase.py, on which it could be evaluated if the program still does what it should do. The results there are checked against the ones of the same case in the matlab project. For testing pytest is used. 
 
-1. If not already installed run: pip install -U pytest
-2. To run the tests, navigate to the Py_Coilgen folder and run: pytest 
+1. If not already installed run: pip install pytest
+2. To run the tests execute `pytest subfuncrions/testCase.py`
 
 The testdata is generated in Matlab with `CoilGen\Examples\ygradient_coil.m`.
 
