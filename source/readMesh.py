@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import meshzoo
 import trimesh
-import scipy
 
 def calculateNormal(vec):
     '''returns the norm for a given 3d vector'''
@@ -258,33 +257,35 @@ class CylindricMesh():
         '''returns sorted list with nodes around every node'''
         oneRingList = self.createOneRingList()
         oneRingList = self.ensureUniformOrientation(oneRingList)
-        #oneRingList = self.orderElementsInCircularArangement(oneRingList)
+        oneRingList = self.orderElementsInCircularArangement(oneRingList)
         return oneRingList
 
-    def orderElementsInCircularArangement(self,oneRingList):
+    def orderElementsInCircularArangement(self, oneRingList):
         '''returns the List in a circular arrangement'''
-        for nodeElements in range(len(oneRingList)):
-            if self.boundary[nodeElements]:
-                start = self.findStartInBoundaryCase(oneRingList,nodeElements)
+        for nodeId in range(len(oneRingList)):
+            if self.boundary[nodeId]:
+                startIdx = self.findStartInBoundaryCase(oneRingList,nodeId)
             else:
-                start = oneRingList[nodeElements][0]
+                startIdx = 0
 
-            new = self.arrangeCircular(start,oneRingList[nodeElements])
-            oneRingList[nodeElements] = new
+            newIdcs = self.arrangeCircular(startIdx, oneRingList[nodeId])
+            oneRingList[nodeId] = list(oneRingList[nodeId][i] for i in newIdcs)
+            # neighbours also needs to be reordered, because it is indexed by triangleId !
+            self.neighbours[nodeId] = list(self.neighbours[nodeId][i] for i in newIdcs)
         return oneRingList
 
-    def arrangeCircular(self,start,Elements):
+    def arrangeCircular(self, startIdx, ringListItem):
         '''returns the elements in a circular order beginning with start'''
-        new = [start]
-        while len(new) != len(Elements):
-            for i in Elements:
-                if len(new) == len(Elements):
+        newIdcs = [startIdx]
+        while len(newIdcs) != len(ringListItem):
+            for i in range(len(ringListItem)):
+                if len(newIdcs) == len(ringListItem):
                     break
-                elif new[-1][1] == i[0]:
-                    new.append(i)
-        return new
+                if ringListItem[newIdcs[-1]][1] == ringListItem[i][0]:
+                    newIdcs.append(i)
+        return newIdcs
 
-    def findStartInBoundaryCase(self,oneRingList,nodeNumber):
+    def findStartInBoundaryCase(self, oneRingList, nodeNumber):
         '''returns the correct start triangle for ordering the triangles around a boundary vertice'''
         index = 0
         start = oneRingList[nodeNumber][0] 
@@ -293,7 +294,7 @@ class CylindricMesh():
             start = oneRingList[nodeNumber][index+1]
             correctstart = self.checkStartTriangle(oneRingList[nodeNumber],start)
             index+=1
-        return start
+        return index
 
     def checkStartTriangle(self,verticeTriangles,start):
         '''returns boolean if "start" is the correct startTriangle'''

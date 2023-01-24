@@ -1,6 +1,5 @@
 #Flächenströme der Dreieck um jeden Knoten aufintegrieren
 import numpy as np
-import scipy
 
 def getSensitivityMatrix(test,mesh,target,n):
     '''returns the sensitivity Matrix for the mesh'''

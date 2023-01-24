@@ -23,6 +23,7 @@ levelOffset = 0.2500
 
 # load test data from Matlab for comparison
 matlabData = scipy.io.loadmat('tests/matlabData.mat')
+oneRingListMatlab = matlabData['coil_parts']['one_ring_list'][0][0]
 sensitivityMatrixMatlab = np.array(matlabData['coil_parts'][0][0][11]).transpose([0,2,1])
 resistanceMatrixMatlab = np.array(matlabData['coil_parts'][0][0][14]).T
 SFOptMatlab = scipy.io.loadmat('tests/opt_stream_func.mat')['opt_stream_func'].ravel()
@@ -44,10 +45,15 @@ def calc_current(a,b,c):
 Test = Tester()
 Mesh = CylindricMeshGiven(meshFile)
 
+def test_oneRingList():
+    for i in range(len(Mesh.oneRingList)):
+       assert np.array_equal(np.array(Mesh.oneRingList[i]), oneRingListMatlab[i, 0].T - 1)
+
 def test_triangleNodeArrays():
     for node in range(Mesh.vertices.shape[0]):
         test = np.column_stack((node*np.ones(np.array(Mesh.oneRingList[node]).shape[0]).T, np.array(Mesh.oneRingList[node]))).astype(int)
-        assert np.array_equal(np.sort(test, 1), np.sort(Mesh.faces[Mesh.neighbours[node]], 1))
+        assert np.array_equal(np.sort(test, 1), np.sort(Mesh.faces[Mesh.neighbours[node]], 1)), \
+            print(f'{str(np.sort(test, 1))}\n != \n{str(np.sort(Mesh.faces[Mesh.neighbours[node]], 1))}')
         if node == 1:
             pass
             # for i in range(np.array(Mesh.oneRingList[node]).shape[0]):
@@ -99,7 +105,7 @@ def test_finalSF():
     assert np.array_equal(np.round(np.array(SFOpt), precision), np.round(SFOptMatlab, precision))
 
 def test_bFieldGeneratedByOptSF():
-    precision = 11
+    precision = 12
     assert np.array_equal(np.round(np.array(BField), precision), np.round(np.array(BFieldMatlab), precision))
 
 def test_gaußLegendre():
@@ -109,6 +115,7 @@ def test_WeightsGauss():
     assert np.array_equal(Test.calcWeightsGauss,np.array(calcWeightsGaussCorrect))
 
 def main():
+    test_oneRingList()
     test_triangleNodeArrays()
     test_areas()
     test_sensitivityMatrix()
