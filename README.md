@@ -1,4 +1,4 @@
-[![CI](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml/badge.svg)](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml)
+[![CI](https://github.com/catkira/pyCoilGen/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/catkira/pyCoilGen/actions/workflows/lint_and_test.yml)
 [![Pylint](https://catkira.github.io/pyCoilGen/pylint.svg)](https://github.com/catkira/pyCoilGen/actions/workflows/CI.yml)
 
 ## Python Implementation
