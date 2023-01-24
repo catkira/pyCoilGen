@@ -30,7 +30,7 @@ jobs:
           score=$(sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' pylint.txt)
           echo "Pylint score was $score"
           mkdir badge
-          anybadge --value=$score --file=badge/pyCoilGen_pylint.svg pylint
+          anybadge --value=$score --file=badge/pylint.svg pylint
       - name: upload pylint badge
         uses: actions/configure-pages@v1
       - name: Deploy to GitHub Page
