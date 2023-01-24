@@ -1,11 +1,11 @@
 import numpy as np
 from decimal import *
 import sys
-sys.path.append('subfunctions/')
+sys.path.append('source/')
 
 
 ### Testing ###############
-from subfunctions.Tester import Tester
+from Tester import Tester
 Test = Tester()
 
 ### Input #################
@@ -21,31 +21,31 @@ levelOffset = 0.2500
 
 ### MESH ##################
 
-from subfunctions.readMesh import CylindricMesh,CylindricMeshGiven
+from readMesh import CylindricMesh,CylindricMeshGiven
 if meshFile:
     Mesh = CylindricMeshGiven(meshFile)
 else: Mesh = CylindricMesh(5.0,3.0,10) 
 
-from subfunctions.defineTargetField import TargetField,TargetFieldGiven
+from defineTargetField import TargetField,TargetFieldGiven
 if targetMeshFile:
     TargetSphere = TargetFieldGiven(targetMeshFile,1)
 else: TargetSphere = TargetField([0,0,0],4,1)
 
-from subfunctions.sensitivityMatrix import getSensitivityMatrix
+from sensitivityMatrix import getSensitivityMatrix
 sensitivityMatrix = getSensitivityMatrix(Test,Mesh,TargetSphere,gaussOrder)
 
-from subfunctions.resistanceMatrix import getResistanceMatrix
+from resistanceMatrix import getResistanceMatrix
 resistanceMatrix = getResistanceMatrix(Test,Mesh,materialFactor)
 
 ### Calculation ############
 
-from subfunctions.streamFunctionOptimization import streamFunctionOptimization
+from streamFunctionOptimization import streamFunctionOptimization
 bFieldGeneratedByOptSF,streamFunction = streamFunctionOptimization(Test,Mesh,TargetSphere,sensitivityMatrix,resistanceMatrix,tikonovFac)
 
-from subfunctions.calcPotentialLevels import calcPotentialLevels
+from calcPotentialLevels import calcPotentialLevels
 contourStep, potentialLevelList = calcPotentialLevels(streamFunction, numLevels, levelOffset)
 
-from subfunctions.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
+from source.calcContoursByTriangularPotentialCuts import calcContoursByTriangluarPotentialCuts
 contour = calcContoursByTriangluarPotentialCuts(Mesh,potentialLevelList,streamFunction)
 
 # topological contour sorting
