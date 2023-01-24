@@ -19,8 +19,8 @@ materialFactor = specificConductivityMaterial/conducterThickness
 matlabData = scipy.io.loadmat('matlabData.mat')
 sensitivityMatrixMatlab = np.array(matlabData['coil_parts'][0][0][11]).transpose([0,2,1])
 resistanceMatrixMatlab = np.array(matlabData['coil_parts'][0][0][14]).T
-SFOptMatlab = scipy.io.loadmat('opt_stream_func.mat')['opt_stream_func'].ravel() / 10 # TODO: why didive by 10 ???
-BFieldMatlab = scipy.io.loadmat('sf_b_field.mat')['sf_b_field'] / 10                  # TODO: why didive by 10 ???
+SFOptMatlab = scipy.io.loadmat('opt_stream_func.mat')['opt_stream_func'].ravel()
+BFieldMatlab = scipy.io.loadmat('sf_b_field.mat')['sf_b_field']
 
 calcWeightsGaussCorrect = [[-0.5773502691896257310588680, 0.5773502691896257310588680],[1.0000000000000004440892099, 1.0000000000000004440892099]]
 gaußLegendreCorrect = [[0.21132486540518713, 0.21132486540518713, 0.7886751345948129, 0.7886751345948129], [0.16666666666666669, 0.6220084679281462, 0.044658198738520456, 0.16666666666666669], [0.19716878364870338, 0.19716878364870338, 0.052831216351296825, 0.052831216351296825]]
@@ -83,11 +83,11 @@ def test_resistanceMatrix():
     assert np.array_equal(np.round(resistanceMatrix, precision), np.round(resistanceMatrixMatlab, precision))
 
 def test_finalSF():
-    precision = 7
+    precision = 6
     assert np.array_equal(np.round(np.array(SFOpt), precision), np.round(SFOptMatlab, precision))
 
 def test_bFieldGeneratedByOptSF():
-    precision = 7
+    precision = 12
     assert np.array_equal(np.round(np.array(BField), precision), np.round(np.array(BFieldMatlab), precision))
 
 def test_gaußLegendre():

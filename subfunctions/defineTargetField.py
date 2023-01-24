@@ -29,7 +29,7 @@ class TargetField():
 
     def getMagneticFieldValues(self,direction):
         '''returns magnetic field values analogus to matlab skript'''
-        targetStrength = 0.1
+        targetStrength = 1
         targetField = np.zeros((3,len(self.vertices)))
         targetField[2] = self.vertices[:,direction]
         targetField = targetField*targetStrength
