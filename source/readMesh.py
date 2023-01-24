@@ -18,10 +18,10 @@ def updateList(edgeList,otheredge):
     '''returns the edgeList without otheredge'''
     return [a for a, skip in zip(edgeList, [np.allclose(a, otheredge) for a in edgeList]) if not skip]
 
-#option 1: create mesh 
+#option 1: create mesh
 class CylindricMesh():
-    def __init__(self,coilLength,coilRadius,n):
-        self.vertices, self.faces = meshzoo.tube(length=coilLength, radius=coilRadius, n=int(n))#points, cells(index of the points that close the cell)
+    def __init__(self, coilLength, coilRadius, n):
+        self.vertices, self.faces = meshzoo.tube(length=coilLength, radius=coilRadius, n=int(n)) # points, cells(index of the points that close the cell)
         self.vertices = np.array(self.vertices)
         self.normals=self.getNormals()
         self.openBoundaries=self.getOpenBoundaries()
@@ -37,14 +37,14 @@ class CylindricMesh():
         self.oneRingList = self.getOneRingList()
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourcurrentUnsorted = self.getNeighbourCurrentsUnsorted()
-    
+
     def checkIfBoundary(self):
         '''returns a list of boolean if the vertice is a boundary vertice'''
         boundaryBooleans = []
         for nodeElements in range(len(self.vertices)):
             boundaryBooleans.append((nodeElements in self.openBoundaries[0]) | (nodeElements in self.openBoundaries[1]))
         return boundaryBooleans
-    
+
     def getVertexNormals(self):
         '''returns the normals of the vertices. These are calculated as average of the touching faces normals.'''
         vertexNormals = []
@@ -54,7 +54,7 @@ class CylindricMesh():
                 sum+= self.normals[x]
             vertexNormals.append(sum/len(self.neighbours[vertex]))
         return vertexNormals
-    
+
     def getNormals(self):
         '''returns the normals of the faces'''
         normals=[]
@@ -78,10 +78,11 @@ class CylindricMesh():
         for i in range(len(self.vertices)):
             neighbourcurrentparts=[]
             for j in self.oneRingList[i]:
-                neighbourcurrentparts.append((self.vertices[j[1]] - self.vertices[j[0]])/(scipy.linalg.norm(np.cross(self.vertices[j[1]]-self.vertices[i],self.vertices[j[0]] - self.vertices[i]))))
+                neighbourcurrentparts.append((self.vertices[j[1]] - self.vertices[j[0]]) \
+                    / np.linalg.norm(np.cross(self.vertices[j[1]]-self.vertices[i],self.vertices[j[0]] - self.vertices[i])))
             neighbourcurrents.append(neighbourcurrentparts)
         return neighbourcurrents
-    
+
     def getNeighbourCurrentsUnsorted(self):
         '''returns the currents of the neighbour triangles for every node before sorting'''
         neighbourcurrents = []
@@ -104,7 +105,8 @@ class CylindricMesh():
         '''returns the areas of the triangles made with the points in faces'''
         areas=[]
         for i in self.faces:
-            areas.append(np.linalg.norm(np.cross((self.vertices[i[1]]-self.vertices[i[0]]),(self.vertices[i[2]]-self.vertices[i[0]])))/2)
+            areas.append(np.linalg.norm(np.cross((self.vertices[i[1]] - self.vertices[i[0]]),
+                (self.vertices[i[2]] - self.vertices[i[0]])))/2)
         return areas
 
     def getOpenBoundaries(self):
@@ -140,7 +142,7 @@ class CylindricMesh():
             eachBoundaryEdges = self.removeDoubleEdges(eachBoundaryEdges)
             boundaryEdges.append(eachBoundaryEdges)
         return boundaryEdges
-    
+
     def removeDoubleEdges(self,edgeList):
         '''returns the edgeList with each edge just once.'''
         newList=np.copy(edgeList)
@@ -149,7 +151,7 @@ class CylindricMesh():
                 if (newList[edgeInd][::-1] == newList[otheredgeInd]).all() and edgeInd < otheredgeInd:
                     edgeList = updateList(edgeList,newList[otheredgeInd])
         return edgeList
-    
+
     def getBoundaryLoopNodes(self):
         '''returns the unsorted nodes for the boundaryLoop.'''
         boundaryEdges = self.getBoundaryEdges()
@@ -160,7 +162,7 @@ class CylindricMesh():
             boundaryNodes = np.append(np.array(boundary)[:,0],boundary[0][0])
             boundaryLoopNodes.append(boundaryNodes)
         return boundaryLoopNodes
-    
+
     def getRotatedCopy(self):
         '''returns rotated copy of the vertices. If the cylinder is orientated along the z axis we need a rotated copy.'''
         boundaryLoopNodes = self.getBoundaryLoopNodes()
@@ -168,7 +170,7 @@ class CylindricMesh():
         rotMat = self.calc3DRotMatByVec(rotationVec,angle)
         rotatedVertices = self.getRotatedVertices(rotMat)
         return rotatedVertices
-    
+
     def getRotatedVertices(self,rotMat):
         '''returns the rotated vertices (multiplication with rotMat).'''
         rotatedVertices = []
@@ -178,7 +180,8 @@ class CylindricMesh():
 
     def calcRotationVec(self,boundaryLoopNodes):
         '''returns the rotationVector and the angle based on the boundaryLoopNodes.'''
-        openingMean = [np.mean(self.vertices[boundaryLoopNodes[0]][:,0]),np.mean(self.vertices[boundaryLoopNodes[0]][:,1]),np.mean(self.vertices[boundaryLoopNodes[0]][:,2])]
+        openingMean = [np.mean(self.vertices[boundaryLoopNodes[0]][:,0]),
+            np.mean(self.vertices[boundaryLoopNodes[0]][:,1]), np.mean(self.vertices[boundaryLoopNodes[0]][:,2])]
         overallMean = np.mean(self.vertices)
         oldOrientationVec=(openingMean-overallMean)/np.linalg.norm(openingMean-overallMean)
         zVec = [0,0,1]
@@ -205,7 +208,7 @@ class CylindricMesh():
         rotMat[2][1] = uZ*uX*tmp3+uX*tmp1
         rotMat[2][2] = tmp2+uZ*uZ*tmp3
         return rotMat
-    
+
     def turnAnsSortElements(self,boundaryEdges):
         '''returns the given list in sorted. If needed single elements were turned to close the loop.'''
         new=[]
@@ -227,7 +230,7 @@ class CylindricMesh():
                 start = newElement[-1]
             new.append(newElement)
         return new
-     
+
     def get2Dcoordinates(self):
         '''returns the from 3D to 2D converted vertices'''
         corods = np.array(self.rotatedCaylinder)
@@ -250,14 +253,14 @@ class CylindricMesh():
                     k.append(i)
             neighbourtrianglesIndices.append(k)
         return neighbourtrianglesIndices
-    
+
     def getOneRingList(self):
         '''returns sorted list with nodes around every node'''
         oneRingList = self.createOneRingList()
         oneRingList = self.ensureUniformOrientation(oneRingList)
         #oneRingList = self.orderElementsInCircularArangement(oneRingList)
         return oneRingList
-    
+
     def orderElementsInCircularArangement(self,oneRingList):
         '''returns the List in a circular arrangement'''
         for nodeElements in range(len(oneRingList)):
@@ -298,7 +301,7 @@ class CylindricMesh():
         for i in range(len(verticeTriangles)):
             test.append(start[0]==verticeTriangles[i][1])
         return not np.any(test)
-    
+
     def createOneRingList(self):
         '''returns a list with the other two triangle Points for each triangle per node'''
         indices = self.getNeighbourTriangleIndices()
@@ -313,7 +316,7 @@ class CylindricMesh():
                 eachnode.append(new)
             oneRingList.append(eachnode)
         return oneRingList
-    
+
     def ensureUniformOrientation(self,oneRingList):
         '''returns oneRingList with ensured uniform Orientation'''
         for nodeelements in range(len(oneRingList)):
@@ -331,7 +334,7 @@ class CylindricMesh():
         return oneRingList
 
 
-#option 2: create cylindric mesh 
+#option 2: create cylindric mesh
 def getMeshFromSTL(filename):
     '''returns vertices and faces from given stl file meshes'''
     myobj = trimesh.load_mesh(filename, enable_post_processing=True, solid=True)
@@ -355,7 +358,7 @@ class CylindricMeshGiven(CylindricMesh):
         self.oneRingList = self.getOneRingList()
         self.neighbourcurrents = self.getNeighbourCurrents()
         self.neighbourcurrentUnsorted = self.getNeighbourCurrentsUnsorted()
-    
+
 def checkIfVecInVeclist(node,vecList):
     '''returns Boolean if a 3 components vec is in a list of 3 component elements'''
     return (node == vecList[0]).all()|(node == vecList[1]).all()|( node == vecList[2]).all()

@@ -8,14 +8,15 @@ def calcContoursByTriangluarPotentialCuts(mesh,potentialLevelList,streamFunction
 
     edgeNodePotentials = streamFunction[innerEdges]
     potentialCutCriteria = getPotentialCutCriteria(edgeNodePotentials,potentialLevelList)
-    edgeLength = np.sqrt((mesh.u[innerEdges[:,0]]-mesh.u[innerEdges[:,1]])**2 + (mesh.v[innerEdges[:,0]]-mesh.v[innerEdges[:,1]])**2)
+    edgeLength = np.sqrt((mesh.u[innerEdges[:,0]]-mesh.u[innerEdges[:,1]]) ** 2
+        + (mesh.v[innerEdges[:,0]]-mesh.v[innerEdges[:,1]])**2)
     cutPointDistanceToEdgeNode=getCutDistancesToEdgeNodes(edgeNodePotentials,potentialLevelList,edgeLength)
     uCutPoint, vCutPoint = getuvCutPoints(mesh,innerEdges,edgeLength,potentialCutCriteria,cutPointDistanceToEdgeNode)
-    
+
     potentialSortedCutPoints = getPotentialSortedCutPoints(potentialLevelList,uCutPoint,vCutPoint)
     rawUnsortedPoints = getRawUnsortedPoints(potentialLevelList,potentialSortedCutPoints)
     rawUnarrangedLoops = getRawUnarrangedLoops(rawUnsortedPoints,innerEdges,innerEdgeOpposedNode)
- 
+
     #TODO: next step Matlab calc_contours_by trianglar_potential_cuts line 179 "evaluate for each loop the current orientation"
 
     contours=0
@@ -36,9 +37,9 @@ def getRawUnsortedPoints(potentialLevelList,potentialSortedCutPoints):
     rawUnsortedPoints = []
     for i in range(len(potentialLevelList)):
         rawUnsortedPointsDict = {
-            "potential": potentialLevelList[i],
-            "edgeInd": np.array(potentialSortedCutPoints[i])[:,2].astype(int),
-            "uv": [np.array(potentialSortedCutPoints[i])[:,0],np.array(potentialSortedCutPoints[i])[:,1]],
+            'potential': potentialLevelList[i],
+            'edgeInd': np.array(potentialSortedCutPoints[i])[:,2].astype(int),
+            'uv': [np.array(potentialSortedCutPoints[i])[:,0],np.array(potentialSortedCutPoints[i])[:,1]],
         }
         rawUnsortedPoints.append(rawUnsortedPointsDict)
     return rawUnsortedPoints
@@ -64,7 +65,7 @@ def getCutDistancesToEdgeNodes(edgeNodePotentials,potentialLevelList,edgeLength)
             cutPointDistanceToEdgeNodePart.append(np.abs(edgeLength[x]/edgePotentialSpan[x] * (potentialLevelList[y]-edgeNodePotentials[x][0])))
         cutPointDistanceToEdgeNode.append(cutPointDistanceToEdgeNodePart)
     return cutPointDistanceToEdgeNode
-    
+
 
 def getPotentialCutCriteria(edgeNodePotentials,potentialLevelList):
     '''returns the PotentialCutCriteria'''
@@ -84,59 +85,60 @@ def getRawUnarrangedLoops(rawUnsortedPoints,innerEdges,innerEdgeOpposedNode):
     '''returns rawUnarrangedLoops'''
     rawUnarrangedLoopsTotal = []
     for potentialGroupInd in range(len(rawUnsortedPoints)):
-            allCurrentEdges = innerEdges[rawUnsortedPoints[potentialGroupInd]['edgeInd']]
-            allCurrentOpposedNodes = np.array(innerEdgeOpposedNode)[rawUnsortedPoints[potentialGroupInd]['edgeInd']]
-            allCurrentUVKoords = rawUnsortedPoints[potentialGroupInd]['uv']
-            setNewStart = True
-            numBuildLoops = 0
-            edgeAlreadyUsed = np.zeros(len(allCurrentEdges))
-            rawUnarrangedLoops = []
+        allCurrentEdges = innerEdges[rawUnsortedPoints[potentialGroupInd]['edgeInd']]
+        allCurrentOpposedNodes = np.array(innerEdgeOpposedNode)[rawUnsortedPoints[potentialGroupInd]['edgeInd']]
+        allCurrentUVKoords = rawUnsortedPoints[potentialGroupInd]['uv']
+        setNewStart = True
+        numBuildLoops = 0
+        edgeAlreadyUsed = np.zeros(len(allCurrentEdges))
+        rawUnarrangedLoops = []
 
-            while not edgeAlreadyUsed.all():
-                if setNewStart:
-                    oneLoop =[]
-                    numBuildLoops += 1
-                    startingEdge = min(np.argwhere(edgeAlreadyUsed== 0))
-                    rawUnarrangedLoopsDict = {
-                        "edgeInd":allCurrentEdges[startingEdge],
-                        "uv": np.array(allCurrentUVKoords)[:,startingEdge]
-                    }
-                    oneLoop.append(rawUnarrangedLoopsDict)
-                    edgeAlreadyUsed[startingEdge] = 1
-                    currentEdge = startingEdge
+        while not edgeAlreadyUsed.all():
+            if setNewStart:
+                oneLoop =[]
+                numBuildLoops += 1
+                startingEdge = min(np.argwhere(edgeAlreadyUsed== 0))
+                rawUnarrangedLoopsDict = {
+                    "edgeInd":allCurrentEdges[startingEdge],
+                    "uv": np.array(allCurrentUVKoords)[:,startingEdge]
+                }
+                oneLoop.append(rawUnarrangedLoopsDict)
+                edgeAlreadyUsed[startingEdge] = 1
+                currentEdge = startingEdge
 
-                    testElement,testtestElement=checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges,allCurrentOpposedNodes, currentEdge)
-                    neighbouringFreeNextEdges = np.argwhere(np.any(testElement, axis=1) & np.any(testtestElement, axis=1))
-                    if not neighbouringFreeNextEdges.any(): break
-                    elif len(neighbouringFreeNextEdges) == 1: 
-                        setNewStart = False
-                        nextEdge = neighbouringFreeNextEdges[0]
-                    else: 
-                        setNewStart = False
-                        if not edgeAlreadyUsed[neighbouringFreeNextEdges[0]]: nextEdge = neighbouringFreeNextEdges[0]
-                        else: nextEdge = neighbouringFreeNextEdges[1]
-                
-                while not (nextEdge == startingEdge):
-                    rawUnarrangedLoopsDict = {
-                        "edgeInd":allCurrentEdges[nextEdge],
-                        "uv": np.array(allCurrentUVKoords)[:,nextEdge]
-                    }
-                    oneLoop.append(rawUnarrangedLoopsDict)
-                    edgeAlreadyUsed[nextEdge] = 1
-                    currentEdge = np.copy(nextEdge)
+                testElement,testtestElement=checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges,allCurrentOpposedNodes, currentEdge)
+                neighbouringFreeNextEdges = np.argwhere(np.any(testElement, axis=1) & np.any(testtestElement, axis=1))
+                if not neighbouringFreeNextEdges.any():
+                    break
+                elif len(neighbouringFreeNextEdges) == 1:
+                    setNewStart = False
+                    nextEdge = neighbouringFreeNextEdges[0]
+                else:
+                    setNewStart = False
+                    if not edgeAlreadyUsed[neighbouringFreeNextEdges[0]]: nextEdge = neighbouringFreeNextEdges[0]
+                    else: nextEdge = neighbouringFreeNextEdges[1]
             
-                    testElement,testtestElement=checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges,allCurrentOpposedNodes, currentEdge)
-                    possibleNextEdges = np.argwhere(np.any(testElement, axis=1) & np.any(testtestElement, axis=1))
-                    possibleNextEdges = np.setdiff1d(possibleNextEdges,np.argwhere(edgeAlreadyUsed == 1))
-                    if not possibleNextEdges.any(): 
-                        rawUnarrangedLoops.append(oneLoop)
-                        break
-                    elif len(possibleNextEdges) == 1: nextEdge = possibleNextEdges[0]
-                    else: 
-                        if not edgeAlreadyUsed[possibleNextEdges[0]]: nextEdge = possibleNextEdges[0]
-                        else: nextEdge = possibleNextEdges[1]
-                setNewStart = True 
-            rawUnarrangedLoopsTotal.append(rawUnarrangedLoops)
+            while not (nextEdge == startingEdge):
+                rawUnarrangedLoopsDict = {
+                    'edgeInd' : allCurrentEdges[nextEdge],
+                    'uv' : np.array(allCurrentUVKoords)[:,nextEdge]
+                }
+                oneLoop.append(rawUnarrangedLoopsDict)
+                edgeAlreadyUsed[nextEdge] = 1
+                currentEdge = np.copy(nextEdge)
+        
+                testElement,testtestElement=checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges,allCurrentOpposedNodes, currentEdge)
+                possibleNextEdges = np.argwhere(np.any(testElement, axis=1) & np.any(testtestElement, axis=1))
+                possibleNextEdges = np.setdiff1d(possibleNextEdges,np.argwhere(edgeAlreadyUsed == 1))
+                if not possibleNextEdges.any(): 
+                    rawUnarrangedLoops.append(oneLoop)
+                    break
+                elif len(possibleNextEdges) == 1: nextEdge = possibleNextEdges[0]
+                else: 
+                    if not edgeAlreadyUsed[possibleNextEdges[0]]: nextEdge = possibleNextEdges[0]
+                    else: nextEdge = possibleNextEdges[1]
+            setNewStart = True
+        rawUnarrangedLoopsTotal.append(rawUnarrangedLoops)
     return rawUnarrangedLoopsTotal
 
 def checkIfPositionsElementIdenticalWithFirstList(allCurrentEdges, allCurrentOpposedNodes, checkPosition):
@@ -160,7 +162,8 @@ def getEdgeOpposedNode(mesh,innerEdgesTrianglesInds,innerEdges):
     for edgeInd in range(len(innerEdges)):
         oneEdgeOpposedNodes= []
         for triangleInd in range(len(innerEdgeTriangleNodes[edgeInd])):
-            oneEdgeOpposedNodes.append(removeTwoElementsFromArray(innerEdgeTriangleNodes[edgeInd][triangleInd],innerEdges[edgeInd][0],innerEdges[edgeInd][1])[0])
+            oneEdgeOpposedNodes.append(removeTwoElementsFromArray(
+                innerEdgeTriangleNodes[edgeInd][triangleInd],innerEdges[edgeInd][0],innerEdges[edgeInd][1])[0])
         edgeOpposedNodes.append(oneEdgeOpposedNodes)
     return edgeOpposedNodes
 
@@ -172,7 +175,8 @@ def getInnerEdegTriangleNodes(innerEdgesTrianglesInds,mesh):
     '''returns the Node Indices for the Triangles.'''
     innerEdgeTriangleNodes = []
     for edgeInd in range(len(innerEdgesTrianglesInds)):
-        innerEdgeTriangleNodes.append([np.array(mesh.faces[innerEdgesTrianglesInds[edgeInd][0]]),np.array(mesh.faces[innerEdgesTrianglesInds[edgeInd][1]])])
+        innerEdgeTriangleNodes.append([np.array(
+            mesh.faces[innerEdgesTrianglesInds[edgeInd][0]]),np.array(mesh.faces[innerEdgesTrianglesInds[edgeInd][1]])])
     return innerEdgeTriangleNodes
 
 def getInnerEdges(mesh):

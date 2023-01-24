@@ -92,7 +92,7 @@ def elementInAandB(a, b):
         if i in b: solution.append(i)
     return solution
 
-def compareMultipleElementsBoolean(elements,testelements):
+def compareMultipleElementsBoolean(elements, testelements):
     '''returns a array with boolean elements in the length of elements, True if the value is in testelements False otherwise'''
     comparisonResult=[]
     for i in elements:
@@ -118,9 +118,3 @@ def getNeighbourhoodMatrix(mesh):
         nodeAdjacencyMatrix[mesh.faces[i][1]][mesh.faces[i][2]]=True
         nodeAdjacencyMatrix[mesh.faces[i][2]][mesh.faces[i][0]]=True
     return nodeAdjacencyMatrix
-
-
-
-def compareMultipleElementsBooleanTest():
-    '''Test function: should always be True'''
-    return len(np.where(compareMultipleElementsBoolean()))==1

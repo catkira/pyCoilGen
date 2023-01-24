@@ -6,17 +6,21 @@ def streamFunctionOptimization(test,mesh,target,sensitivityMatrix,resistanceMatr
     PotentialZeroAtBoundaryNodes = False
     sensitivityMatrixSingleZKomp=np.array(sensitivityMatrix)[2,:,:].T
 
-    redResMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,resistanceMatrix,PotentialZeroAtBoundaryNodes)
-    redSenMat,boundaryNodes,isNotBoundaryNode = reduceMatricesForBoundaryNodes(mesh,sensitivityMatrixSingleZKomp,PotentialZeroAtBoundaryNodes)
- 
+    redResMat,boundaryNodes,isNotBoundaryNode = \
+        reduceMatricesForBoundaryNodes(mesh, resistanceMatrix, PotentialZeroAtBoundaryNodes)
+    redSenMat,boundaryNodes,isNotBoundaryNode = \
+        reduceMatricesForBoundaryNodes(mesh, sensitivityMatrixSingleZKomp, PotentialZeroAtBoundaryNodes)
+
     reducedSF = applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target)
     test.reducedSF = reducedSF
 
     if not PotentialZeroAtBoundaryNodes:
-        optStreamFkt = reexpandSteamFunctionForBoundaryNodes(mesh,reducedSF,boundaryNodes,isNotBoundaryNode,PotentialZeroAtBoundaryNodes)
+        optStreamFkt = reexpandSteamFunctionForBoundaryNodes(mesh, reducedSF, boundaryNodes, isNotBoundaryNode,
+            PotentialZeroAtBoundaryNodes)
     else: optStreamFkt = reducedSF
 
-    bFieldGeneratedByOptSF = [np.dot(np.transpose(sensitivityMatrix[0]),optStreamFkt), np.dot(np.transpose(sensitivityMatrix[1]),optStreamFkt), np.dot(np.transpose(sensitivityMatrix[2]),optStreamFkt)]
+    bFieldGeneratedByOptSF = [np.dot(np.transpose(sensitivityMatrix[0]),optStreamFkt),
+        np.dot(np.transpose(sensitivityMatrix[1]), optStreamFkt), np.dot(np.transpose(sensitivityMatrix[2]), optStreamFkt)]
 
     updateMeshCurrentDensityMeshFaces(mesh,optStreamFkt)
     return bFieldGeneratedByOptSF,optStreamFkt
@@ -25,7 +29,8 @@ def applyTikonovRegularisation(tikonovFactor,redSenMat,redResMat, target):
     '''returns the StreamFunction for the reduced Matrix with applied trikonov regularisation.'''
     tikonovFactor = tikonovFactor*np.shape(redSenMat)[0]/np.shape(redSenMat)[1]
     tikRegMat = tikonovFactor * redResMat
-    reducedSF = np.dot(sc.pinv(np.dot(np.array(redSenMat).T,redSenMat) + np.dot(np.array(tikRegMat).T,tikRegMat)),np.dot(np.array(redSenMat).T,target.fieldValues[2]))
+    reducedSF = np.dot(sc.pinv(np.dot(np.array(redSenMat).T,redSenMat) + np.dot(np.array(tikRegMat).T,tikRegMat)),
+        np.dot(np.array(redSenMat).T,target.fieldValues[2]))
     return reducedSF
 
 def reduceMatricesForBoundaryNodes(mesh, matToRed,zeroFlag):
@@ -34,13 +39,13 @@ def reduceMatricesForBoundaryNodes(mesh, matToRed,zeroFlag):
     if True in dimToRed:
         reducedMat = getReducedMat(mesh,dimToRed,matToRed,zeroFlag)
         reducedMat,boundaryNodes,notBoundaryNodes = rearrangeReducedMat(mesh,dimToRed,reducedMat)
-    else: 
-        print("nothing to reduce")                
+    else:
+        print("nothing to reduce")
     return [reducedMat,boundaryNodes,notBoundaryNodes]
 
-def rearrangeReducedMat(mesh,dimToRed,reducedMat):   
+def rearrangeReducedMat(mesh,dimToRed,reducedMat):
     '''rearranges the reduced matrix. returns: reducedMat,boundaryNodes,notBoundaryNodes'''
-    reducedMat = reducedMat.copy() 
+    reducedMat = reducedMat.copy()
     numNodesPerBoundary,notBoundaryNodes,boundaryNodes = getBoundaryDetails(mesh) 
     boundaryNodesFirstInds = [boundaryNodes[i][0] for i in range(len(mesh.openBoundaries))]
     for dimToRedInd in np.nonzero(dimToRed)[0]:
@@ -51,9 +56,10 @@ def rearrangeReducedMat(mesh,dimToRed,reducedMat):
         index2[dimToRedInd] = [x for x in boundaryNodesFirstInds]
         index3[dimToRedInd] = np.arange((len(mesh.openBoundaries)),(len(notBoundaryNodes)+len(mesh.openBoundaries)))
         index4[dimToRedInd] = np.transpose(notBoundaryNodes)
-        index5[dimToRedInd] = np.arange(((len(prevReducedMat[0])-(sum(numNodesPerBoundary)-len(mesh.openBoundaries)))), len(prevReducedMat[0]))
+        index5[dimToRedInd] = np.arange(((len(prevReducedMat[0])-(sum(numNodesPerBoundary)-len(mesh.openBoundaries)))),
+            len(prevReducedMat[0]))
 
-        
+
         if index1[0] == ':' and index2[0]==':' and index3[0] == ':' and index4[0]==':' and index5[0] == ':':
             reducedMat[:,index1[1]] = prevReducedMat[:,index2[1]]
             reducedMat[:,index3[1]] = prevReducedMat[:,index4[1]]
@@ -76,19 +82,19 @@ def getReducedMat(mesh,dimToRed,matToRed,zeroFlag):
     reducedMat = matToRed.copy()
     boundaryNodes = [mesh.openBoundaries[1],mesh.openBoundaries[0]]
     for dimToRedInd in np.nonzero(dimToRed)[0]:
-            index1=np.array([':']*np.ndim(reducedMat),dtype=object)
-            index2=np.copy(index1)
-            for boundaryInd in range(len(mesh.openBoundaries)):
-                if zeroFlag:
-                    index1[dimToRedInd] = boundaryNodes[boundaryInd][0]
-                    reducedMat[index1[0:None]]=0
+        index1=np.array([':']*np.ndim(reducedMat),dtype=object)
+        index2=np.copy(index1)
+        for boundaryInd in range(len(mesh.openBoundaries)):
+            if zeroFlag:
+                index1[dimToRedInd] = boundaryNodes[boundaryInd][0]
+                reducedMat[index1[0:None]]=0
+            else:
+                index1[dimToRedInd] = boundaryNodes[boundaryInd][0]
+                index2[dimToRedInd] = np.array(boundaryNodes[boundaryInd][0:None],dtype=int)
+                if dimToRedInd:#(==1)
+                    reducedMat[:,index1[1]] = np.sum(np.array(reducedMat)[:,index2[1]],dimToRedInd) #spalte ersetzen
                 else:
-                    index1[dimToRedInd] = boundaryNodes[boundaryInd][0]
-                    index2[dimToRedInd] = np.array(boundaryNodes[boundaryInd][0:None],dtype=int)
-                    if dimToRedInd:#(==1)
-                        reducedMat[:,index1[1]] = np.sum(np.array(reducedMat)[:,index2[1]],dimToRedInd)#spalte ersetzen 
-                    else:
-                        reducedMat[index1[0]] = np.sum(np.array(reducedMat)[index2[0]],dimToRedInd)
+                    reducedMat[index1[0]] = np.sum(np.array(reducedMat)[index2[0]],dimToRedInd)
     return reducedMat
 
 def getNotBoundaryNodes(mesh):
@@ -103,9 +109,11 @@ def getNotBoundaryNodes(mesh):
 def getDimToRed(matToRed):
     '''returns boolean values which dimension should be reduced'''
     dimToRed=[]
-    for i in np.shape(matToRed): 
-        if i == len(matToRed[0]): dimToRed.append(True)
-        else: dimToRed.append(False)
+    for i in np.shape(matToRed):
+        if i == len(matToRed[0]):
+            dimToRed.append(True)
+        else:
+            dimToRed.append(False)
     return dimToRed
 
 def getNumNodesPerBoundary(mesh):
@@ -123,17 +131,22 @@ def reexpandSteamFunctionForBoundaryNodes(mesh,reducedSF,boundaryNodes,isNotBoun
             streamFunction[boundaryNodes[boundaryInd]]=0
         else:
             streamFunction[boundaryNodes[boundaryInd]]=reducedSF[boundaryInd]
-    
+
     streamFunction[isNotBoundaryNode]=reducedSF[len(boundaryNodes):]
     return streamFunction
 
 def updateMeshCurrentDensityMeshFaces(mesh,optStreamFkt):
     '''updates the current density of the Faces in the mesh'''
-    pot1 = np.transpose(np.array([optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]],optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]],optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]]]))
-    pot2 = np.transpose(np.array([optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]],optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]],optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]]]))
-    pot3 = np.transpose(np.array([optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]],optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]],optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]]]))
+    pot1 = np.transpose(np.array([optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]],
+        optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]],
+        optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,0]]]))
+    pot2 = np.transpose(np.array([optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]],
+        optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]],
+        optStreamFkt[mesh.faces[:,1]]-optStreamFkt[mesh.faces[:,0]]]))
+    pot3 = np.transpose(np.array([optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]],
+        optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]],
+        optStreamFkt[mesh.faces[:,2]]-optStreamFkt[mesh.faces[:,1]]]))
     edge1 = mesh.vertices[mesh.faces[:,2]]-mesh.vertices[mesh.faces[:,0]]
     edge2 = mesh.vertices[mesh.faces[:,1]]-mesh.vertices[mesh.faces[:,0]]
     edge3 = mesh.vertices[mesh.faces[:,2]]-mesh.vertices[mesh.faces[:,1]]
     mesh.currentDensityFaces = edge1*pot1+edge2*pot2+edge3*pot3
-

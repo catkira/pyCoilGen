@@ -6,4 +6,4 @@ def calcPotentialLevels(streamFunction, numLevels, levelOffset):
     contourStep = SFRangePerMesh/(numLevels-1+2*levelOffset)
     potentialLevelList= np.arange(0,numLevels)*contourStep+(np.min(streamFunction)+levelOffset*contourStep)
 
-    return contourStep, potentialLevelList 
+    return contourStep, potentialLevelList

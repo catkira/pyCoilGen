@@ -25,22 +25,25 @@ def calcSensitivityMat(mesh,biotSavatCoeff,target,u,v,gaussWeight):
             cX,cY,cZ = pointC
             vX,vY,vZ = (pointC - pointB)/mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]/2
             for gaussIndex in range(len(gaussWeight)):
-                xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex])#scalar
-                yGaussInUV = nodeY*u[gaussIndex]+bY*v[gaussIndex]+cY*(1-u[gaussIndex]-v[gaussIndex])#scalar
-                zGaussInUV = nodeZ*u[gaussIndex]+bZ*v[gaussIndex]+cZ*(1-u[gaussIndex]-v[gaussIndex])#scalar
-                distanceNorm = (np.square(xGaussInUV-xTarget)+np.square(yGaussInUV-yTarget)+np.square(zGaussInUV-zTarget))**(-3/2)#for biot savat #len of target
-                dCx = dCx + ((-1)*vZ*(yTarget-yGaussInUV)+ vY*(zTarget-zGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-                dCy = dCy + ((-1)*vX*(zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]
-                dCz = dCz + ((-1)*vY*(xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm *2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]]* gaussWeight[gaussIndex]          
+                xGaussInUV = nodeX*u[gaussIndex]+bX*v[gaussIndex]+cX*(1-u[gaussIndex]-v[gaussIndex]) # scalar
+                yGaussInUV = nodeY*u[gaussIndex]+bY*v[gaussIndex]+cY*(1-u[gaussIndex]-v[gaussIndex]) # scalar
+                zGaussInUV = nodeZ*u[gaussIndex]+bZ*v[gaussIndex]+cZ*(1-u[gaussIndex]-v[gaussIndex]) # scalar
+                distanceNorm = (np.square(xGaussInUV-xTarget)+np.square(yGaussInUV-yTarget) + np.square(zGaussInUV-zTarget))**(-3/2)
+                dCx = dCx + ((-1) * vZ *(yTarget-yGaussInUV) + vY * (zTarget-zGaussInUV)) * distanceNorm \
+                    * 2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]] * gaussWeight[gaussIndex]
+                dCy = dCy + ((-1) * vX * (zTarget-zGaussInUV)+ vZ*(xTarget-xGaussInUV))*distanceNorm \
+                    * 2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]] * gaussWeight[gaussIndex]
+                dCz = dCz + ((-1) * vY * (xTarget-xGaussInUV)+ vX*(yTarget-yGaussInUV))*distanceNorm \
+                    * 2 *mesh.areas[mesh.neighbours[nodeIndex][triangleIndex]] * gaussWeight[gaussIndex]
         dCx *= biotSavatCoeff
         dCy *= biotSavatCoeff
         dCz *= biotSavatCoeff
         xAll.append(dCx)
         yAll.append(dCy)
         zAll.append(dCz)
-    return [xAll,yAll,zAll]   
+    return [xAll,yAll,zAll]
 
-def gaussLegendreIntegrationPointsTriangle(test,n):
+def gaussLegendreIntegrationPointsTriangle(test, n):
     '''returns the weights and the test point for the gauss legendre'''
     u,v,ck=[],[],[]
     eta,w = calcWeightsGauss(n)
@@ -75,4 +78,4 @@ def calcWeightsGauss(n):
         abscissa[int(n+1-i-1)] = z
         weights[int(i-1)] = 2/((1-z**2)*pp**2)
         weights[int(n+1-i-1)] = weights[int(i-1)]
-    return abscissa,weights
+    return abscissa, weights
